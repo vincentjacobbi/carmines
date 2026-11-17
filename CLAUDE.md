@@ -37,7 +37,7 @@ Her designer's InDesign packages, organized by year. Local copies of the files w
 - `Carmines_Mural/` is mostly downloaded reference images (one filename is a stock-vector preview). Don't use those. `GirlOnVespa.jpg`: origin unknown, don't use.
 - Dropbox `/CarminesMenus` holds only 2017–2018 packages (older than `/Carmines`).
 
-**Two brand looks exist.** The building sign and the 2013 logo files use the red script with a green "Italiano". Every printed menu since 2017 (dinner, catering, banquet, through May 2026) uses the script alone in charcoal `#282624` with deep wine `#5f1722`, Clarendon Text for dish names, Caecilia bold italic for prices, Mensch / TrendHM Sans wide caps for section heads with triple rules, an aged-paper background and the Italy stamp watermark. The user is choosing between them (Nov 2026). Those fonts are commercial; the site needs licensed web versions or free lookalikes.
+**Two brand looks exist.** The building sign and the 2013 logo files use the red script with a green "Italiano". Every printed menu since 2017 (dinner, catering, banquet, through May 2026) uses the script alone in charcoal `#282624` with deep wine `#5f1722`, Clarendon Text for dish names, Caecilia bold italic for prices, Mensch / TrendHM Sans wide caps for section heads with triple rules, an aged-paper background and the Italy stamp watermark. **The user chose the menu look (Nov 17, 2026)**; the sign colors are kept only as `logo-sign.svg`. Those fonts are commercial; the site needs licensed web versions or free lookalikes.
 
 ## Source material (user's Google Drive: `Carmines2.0/`, older snapshot from 2017–2018)
 - `Carmine's/ACTUAL LOGOS/`: the official logo. **`LARGE_CARMINES_LOGO.ai` and `Carmines_Vector.ai` are real vector files** (PDF-compatible), so the logo was converted, not traced. Also `LARGE_CARMINES_LOGO(COLOR).jpg` (red script, green "Italiano") and black versions.
@@ -48,19 +48,26 @@ Her designer's InDesign packages, organized by year. Local copies of the files w
 - Download raw Drive files into `source/` (git-ignored). Only finished, web-sized assets go into `assets/img/`.
 
 ## Current menus
-Two sources: the newest Dropbox PDFs above, and the HTML menu pages on carminestogo.com (`Carmines_Italiano_-_Dinner_Menu.html`, `_Wine_List`, `_Catering_Menu`, `_Banquet_Menu`, `_Take-out_Menu`, all under `/Carmines/`). Compare them, ask Kelly which is current where they differ, then transcribe `MENU` and `CATERING` in `build.mjs` with real prices and note the source and date. Re-check when they change.
+- **Dinner:** `content/menu.json`, transcribed Nov 2026 from the printed menu revision 3/18/2025 (Dropbox). carminestogo.com shows the 2/10/2025 version as an image; the only differences are two typos. Kelly still has to confirm nothing changed since March 2025.
+- Edits made while transcribing: obvious typos fixed (olil → oil, riostto → risotto, vinaigarette → vinaigrette, mesculin → mesclun, proscuitto → prosciutto, cappicola → capicola, driedtomatoes → dried tomatoes, Ceasar → Caesar), sentence case on descriptions. Her own spellings "Fussili" and "Fruitti di Mare" are kept until she decides.
+- **Catering and banquet are not transcribed yet:** use Dropbox `2025/carminescatering 5.14.26.pdf` and `CarminesBanquetMenu10-24.pdf`, checked against the Catering and Banquet pages on carminestogo.com.
+- The live site's other menu pages: `/Carmines/Carmines_Italiano_-_Wine_List.html`, `_Catering_Menu`, `_Banquet_Menu`, `_Take-out_Menu`.
 
 ## Structure (static, no build step needed to host)
-- `build.mjs` generates `index.html`, `menu.html`, `story.html`, `catering.html`, `assets/menu-data.js` (`window.SITE_DATA`, shared by the admin and the concierge), `llms.txt` and `robots.txt`. Edit content there, then run `node build.mjs`.
+- `content/menu.json` is the dinner menu (sections → items: `n`, `d`, `p` or `v` options, `feature`, `hidden`; the bowl section adds `pasta`, `served`, `gf`; `adds` = add-ons). `build.mjs` generates `index.html`, `menu.html`, `story.html`, `catering.html`, `assets/menu-data.js` (`window.SITE_DATA`, shared by the admin and the concierge), `llms.txt` and `robots.txt`. Edit content there, then run `node build.mjs`.
 - `ph("...")` renders a striped `[placeholder]` label; unpriced items show `$ —`. Placeholders never go into the JSON-LD schema.
 - `logo.mjs` → `logoSVG({ script, word, italiano })` draws the logo from `logo-paths.json` (vector paths from the .ai, counters masked so they stay transparent). `node render-logo.mjs` writes `assets/img/logo*.svg`, the favicon, apple-touch-icon and og-image (headless Chrome).
 - Vectorizing a raster piece (an old sign, menu art, the napkin's chef): same method as the Giacobbi's matchbook. Photograph or scan it flat, deskew, threshold, `potrace` to SVG paths, store the paths in a JSON file and draw them from a module. Never redraw lettering by hand.
 - `stickers.mjs`: the round-badge engine. Its drawings and wording are placeholders until Kelly picks them. Draw our own art; never copy other restaurants' or illustrators' work.
-- `assets/site.css`: reused print-style rules with placeholder tokens. `assets/chat.js`: scripted demo concierge (reads `SITE_DATA`). `assets/chart.umd.js`: vendored Chart.js.
-- `admin/index.html`: demo owner dashboard. **Every number is labeled sample data.** Tabs: sales & forecast, menu editor, profitability, market prices (anonymized competitors; never put real competitor names next to invented prices), marketing campaigns, "Ask your business".
+- `pasta.mjs` draws her menus' pasta line drawings from `pasta-paths.json` (converted from `Carmines_pasta_*.ai`; confirm the designer's permission before launch).
+- `assets/site.css`: the menu look (tokens at the top). `assets/chat.js`: scripted demo concierge (reads `SITE_DATA`). `assets/chart.umd.js`: vendored Chart.js.
+- `admin/index.html`: **Kelly's owner home**, kept deliberately simple (big type, works on a phone). Menu editor over `SITE_DATA.menu`: edit, hide, reorder, add, delete; drafts live in localStorage (`carmines-menu-draft`); **Preview** opens `menu.html?preview=1`, where `assets/menu-preview.js` re-renders the menu from the draft; **Publish** is a demo; **Download file** exports `menu.json`. Social posts tab: captions built only from real menu text, with `[brackets]` for what only she knows.
+- `admin/insights.html`: the sample-data dashboard (sales & forecast, profitability, market prices with anonymized competitors (never real names next to invented prices), email campaigns, "Ask your business"). **Every number is labeled sample data.**
+- Social plan and the open questions for Kelly: Claude Doc "Carmine's Social Plan & Questions for Kelly" (https://claude.ai/artifact/Y9SwtT9MVUY1vhu81ZD2dK).
+- Later phase for real publishing: the editor commits `content/menu.json` (GitHub API or a Git-backed CMS such as Decap) and Vercel rebuilds.
 
-## Brand (not decided yet)
-The script lettering is settled (vector paths in `logo-paths.json`; `logoSVG({ italiano: false, script: "#282624" })` gives the menu version). Which look to build around (sign red/green vs. menu charcoal/wine) is open; see "Two brand looks" above. Everything else (palette, type, the feel, references, stickers) waits on Kelly's answers. The current CSS tokens and system fonts are stand-ins.
+## Brand: her printed menus
+Charcoal `#282624` script logo (no "Italiano"), deep wine `#5f1722`, paper `#f4f0e4` with a faint grain. Bitter stands in for Clarendon Text / Caecilia, Josefin Sans for the menus' wide display caps; buy web licenses for the originals if Kelly wants an exact match. Section heads are wide caps between triple rules; a signature dish gets the menus' solid wine panel; dishes are centered with italic wine prices, as printed; the footer copies the back of the menu. Feel: classic Italian-American (Kelly, Nov 2026). Not used: the Italy stamp (origin unknown, misspelled) and the stickers (no motifs chosen).
 
 ## Rules
 - **Never invent facts, dishes or prices.** Placeholders must look like placeholders (`[striped label]`, `$ —`, "Staging note", "Sample").
