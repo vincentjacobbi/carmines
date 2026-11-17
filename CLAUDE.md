@@ -50,10 +50,13 @@ Her designer's InDesign packages, organized by year. Local copies of the files w
 ## Current menus
 - **Dinner:** `content/menu.json`, transcribed Nov 2026 from the printed menu revision 3/18/2025 (Dropbox). carminestogo.com shows the 2/10/2025 version as an image; the only differences are two typos. Kelly still has to confirm nothing changed since March 2025.
 - Edits made while transcribing: obvious typos fixed (olil → oil, riostto → risotto, vinaigarette → vinaigrette, mesculin → mesclun, proscuitto → prosciutto, cappicola → capicola, driedtomatoes → dried tomatoes, Ceasar → Caesar), sentence case on descriptions. Her own spellings "Fussili" and "Fruitti di Mare" are kept until she decides.
-- **Catering and banquet are not transcribed yet:** use Dropbox `2025/carminescatering 5.14.26.pdf` and `CarminesBanquetMenu10-24.pdf`, checked against the Catering and Banquet pages on carminestogo.com.
+- **Catering:** `content/catering.json`, from Dropbox `2025/carminescatering 5.14.26.pdf` (same as the image on carminestogo.com). Drop-off packages, full-service party package, Just Trays.
+- **Banquet:** `content/banquet.json`, from `CarminesBanquetMenu10-24.pdf`. The live site still links the **May 27, 2024** banquet PDF with higher prices (Standard $29.99 vs $25.99, Brunch $24.99 vs $22.95, Deluxe $46.99 vs $42.99, "Minimum 25 adult guests", cake-cutting fee, mini cannolis). Kelly to confirm which is current. Each JSON file has `source` and `edits` fields recording the typo fixes.
+- Open question: on the catering menu, "Full: 22 rolls / Half: 12 rolls" sits between Roast Beef and BBQ Pulled Pork; we show it on both.
 - The live site's other menu pages: `/Carmines/Carmines_Italiano_-_Wine_List.html`, `_Catering_Menu`, `_Banquet_Menu`, `_Take-out_Menu`.
 
 ## Structure (static, no build step needed to host)
+- `content/catering.json` and `content/banquet.json` feed `catering.html`.
 - `content/menu.json` is the dinner menu (sections → items: `n`, `d`, `p` or `v` options, `feature`, `hidden`; the bowl section adds `pasta`, `served`, `gf`; `adds` = add-ons). `build.mjs` generates `index.html`, `menu.html`, `story.html`, `catering.html`, `assets/menu-data.js` (`window.SITE_DATA`, shared by the admin and the concierge), `llms.txt` and `robots.txt`. Edit content there, then run `node build.mjs`.
 - `ph("...")` renders a striped `[placeholder]` label; unpriced items show `$ —`. Placeholders never go into the JSON-LD schema.
 - `logo.mjs` → `logoSVG({ script, word, italiano })` draws the logo from `logo-paths.json` (vector paths from the .ai, counters masked so they stay transparent). `node render-logo.mjs` writes `assets/img/logo*.svg`, the favicon, apple-touch-icon and og-image (headless Chrome).

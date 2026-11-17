@@ -34,10 +34,12 @@ const BOWL = MENU.find((s) => s.id === "bowl");
 const findItem = (name) => MENU.flatMap((s) => s.items).find((i) => i.n === name);
 
 // ---------- Catering & banquets ----------
-// PLACEHOLDER. Transcribe from Dropbox 2025/carminescatering 5.14.26.pdf (newest) and CarminesBanquetMenu10-24.pdf,
-// checked against the Catering and Banquet pages on carminestogo.com.
+// content/catering.json (May 14, 2026 catering menu) and content/banquet.json (October 2024 banquet menu),
+// transcribed from her newest Dropbox PDFs. See each file's "source" and "edits" fields.
 // Confirmed on the current site: catering for gatherings of 10 or more, delivered anywhere in the 716 area,
 // seven days a week, afternoon through evening.
+const CATER = JSON.parse(readFileSync("content/catering.json", "utf8"));
+const BANQ = JSON.parse(readFileSync("content/banquet.json", "utf8"));
 const CATERING = {
   min: 10,
   intro: "Drop-off catering for gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening.",
@@ -56,6 +58,21 @@ const priceText = (i) => (i.p != null ? money(i.p) : i.v && i.v.length ? i.v.map
 const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 // Stand-in for a photo that hasn't been chosen or cleared yet.
 const phPhoto = (label, ratio = "4/3") => `<div class="ph ph-block" style="aspect-ratio:${ratio};display:grid;place-items:center;text-align:center;margin:0">[Photo: ${label}]</div>`;
+// Catering prices print the way her catering menu does: whole dollars without cents.
+const trayPrice = (n) => (typeof n === "number" ? (Number.isInteger(n) ? String(n) : n.toFixed(2)) : n === "mp" ? "Mkt" : "—");
+const extra = (x) => (x ? ` <span class="x">+${x.toFixed(2)}</span>` : "");
+const choiceItem = (i) => `<li>${i.n}${i.best ? ` <span class="best">Our best seller</span>` : ""}${extra(i.x)}${i.d ? `<small>${i.d}</small>` : ""}</li>`;
+const choiceGroup = (g) => `<div>${g.choose ? `<p class="sub-caps choose">Choose ${g.choose}</p>` : ""}<h3 class="rule-head sm">${g.title}</h3><ul class="choice-list">${g.items.map(choiceItem).join("")}</ul></div>`;
+// Leader-dot rows: name ........ price(s)
+const ledgerRow = (n, d, prices) => `<div class="lrow"><span class="nm">${n}${d ? ` <i>${d}</i>` : ""}</span><span class="dots"></span>${prices.map((p) => `<span class="pr">${p}</span>`).join("")}</div>`;
+const ledgerHead = (cols) => `<div class="lrow lhead"><span class="nm"></span><span class="dots" style="border:0"></span>${cols.map((c) => `<span class="pr">${c}</span>`).join("")}</div>`;
+const banquetPkg = (k) => `<article class="banquet">
+    <h3 class="pkg-name">${k.n} <span class="price">${money(k.p)}</span></h3>
+    <p class="small-caps">per person · children 4–10 $${k.kids}</p>${k.lead ? `<p class="center">${k.lead}</p>` : ""}
+    <p class="includes"><b>Includes</b> ${k.includes.join(" · ")}</p>
+    <p class="sub-caps choose">${k.choose}</p>
+    <ul class="choice-list two">${k.items.map((n) => `<li>${n}${n === k.best ? ` <span class="best">Our best seller</span>` : ""}</li>`).join("")}</ul>
+  </article>`;
 const ruleHead = (t, tag = "h2", cls = "") => `<${tag} class="rule-head ${cls}">${t}</${tag}>`;
 
 const pageHead = (title, lead = "") => `
@@ -282,23 +299,66 @@ const cateringPage = page(
   "Catering",
   `
 ${pageHead("Catering &amp; Banquets", CATERING.intro)}
-<section class="tight"><div class="wrap">
-  ${ruleHead("Main Drop-Off Menu")}
-  <p class="sub-caps">Parties of 10 or more</p>
+<nav class="menu-nav wrap"><a href="#dropoff">Drop-off</a><a href="#full-service">Full service</a><a href="#trays">Just trays</a><a href="#banquets">Banquets</a><a href="#quote">Request a quote</a></nav>
+
+<section class="tight" id="dropoff"><div class="wrap">
+  ${ruleHead(CATER.dropoff.title)}
+  <p class="sub-caps">${CATER.dropoff.min}</p>
   <div class="pkgs">
-    <div><div class="pkg-name">${ph("Package")}</div><p class="price" style="font-size:20px">$ — <small>per person</small></p><p>${ph("What's included, from the newest catering menu")}</p></div>
-    <div><div class="pkg-name">${ph("Package")}</div><p class="price" style="font-size:20px">$ — <small>per person</small></p><p>${ph("What's included, from the newest catering menu")}</p></div>
+    ${CATER.dropoff.packages.map((k) => `<div><div class="pkg-name">${k.n} <span class="price">${money(k.p)}</span></div><p class="small-caps">per person</p><p>${k.d}</p></div>`).join("\n    ")}
   </div>
+  <p class="adds" style="margin-top:18px">${CATER.dropoff.adds}</p>
+  <div class="choices">
+    ${CATER.dropoff.groups.map(choiceGroup).join("\n    ")}
+  </div>
+  <p class="note" style="margin-top:8px"><span class="x">+1.00</span> = extra per person</p>
+  <ul class="fine-print">${CATER.dropoff.fine.map((t) => `<li>${t}</li>`).join("")}</ul>
 </div></section>
-<section class="tight"><div class="wrap split" style="align-items:start">
-  <div>
-    ${ruleHead("Appetizers · Salads · Sides · Entrées", "h3", "sm")}
-    <p>${phBlock("Choices transcribed from the newest catering menu")}</p>
-    ${ruleHead("Banquets", "h3", "sm")}
-    <p>${phBlock("Banquet packages transcribed from the newest banquet menu")}</p>
-    <p class="small">Call <a href="tel:${R.tel}">${R.phone}</a> to plan your order.</p>
+
+<section class="tight" id="full-service"><div class="wrap">
+  ${ruleHead(`${CATER.fullservice.title} <span class="price">${money(CATER.fullservice.p)}</span>`)}
+  <p class="sub-caps">Per person · served by our staff</p>
+  <div class="choices three">
+    ${CATER.fullservice.groups.map(choiceGroup).join("\n    ")}
   </div>
-  <div class="quote-form sticky">
+  <p class="center" style="max-width:720px;margin:26px auto 6px">${CATER.fullservice.includes}</p>
+  <p class="center small">${CATER.fullservice.fee}</p>
+  <p class="adds">${CATER.fullservice.dropoffNote}</p>
+</div></section>
+
+<section class="tight" id="trays"><div class="wrap">
+  ${ruleHead(CATER.trays.title)}
+  <p class="sub-caps">${CATER.trays.serves}</p>
+  <div class="cols2 ledgers">
+    <div>
+      <div class="ledger">${ledgerHead(["Count", ""])}${CATER.trays.counted.map((t) => ledgerRow(t.n, t.d, [`<span class="ct">${t.ct} ct</span>`, trayPrice(t.p)])).join("")}</div>
+      <div class="ledger" style="margin-top:22px">${ledgerHead(["Full", "Half"])}${CATER.trays.sized.slice(0, 13).map((t) => ledgerRow(t.n, t.d, [trayPrice(t.full), trayPrice(t.half)])).join("")}</div>
+    </div>
+    <div>
+      <div class="ledger">${ledgerHead(["Full", "Half"])}${CATER.trays.sized.slice(13).map((t) => ledgerRow(t.n, t.d, [trayPrice(t.full), trayPrice(t.half)])).join("")}</div>
+    </div>
+  </div>
+  <p class="note" style="margin-top:22px">${CATER.trays.fine}</p>
+</div></section>
+
+<section class="tight" id="banquets"><div class="wrap">
+  ${ruleHead("Banquets")}
+  <p class="sub-caps">${BANQ.room}</p>
+  ${BANQ.packages.map(banquetPkg).join("\n  ")}
+  <div class="cols2 ledgers" style="margin-top:40px">
+    <div>${ruleHead("Add-ons", "h3", "sm")}<div class="ledger">${BANQ.addons.map((t) => ledgerRow(t.n, t.d, [trayPrice(t.p)])).join("")}</div></div>
+    <div>${ruleHead("Miscellaneous", "h3", "sm")}<div class="ledger">${BANQ.misc.map((t) => ledgerRow(t.n, t.d, [trayPrice(t.p)])).join("")}</div></div>
+  </div>
+  <p class="note" style="margin-top:22px">Staging note: catering from the May 14, 2026 menu; banquets from the October 2024 menu. carminestogo.com still shows the May 2024 banquet prices, so Kelly to confirm which is current.</p>
+</div></section>
+
+<section class="tight" id="quote"><div class="wrap split" style="align-items:start">
+  <div>
+    ${ruleHead("Plan your party", "h2")}
+    <p>Tell us the date, how many guests and what you'd like, and we'll put it together. Drop-off trays come family-style, ready to serve; the full-service package brings our staff to you; banquets are in our private room at the restaurant.</p>
+    <p>Call <a href="tel:${R.tel}">${R.phone}</a>, or send a request and we'll call you back.</p>
+  </div>
+  <div class="quote-form">
     <h3>Request a catering quote</h3>
     <form class="stack" onsubmit="event.preventDefault();this.innerHTML='<p><b>Thank you!</b> Demo only, nothing was sent. In the live site this request goes to the catering inbox in the owner dashboard.</p>'">
       <label>Name<input required></label>
@@ -319,6 +379,7 @@ const menuData = {
   source: "printed dinner menu, " + MENU_DOC.updated,
   menu: MENU_DOC, // full document for the owner menu editor
   restaurant: { name: R.name, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday", catering: CATERING.intro },
+  catering: { packages: CATER.dropoff.packages, fullService: CATER.fullservice.p, banquets: BANQ.packages.map((k) => ({ n: k.n, p: k.p })), room: BANQ.room },
   sections: MENU.map((s) => ({ id: s.id, title: s.title, items: s.items.filter((i) => !i.hidden).map((i) => ({ n: i.n, d: i.d, p: typeof i.p === "number" ? i.p : null, price: priceText(i) })) })),
 };
 
@@ -332,6 +393,8 @@ const llms = `# Carmine's Italiano
 - Hours: Wednesday–Sunday from 4pm; closed Monday and Tuesday
 - Reservations: suggested for parties of 6 or more and on Fridays and Saturdays (call)
 - Catering: gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening
+- Drop-off catering packages: ${CATER.dropoff.packages.map((k) => `${k.n} $${money(k.p)} per person (${k.d.toLowerCase()})`).join("; ")}. Full service party package $${money(CATER.fullservice.p)} per person. Trays by the full or half.
+- Banquets: private room seating 40. ${BANQ.packages.map((k) => `${k.n} $${money(k.p)} per person`).join("; ")}.
 
 ## Pages
 - [Menu](${SITE}/menu.html)

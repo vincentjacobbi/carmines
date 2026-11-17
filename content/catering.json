@@ -1,0 +1,160 @@
+{
+  "source": "Dropbox /Carmines/2025/carminescatering 5.14.26.pdf (May 14, 2026). Same menu as the image on carminestogo.com's Catering page.",
+  "updated": "2026-05-14",
+  "edits": "Typos fixed: Fillet Portabello → Filet Portobello, Peppers’ → Peppers, Sun-Dried Toma- (cut off) → Sun-Dried Tomatoes. x = extra charge per person.",
+  "dropoff": {
+    "title": "Main Drop-Off Menu",
+    "min": "Parties of 10 or more",
+    "packages": [
+      { "n": "Standard", "p": 19.99, "d": "Pick 2 entrées, 2 sides & 1 salad" },
+      { "n": "Deluxe", "p": 23.99, "d": "Pick 2 entrées, 2 sides, 1 salad & 1 appetizer" }
+    ],
+    "adds": "Add one entrée $8 per person · add one side $5 per person",
+    "groups": [
+      { "title": "Appetizers", "items": [
+        { "n": "Spinach Artichoke Dip w/ Tortillas" },
+        { "n": "Stuffed Mushrooms w/ Spinach Sausage" },
+        { "n": "Mini Meatballs (BBQ, Italian, or Swedish)" },
+        { "n": "Chicken Wing Dip w/ Tortillas" },
+        { "n": "Fried Cheese Ravioli w/ Marinara" },
+        { "n": "Palermo Pepper Dip w/ Tortillas", "x": 1 },
+        { "n": "Bacon Wrap Casino Stuffed Shrimp", "x": 3 },
+        { "n": "Seafood Stuffed Mushrooms", "x": 2 }
+      ]},
+      { "title": "Salads", "items": [
+        { "n": "Chef Salad" },
+        { "n": "Caesar Salad" },
+        { "n": "Mediterranean Greek" },
+        { "n": "Cucumber Tomato Salad" },
+        { "n": "Pasta Salad w/ Veggies" },
+        { "n": "Pasta Salad w/ Deli Meats" },
+        { "n": "Potato Salad" },
+        { "n": "Antipasto", "x": 2 }
+      ]},
+      { "title": "Sides", "items": [
+        { "n": "Roasted Red Potatoes" },
+        { "n": "Smashed Ranch Potatoes" },
+        { "n": "Cheddar Potato Casserole" },
+        { "n": "Baked Ziti" },
+        { "n": "Green Beans (Italian or Almondine)" },
+        { "n": "Mixed Garden Vegetable" },
+        { "n": "Broccoli Au Gratin" },
+        { "n": "Cauliflower Au Gratin" },
+        { "n": "Pasta Broccoli w/ Sun-Dried Tomatoes" },
+        { "n": "Gourmet Macaroni & Cheese" },
+        { "n": "Penne Pink Vodka", "x": 1 },
+        { "n": "Fusilli Alfredo with Broccoli", "x": 1 }
+      ]},
+      { "title": "Entrées", "items": [
+        { "n": "Chicken Piccata", "best": true },
+        { "n": "Italian Sausage w/ Peppers & Onions" },
+        { "n": "Chicken Ala Carmine" },
+        { "n": "Chicken Parmesan" },
+        { "n": "Chicken Marsala" },
+        { "n": "Lasagna" },
+        { "n": "Stuffed Shells" },
+        { "n": "Ravioli w/ Meatballs" },
+        { "n": "Tortellini Alfredo Ala Carmine" },
+        { "n": "Eggplant Parmesan" },
+        { "n": "Al’s Fusilli" },
+        { "n": "Stuffed Beef Roulades", "x": 3 },
+        { "n": "Breaded Panko Crusted Pork Chops" },
+        { "n": "Sliced Roast Beef Au Jus w/ Weck & Hard Rolls", "x": 2 },
+        { "n": "BBQ Pulled Pork w/ Hard Rolls", "x": 2 },
+        { "n": "Haddock Italiano", "x": 2.5 }
+      ]}
+    ],
+    "fine": [
+      "We provide all plastic serving utensils and condiments. Quality plates, forks, knives and napkins are available at $2.00 a person.",
+      "There is a $25 minimum delivery and set-up charge.",
+      "All of our drop-offs are served in large catering trays for family-style dining.",
+      "Italian bread and butter service available for $1.50 per person.",
+      "Chafing dishes are available for rent for larger functions ($15.00 per unit)."
+    ]
+  },
+  "fullservice": {
+    "title": "Full Service Party Package",
+    "p": 31.99,
+    "groups": [
+      { "title": "Entrées", "choose": 2, "items": [
+        { "n": "Beef Roulades", "d": "Rolled stuffed steak w/ port wine demi-glace" },
+        { "n": "Roast Pork Loin w/ Stuffing & Gravy" },
+        { "n": "Chicken Piccata", "best": true },
+        { "n": "Chicken Parmesan" },
+        { "n": "Chicken Marsala" },
+        { "n": "Italian Sausage w/ Peppers & Onions" },
+        { "n": "Haddock Italiano" },
+        { "n": "Stuffed Shells" },
+        { "n": "Roasted Turkey w/ Stuffing & Gravy" },
+        { "n": "Petite Filet Portobello", "x": 7 },
+        { "n": "Neptune Supreme", "x": 5 }
+      ]},
+      { "title": "Sides", "choose": 2, "items": [
+        { "n": "Roasted Red Potatoes" },
+        { "n": "Potato Cheddar Casserole" },
+        { "n": "Smashed Ranch Potatoes" },
+        { "n": "Baked Ziti" },
+        { "n": "Penne w/ Pink Vodka Sauce" },
+        { "n": "Tortellini Alfredo" },
+        { "n": "Mixed Garden Vegetables" },
+        { "n": "Cauliflower Au Gratin" },
+        { "n": "Green Beans Almondine" },
+        { "n": "Broccoli Au Gratin" },
+        { "n": "Pasta Broccoli w/ Sun-Dried Tomatoes" }
+      ]},
+      { "title": "Salads", "choose": 1, "items": [
+        { "n": "Chef" }, { "n": "Caesar" }, { "n": "Potato" }, { "n": "Mediterranean Greek" },
+        { "n": "Pasta Salad w/ Veggies" }, { "n": "Pasta Salad w/ Deli Meats" }, { "n": "Cucumber Tomato" }, { "n": "Antipasto" }
+      ]}
+    ],
+    "includes": "Bread & butter and all necessary condiments and dressings as needed. Our professional staff will be there to provide on-site service. We provide chafing dishes and serving utensils as well as quality plastic cutlery & plates.",
+    "fee": "Service fee: we charge gratuity of 20% & 8.75% sales tax.",
+    "dropoff": 27.99,
+    "dropoffNote": "This package is available for drop-off (without service or paper products) for $27.99 per person."
+  },
+  "trays": {
+    "title": "Just Trays",
+    "serves": "Full trays serve approximately 15–20 people.",
+    "counted": [
+      { "n": "Chicken Wings (Bflo or BBQ)", "ct": 50, "p": "mp" },
+      { "n": "Chicken Fingers w/ Fries", "ct": 20, "p": 50 },
+      { "n": "Thai Chicken Kabobs", "ct": 40, "p": 100 },
+      { "n": "Fried Cheese Ravioli w/ Marinara", "ct": 50, "p": 120 },
+      { "n": "Meatballs (Swedish, BBQ or Italian)", "ct": 50, "p": 100 },
+      { "n": "Bacon Wrap Casino Stuffed Shrimp", "ct": 50, "p": 150 },
+      { "n": "Stuffed Mushrooms w/ Spinach & Sausage", "ct": 40, "p": 110 },
+      { "n": "Stuffed Mushrooms w/ Crab Casino", "ct": 40, "p": 130 }
+    ],
+    "sized": [
+      { "n": "Chicken Wing Dip", "full": 110, "half": 60 },
+      { "n": "Spinach Artichoke Dip", "full": 110, "half": 60 },
+      { "n": "Antipasto Deluxe", "full": 120, "half": null },
+      { "n": "Chef Salad", "full": 80, "half": 42 },
+      { "n": "Caesar Salad", "full": 90, "half": 47 },
+      { "n": "Mediterranean Greek Salad", "full": 90, "half": 47 },
+      { "n": "Roasted Red Potatoes", "full": 80, "half": 42 },
+      { "n": "“Greek” Pasta Salad", "full": 100, "half": 55 },
+      { "n": "Pasta Salad w/ Deli Meats", "full": 100, "half": 55 },
+      { "n": "Smashed Ranch Potatoes", "full": 90, "half": 47 },
+      { "n": "Baked Ziti", "full": 100, "half": 55 },
+      { "n": "Lasagna", "full": 120, "half": 65 },
+      { "n": "Stuffed Shells", "d": "Full 40 ct, half 20 ct", "full": 100, "half": 55 },
+      { "n": "Tortellini Alfredo Ala Carmine", "full": 110, "half": 60 },
+      { "n": "Penne Palermo w/ Sausage", "full": 110, "half": 60 },
+      { "n": "Penne Pink Vodka", "full": 110, "half": 60 },
+      { "n": "Chicken Marsala", "full": 120, "half": 65 },
+      { "n": "Chicken Mediterranean Pasta", "full": 120, "half": 65 },
+      { "n": "Chicken Parmesan", "full": 100, "half": 55 },
+      { "n": "Chicken Ala Carmine", "full": 120, "half": 65 },
+      { "n": "Chicken Piccata", "full": 120, "half": 65 },
+      { "n": "Lemon-Garlic Roasted Chicken (bone-in)", "full": 100, "half": 55 },
+      { "n": "Italian Sausage w/ Peppers & Onions", "d": "In a red sauce", "full": 110, "half": 60 },
+      { "n": "Cheddar Potato Casserole", "full": 100, "half": 55 },
+      { "n": "Roast Beef w/ Au Jus & Rolls", "d": "Full 22 rolls, half 12 rolls", "full": 130, "half": 70 },
+      { "n": "BBQ Pulled Pork & Rolls", "d": "Full 22 rolls, half 12 rolls", "full": 120, "half": 65 },
+      { "n": "Green Beans (Almondine or Italian)", "full": 90, "half": 47 },
+      { "n": "Eggplant Parmesan", "full": 120, "half": 65 }
+    ],
+    "fine": "If we missed one of your favorites, just ask, we can accommodate! Please let us know of any food allergies."
+  }
+}

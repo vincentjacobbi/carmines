@@ -456,6 +456,36 @@ window.SITE_DATA = {
   "hours": "Wednesday–Sunday from 4pm; closed Monday and Tuesday",
   "catering": "Drop-off catering for gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening."
  },
+ "catering": {
+  "packages": [
+   {
+    "n": "Standard",
+    "p": 19.99,
+    "d": "Pick 2 entrées, 2 sides & 1 salad"
+   },
+   {
+    "n": "Deluxe",
+    "p": 23.99,
+    "d": "Pick 2 entrées, 2 sides, 1 salad & 1 appetizer"
+   }
+  ],
+  "fullService": 31.99,
+  "banquets": [
+   {
+    "n": "Standard Family Buffet",
+    "p": 25.99
+   },
+   {
+    "n": "Brunch",
+    "p": 22.95
+   },
+   {
+    "n": "Deluxe Buffet Package",
+    "p": 42.99
+   }
+  ],
+  "room": "Seating available for 40 guests in our private banquet room."
+ },
  "sections": [
   {
    "id": "appetizers",
