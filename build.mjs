@@ -23,6 +23,11 @@ const R = {
   instagram: "https://www.instagram.com/carminestogo/",
   // Placeholders: Kelly uses Uber Eats for online ordering; the store link isn't confirmed yet. No reservation system.
   ubereats: null,
+  // From Kelly (Nov 2026): owners Kelly & Alex Jacobbi; opened in 1993.
+  owners: "Kelly & Alex Jacobbi",
+  founded: 1993,
+  // She keeps closing times flexible and posts holiday hours on Google.
+  hoursNote: "Closing times vary by night. Holiday hours are posted on Google.",
 };
 
 // ---------- Dining menu ----------
@@ -87,10 +92,11 @@ const schema = {
   logo: `${SITE}/assets/img/og-image.png`,
   servesCuisine: ["Italian", "Italian-American"],
   telephone: R.tel,
+  foundingDate: String(R.founded),
   url: `${SITE}/`,
   address: { "@type": "PostalAddress", streetAddress: R.street, addressLocality: R.city, addressRegion: R.region, postalCode: R.zip, addressCountry: "US" },
   areaServed: "Buffalo, NY",
-  // Left out on purpose until confirmed: image, priceRange, foundingDate, founder, closing times, menu items.
+  // Left out on purpose until confirmed: image, priceRange, closing times (she keeps them flexible).
   sameAs: [R.facebook, R.instagram],
   openingHoursSpecification: [
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "16:00" },
@@ -158,12 +164,15 @@ ${nav(active)}
 ${footer}
 </body></html>`;
 
-const hoursList = `<ul class="info-list">${HOURS.map(([d, h]) => `<li><span>${d}</span><span class="${h ? "" : "closed"}">${h || "Closed"}</span></li>`).join("")}</ul>`;
+const hoursList = `<ul class="info-list">${HOURS.map(([d, h]) => `<li><span>${d}</span><span class="${h ? "" : "closed"}">${h || "Closed"}</span></li>`).join("")}</ul>
+    <p class="small">${R.hoursNote}</p>`;
 
 // ---------- Home: laid out like the cover of her menu ----------
 // Dishes the current site calls favorites. Descriptions and prices get transcribed from the menu.
 // The current site names Chicken Piccata, Al's Fussili and "Risotto" as favorites. Which risotto is a question for Kelly.
 const FAVORITES = ["Piccata", "Al’s Fussili w/ Chicken", null];
+// Stories behind dish names, in Kelly's words (Nov 2026).
+const DISH_NOTES = { "Al’s Fussili w/ Chicken": "Created by our son Alex Jacobbi, and a house favorite ever since." };
 
 const home = page(
   "Carmine's Italiano | Italian Restaurant on Transit Road, Williamsville NY",
@@ -173,7 +182,7 @@ const home = page(
 <section class="cover"><div class="wrap">
   <h1 class="mark">${logoSVG({ id: "hero" })}</h1>
   <p class="tagline">Dine-in · Take-out · Catering &amp; Banquets</p>
-  <p class="lead">${ph("Opening line in Kelly's words: what Carmine's is and who it's for")}</p>
+  <p class="lead">A casual family Italian restaurant on Transit Road since ${R.founded}.</p>
   <div class="ctas">
     <a class="btn primary" href="/menu.html">See the menu</a>
     <a class="btn ghost" href="tel:${R.tel}">Call ${R.phoneDots}</a>
@@ -201,8 +210,8 @@ ${MENU.flatMap((s) => s.items).filter((i) => i.feature).slice(0, 1).map((i) => `
   ${ruleHead("House Favorites")}
   <div class="dishes">
     ${FAVORITES.map((n) => { const i = n && findItem(n); return i
-      ? `<article class="dish">${phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}<span class="price">${i.v ? money(i.v[0][1]) : money(i.p)}</span></h3><p>${i.d}</p></article>`
-      : `<article class="dish">${phPhoto("Risotto")}<h3>Risotto</h3><p>${ph("Which risotto is the award winner? The menu has Filet Mignon Mushroom Risotto and Salmon & Asparagus Risotto.")}</p></article>`; }).join("\n    ")}
+      ? `<article class="dish">${phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}<span class="price">${i.v ? money(i.v[0][1]) : money(i.p)}</span></h3><p>${i.d}</p>${DISH_NOTES[i.n] ? `<p class="dish-note">${DISH_NOTES[i.n]}</p>` : ""}</article>`
+      : `<article class="dish">${phPhoto("Risotto")}<h3>Risotto</h3><p>${ph("Award-winning risotto: Kelly is sending the Taste of Buffalo records. The menu has Filet Mignon Mushroom Risotto and Salmon & Asparagus Risotto.")}</p></article>`; }).join("\n    ")}
   </div>
   <p class="center" style="margin-top:34px"><a class="btn ghost" href="/menu.html">The full menu</a></p>
 </div></section>
@@ -210,8 +219,8 @@ ${MENU.flatMap((s) => s.items).filter((i) => i.feature).slice(0, 1).map((i) => `
 <section><div class="wrap split">
   <div>
     <span class="eyebrow">Our story</span>
-    <h2>${ph("Headline for the Carmine's story")}</h2>
-    <p class="sub">${ph("Short history, written with Kelly and Alex. The current site says almost 45 years and several Taste of Buffalo honors; confirm the dates and awards before using them.")}</p>
+    <h2>A casual family Italian restaurant since ${R.founded}</h2>
+    <p class="sub">Carmine's opened its doors in 1993. A fire in 2015 changed our course, and we reopened in East Amherst in 2017 before finding our forever home here at 7170 Transit Road in September 2022. Family owned and operated by ${R.owners}.</p>
     <a class="btn primary" href="/story.html">Read our story</a>
   </div>
   <figure class="photo">${phPhoto("a family or archive photo, with rights confirmed", "4/5")}</figure>
@@ -266,11 +275,15 @@ ${pageHead("The Menu", MENU_DOC.note)}
 );
 
 // ---------- Story ----------
-// PLACEHOLDER timeline. Fill only with dates and events Kelly and Alex confirm.
+// History in Kelly's own words (Nov 2026). Fill only with dates and events the family confirms.
 // { y: "year", t: "title", d: "text", clip?: { f, alt, cite, url } } — press clips need rights checked first (CLAUDE.md).
 const TIMELINE = [
-  { y: "Year", t: "Event", d: "Confirmed milestone from the family", ph: true },
-  { y: "Year", t: "Event", d: "Confirmed milestone from the family", ph: true },
+  { y: "1993", t: "Carmine's opens", d: "We wanted a casual, family Italian restaurant. There was never a Carmine in the family; we just felt the name had exactly that feel." },
+  { y: "2015", t: "The fire", d: "A devastating fire changed the course of Carmine's." },
+  { y: "2017", t: "Back in business", d: "Carmine's reopened at 9430 Transit Road in East Amherst, our home for five years." },
+  { y: "2022", t: "Our forever home", d: "In September 2022 we moved to 7170 Transit Road in Williamsville, where we are today." },
+  { y: "2023", t: "Chef Dave comes back", d: "Dave Marshal first cooked for our family from 1997 to 2001, then went on to another career. He came back to our kitchen in 2023, and he's been a nice addition to the family." },
+  { y: "Year", t: "Taste of Buffalo", d: "Awards, years and dishes from Kelly's records", ph: true },
 ];
 const tlItem = (x) => `<li class="tl"><div class="tl-y">${x.ph ? ph(x.y) : x.y}</div><div class="tl-body"><h3>${x.ph ? ph(x.t) : x.t}</h3><p>${x.ph ? ph(x.d) : x.d}</p>${x.clip ? `
       <figure class="clip"><a href="/assets/img/press/${x.clip.f}.jpg" target="_blank" rel="noopener"><img src="/assets/img/press/${x.clip.f}-sm.jpg" alt="${x.clip.alt}" loading="lazy"></a>
@@ -283,11 +296,17 @@ const storyPage = page(
   "The story of Carmine's Italiano on Transit Road in Williamsville.",
   "Our Story",
   `
-${pageHead("Our Story", ph("Intro written with Kelly and Alex"))}
+${pageHead("Our Story", `A casual family Italian restaurant since ${R.founded}, owned and operated by ${R.owners}.`)}
 <section class="tight"><div class="wrap story-head" style="max-width:820px">
   <ol class="timeline">
     ${TIMELINE.map(tlItem).join("\n    ")}
   </ol>
+  ${ruleHead("The Family")}
+  <div class="cols2 family">
+    <div><h3>Kelly &amp; Alex Jacobbi</h3><p>Owners. Alex created Al’s Fussili, the dish that became a house favorite.</p></div>
+    <div><h3>Chef Dave Marshal</h3><p>In our kitchen from 1997 to 2001, and again since 2023.</p></div>
+  </div>
+  <p class="center" style="margin-top:30px">${phPhoto("the family and Chef Dave at the restaurant (Kelly is OK showing faces; photo shoot planned)", "3/2")}</p>
   ${RECIPES.length ? `${ruleHead("From the Kitchen")}<div class="recipes">${RECIPES.map(recipeCard).join("\n    ")}</div>` : ""}
 </div></section>`, [], "/story.html"
 );
@@ -378,7 +397,7 @@ const menuData = {
   updated: MENU_DOC.updated,
   source: "printed dinner menu, " + MENU_DOC.updated,
   menu: MENU_DOC, // full document for the owner menu editor
-  restaurant: { name: R.name, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday", catering: CATERING.intro },
+  restaurant: { name: R.name, owners: R.owners, founded: R.founded, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary by night, and holiday hours are posted on Google", catering: CATERING.intro },
   catering: { packages: CATER.dropoff.packages, fullService: CATER.fullservice.p, banquets: BANQ.packages.map((k) => ({ n: k.n, p: k.p })), room: BANQ.room },
   sections: MENU.map((s) => ({ id: s.id, title: s.title, items: s.items.filter((i) => !i.hidden).map((i) => ({ n: i.n, d: i.d, p: typeof i.p === "number" ? i.p : null, price: priceText(i) })) })),
 };
@@ -386,11 +405,12 @@ const menuData = {
 // ---------- GEO / crawler files ----------
 const llms = `# Carmine's Italiano
 
-> Italian restaurant at 7170 Transit Road, Williamsville, NY 14221. Dine-in, take-out, catering and banquets. Owned by the Jacobbi family.
+> Italian restaurant at 7170 Transit Road, Williamsville, NY 14221. Dine-in, take-out, catering and banquets. Family owned and operated by ${R.owners}; opened in ${R.founded}.
 
 ## Essentials
 - Phone: ${R.phone}
-- Hours: Wednesday–Sunday from 4pm; closed Monday and Tuesday
+- Hours: Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary; holiday hours are posted on Google.
+- History: opened in 1993; after a 2015 fire, reopened at 9430 Transit Road, East Amherst in 2017; at 7170 Transit Road, Williamsville since September 2022.
 - Reservations: suggested for parties of 6 or more and on Fridays and Saturdays (call)
 - Catering: gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening
 - Drop-off catering packages: ${CATER.dropoff.packages.map((k) => `${k.n} $${money(k.p)} per person (${k.d.toLowerCase()})`).join("; ")}. Full service party package $${money(CATER.fullservice.p)} per person. Trays by the full or half.

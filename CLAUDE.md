@@ -19,11 +19,21 @@ This repo is a **staging demo** to show Kelly what's possible. It is not the liv
 - Facebook https://www.facebook.com/CarminesToGo/ · Instagram https://www.instagram.com/carminestogo/
 - The site names Chicken Piccata, Al's Fussili and Risotto as favorites.
 
-**Claims to confirm before using them:**
-- The current site says "for almost 45 years" and that Carmine's was honored several times by the Taste of Buffalo (the Risotto is "award winning"). Get the years and the awards from Kelly.
-- The current site lists the owners as Kelly, Vincent and Alex Jacobbi. The user says Kelly & Alex. Ask which to use.
-- Older Carmine's print pieces (napkin, 2013) show **4715 Transit Rd.** and (716) 632-2318, and the Giacobbi's repo says Carmine's on Transit Road closed after a 2015 fire. Drive has "GrandOpening" files from 2017. The move to 7170 Transit and the reopening date need Kelly's own wording before any history goes on the site.
-- The site's contact email is a personal address. Don't publish it in this repo; ask what address the site should use.
+## Kelly's answers (Nov 17, 2026)
+- **Owners:** Kelly & Alex Jacobbi (not Vincent).
+- **History, in her words:** Carmine's opened in 1993 (not "almost 45 years"). A devastating fire in 2015 changed its course. Reopened at **9430 Transit Rd, East Amherst** in 2017 for five years, then found its "forever home" at **7170 Transit Rd, Williamsville** in **September 2022**. The original address isn't stated on the site (old print pieces show 4715 Transit Rd.).
+- **The name:** there was never a Carmine in the family; they chose the name for the casual family Italian feel. **Al's Fussili** was created by son Alex Jacobbi and is a house favorite.
+- **Staff:** Chef Tim is no longer there (keep him off the site). Feature **Chef Dave Marshal**: worked for the family 1997–2001, came back in 2023. Confirm the spelling (Marshal or Marshall) before launch.
+- **Taste of Buffalo:** Kelly is forwarding her records (years, awards, which risotto). Until then it stays a placeholder.
+- **Menus:** the menus on carminestogo.com are current, and so is the take-out menu there (not transcribed yet). No dessert menu. The online wine list probably isn't current. Happy hour isn't defined yet; she wants help with it.
+- **Hours:** Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times stay flexible on purpose. Holiday hours are kept on Google.
+- **Ordering:** she doesn't know the Uber Eats store link. She wants direct online ordering through SkyTab (pickup only, she doesn't deliver). Online reservations depend on the fees.
+- **Photos:** she believes we can use the shoots. The "Smiles" photos were taken by the Buffalo News, so the paper owns them: get written permission before using any. The Jackson photos were taken by a friend of the user's: get their OK and a photo credit. No other photo library. She's open to a one-afternoon shoot of 10 dishes, and to showing staff and family faces.
+- **Domain:** Kelly owns carminestogo.com, but only Jeremy can log in. Get the registrar login (or a transfer) before moving hosting.
+- **Email:** the restaurant has no business email. Set one up on the domain (e.g. info@carminestogo.com) once the domain login is sorted.
+- **Social:** Kelly posts herself and has access to Facebook, Instagram and Google Business Profile. She asked how much time it needs. Accounts she admires: to come.
+- **Competitors to compare prices with:** Italian Village, Faletta's, Linguine's. Only real, sourced prices go next to their names.
+- **Customer list:** none yet (catering customers especially worth starting with).
 
 ## Source material: Dropbox `/Carmines` (newest; the source of truth)
 Her designer's InDesign packages, organized by year. Local copies of the files we use go in `source/dropbox/` (git-ignored).

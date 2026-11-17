@@ -70,6 +70,8 @@
     }
     if (/(hour|open|close|when)/.test(s)) return reply(`We're open ${esc(R.hours)}.`);
     if (/(park|where|address|located|direction)/.test(s)) return reply(`We're at <b>${esc(R.address)}</b>.`);
+    if (/(owner|own|history|story|since|family|how long|fire|moved)/.test(s))
+      return reply(`Carmine's has been family owned since ${esc(R.founded)} and is run today by ${esc(R.owners)}. <a href="/story.html">Read our story</a>.`);
     if (/(phone|call|contact)/.test(s)) return reply(`Call us at ${tel}.`);
     return reply(`I can help with hours, take-out, catering and reservations. For anything else, call ${tel}.`);
   }

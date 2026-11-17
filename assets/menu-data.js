@@ -449,11 +449,13 @@ window.SITE_DATA = {
  },
  "restaurant": {
   "name": "Carmine's Italiano",
+  "owners": "Kelly & Alex Jacobbi",
+  "founded": 1993,
   "address": "7170 Transit Road, Williamsville, NY 14221",
   "phone": "(716) 636-3100",
   "tel": "+17166363100",
   "ubereats": null,
-  "hours": "Wednesday–Sunday from 4pm; closed Monday and Tuesday",
+  "hours": "Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary by night, and holiday hours are posted on Google",
   "catering": "Drop-off catering for gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening."
  },
  "catering": {
