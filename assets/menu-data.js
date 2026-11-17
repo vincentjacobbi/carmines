@@ -447,6 +447,27 @@ window.SITE_DATA = {
    }
   ]
  },
+ "takeout": [
+  {
+   "n": "Big Bucket of Pasta",
+   "p": 39.99,
+   "includes": [
+    "4 meatballs",
+    "Family-style salad with garlic Parmesan dressing",
+    "Half loaf of bread and olive butter"
+   ]
+  },
+  {
+   "n": "Chicken Parm Pack",
+   "p": 64.99,
+   "includes": [
+    "6 chicken parm",
+    "Half tray baked ziti with Carmine’s Red and melted mozzarella",
+    "Family-style salad with garlic Parmesan dressing",
+    "Half loaf of bread and olive butter"
+   ]
+  }
+ ],
  "market": {
   "checked": "2026-11-17",
   "note": "Real prices from each restaurant's published menu, checked on the date above. Dishes are matched by name and description; portions and what comes with them differ, so read the 'includes' notes. Carmine's prices come from content/menu.json at build time.",

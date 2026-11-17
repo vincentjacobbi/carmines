@@ -43,6 +43,24 @@ const findItem = (name) => MENU.flatMap((s) => s.items).find((i) => i.n === name
 // transcribed from her newest Dropbox PDFs. See each file's "source" and "edits" fields.
 // Confirmed on the current site: catering for gatherings of 10 or more, delivered anywhere in the 716 area,
 // seven days a week, afternoon through evening.
+// content/takeout.json: the take-out specials flier (May 19, 2026) from carminestogo.com's Take-out page.
+const TAKEOUT = JSON.parse(readFileSync("content/takeout.json", "utf8"));
+const takeoutSpecial = (k) => `<div>
+      <div class="pkg-name">${k.n} <span class="price">${money(k.p)}</span></div>
+      <ul class="choice-list">${k.includes.map((t) => `<li>${t}</li>`).join("")}</ul>${k.pasta ? `
+      <p class="sub-caps choose" style="margin-top:14px">${k.choose}</p>
+      <div class="pick2"><div><b>Pasta</b>${k.pasta.join("<br>")}</div><div><b>Sauce</b>${k.sauces.map(([n, x]) => `${n}${x ? ` <span class="x">+${x.toFixed(2)}</span>` : ""}`).join("<br>")}</div></div>` : ""}${k.note ? `
+      <p class="small" style="margin-top:10px">${k.note}</p>` : ""}
+    </div>`;
+const takeoutSection = () => `
+<section class="tight" id="takeout"><div class="wrap">
+  ${ruleHead(TAKEOUT.title)}
+  <p class="sub-caps">${TAKEOUT.sub}</p>
+  <div class="pkgs">
+    ${TAKEOUT.specials.map(takeoutSpecial).join("\n    ")}
+  </div>
+  <p class="center" style="margin-top:22px">${orderBtn("primary")}</p>
+</div></section>`;
 const CATER = JSON.parse(readFileSync("content/catering.json", "utf8"));
 const BANQ = JSON.parse(readFileSync("content/banquet.json", "utf8"));
 const CATERING = {
@@ -262,7 +280,7 @@ const menuPage = page(
 ${pageHead("The Menu", MENU_DOC.note)}
 <section class="tight"><div class="wrap">
   <p class="note">Staging note: transcribed from the March 18, 2025 printed menu. Kelly to confirm nothing has changed since.</p>
-  <div class="menu-nav">${MENU.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}</div>
+  <div class="menu-nav">${MENU.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}<a href="#takeout">Take-Out Specials</a></div>
   <div class="menu-cols">${MENU.map((s, k) => `
   <div class="menu-section" id="${s.id}">${ruleHead(s.title)}
     ${sectionBody(s)}
@@ -270,7 +288,7 @@ ${pageHead("The Menu", MENU_DOC.note)}
   <p class="note" style="margin-top:30px">${MENU_DOC.allergy}</p>
   <script src="/assets/menu-preview.js"></script>
   <p class="center" style="margin-top:40px">${orderBtn("primary")} <a class="btn ghost" href="/catering.html">Catering &amp; banquets</a></p>
-</div></section>`,
+</div></section>${takeoutSection()}`,
   menuSchema, "/menu.html"
 );
 
@@ -410,6 +428,7 @@ const menuData = {
   updated: MENU_DOC.updated,
   source: "printed dinner menu, " + MENU_DOC.updated,
   menu: MENU_DOC, // full document for the owner menu editor
+  takeout: TAKEOUT.specials.map((k) => ({ n: k.n, p: k.p, includes: k.includes })),
   market: MARKET, // real competitor prices for the insights dashboard
   restaurant: { name: R.name, owners: R.owners, founded: R.founded, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary by night, and holiday hours are posted on Google", catering: CATERING.intro },
   catering: { packages: CATER.dropoff.packages, fullService: CATER.fullservice.p, banquets: BANQ.packages.map((k) => ({ n: k.n, p: k.p })), room: BANQ.room },
@@ -426,6 +445,7 @@ const llms = `# Carmine's Italiano
 - Hours: Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary; holiday hours are posted on Google.
 - History: opened in 1993; after a 2015 fire, reopened at 9430 Transit Road, East Amherst in 2017; at 7170 Transit Road, Williamsville since September 2022.
 - Reservations: suggested for parties of 6 or more and on Fridays and Saturdays (call)
+- Take-out specials (take-out only, feed 4–6): ${TAKEOUT.specials.map((k) => `${k.n} $${money(k.p)} (${k.includes.join(", ").toLowerCase()})`).join("; ")}
 - Catering: gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening
 - Drop-off catering packages: ${CATER.dropoff.packages.map((k) => `${k.n} $${money(k.p)} per person (${k.d.toLowerCase()})`).join("; ")}. Full service party package $${money(CATER.fullservice.p)} per person. Trays by the full or half.
 - Banquets: private room seating 40. ${BANQ.packages.map((k) => `${k.n} $${money(k.p)} per person`).join("; ")}.

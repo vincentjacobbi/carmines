@@ -210,8 +210,10 @@ const POSTS = {
     photo: `One plate, shot from a low angle by a window, steam showing if you can. No filter. Phone camera is fine.`, when: "Wednesday or Thursday, 3–4pm (people are planning dinner)" }),
   weekend: (d) => ({ text: `This weekend at Carmine's: ${d.n}.\n\n${tidy(d)}.\n\nReservations are a good idea on Fridays and Saturdays, and for parties of 6 or more. Give us a call!\n${SIGN}`,
     photo: `The dining room set for Friday, or the dish at the pass right before it goes out.`, when: "Thursday 5–7pm" }),
-  takeout: (d) => ({ text: `Take-out special: ${d.n} [deal, e.g. "add a Caesar for $X"] 🥡\n\n${tidy(d)}.\n\nValid [days/dates]. Call ${R.phone} to order${R.ubereats ? " or find us on Uber Eats" : ""}.\n📍 7170 Transit Rd, Williamsville`,
-    photo: `The dish in the take-out container with the lid half open, on the counter with a Carmine's bag.`, when: "Tuesday afternoon, then again Friday at 2pm" }),
+  // Real take-out specials from the May 2026 flier (SITE_DATA.takeout); alternates between them by the dish picked.
+  takeout: (d) => { const T = window.SITE_DATA.takeout, k = T[dishes.indexOf(d) % T.length];
+    return { text: `Feeding 4–6 tonight? 🥡 ${k.n}, $${fmt(k.p)}\n\n${k.includes.map((x) => `• ${x}`).join("\n")}\n\nTake-out only. [One line from you: who it's perfect for, e.g. Sunday family dinner or game night]\n\nCall ${R.phone} to order${R.ubereats ? " or find us on Uber Eats" : ""}.\n${SIGN}`,
+    photo: `The ${k.n.toLowerCase()} packed and ready on the counter, lids off, a Carmine's bag beside it. Shot from above.`, when: "Thursday 2–3pm, and again Sunday at noon" }; },
   happy: (d) => ({ text: `Happy hour at the bar 🍷 [days & times]\n\n[Drink and food specials]\n\nPull up a seat. ${SIGN}`,
     photo: `Two drinks on the bar in the late-afternoon light, a small plate of ${d.n.toLowerCase()} beside them.`, when: "The day of, about an hour before it starts" }),
   catering: (d) => ({ text: `Planning a party? Let Carmine's do the cooking. 🎉\n\nDrop-off catering for 10 or more, delivered anywhere in the 716, seven days a week. Crowd favorite: ${d.n}.\n\n[Upcoming occasion: graduations, holidays, Bills games…]\n\nCall ${R.phone} to plan your order.\n📍 7170 Transit Rd, Williamsville`,

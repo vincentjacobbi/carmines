@@ -1,0 +1,23 @@
+{
+  "source": "Flier image “Carmines Flier 05-19-26tm.jpg” on carminestogo.com's Take-out page (May 19, 2026). Kelly confirmed it's current (Nov 2026).",
+  "updated": "2026-05-19",
+  "edits": "Mozzerella → mozzarella. The add-on line is kept as printed: does +$7 cover the grilled chicken swap, the mozzarella, or both? Ask Kelly.",
+  "title": "Take-Out Specials",
+  "sub": "Feeds 4–6 people · Take-out only",
+  "specials": [
+    {
+      "n": "Big Bucket of Pasta",
+      "p": 39.99,
+      "includes": ["4 meatballs", "Family-style salad with garlic Parmesan dressing", "Half loaf of bread and olive butter"],
+      "choose": "Choose 1 of each",
+      "pasta": ["Spaghetti", "Penne", "Linguine", "Fusilli"],
+      "sauces": [["Carmine’s Red Sauce"], ["Marinara"], ["Alfredo", 6], ["Pink Vodka", 6]],
+      "note": "Sub grilled chicken for meatballs, melted mozzarella (+$7)"
+    },
+    {
+      "n": "Chicken Parm Pack",
+      "p": 64.99,
+      "includes": ["6 chicken parm", "Half tray baked ziti with Carmine’s Red and melted mozzarella", "Family-style salad with garlic Parmesan dressing", "Half loaf of bread and olive butter"]
+    }
+  ]
+}
