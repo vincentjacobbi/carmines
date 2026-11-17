@@ -109,7 +109,7 @@ const nav = (active) => `
   <nav class="links">
     ${[["/menu.html", "Menu"], ["/story.html", "Our Story"], ["/catering.html", "Catering"], ["/#visit", "Visit"]]
       .map(([h, t]) => `<a href="${h}"${active === t ? ' aria-current="page"' : ""}>${t}</a>`).join("")}
-    ${orderBtn()}
+    ${R.ubereats ? orderBtn() : ""}
     <a class="btn primary" href="tel:${R.tel}">Call ${R.phone}</a>
   </nav>
 </div></header>`;
