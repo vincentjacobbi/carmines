@@ -26,23 +26,12 @@ const R = {
 };
 
 // ---------- Dining menu ----------
-// PLACEHOLDER. Transcribe from the newest dinner menu (Dropbox 2025/CarminesDinnerMenu_Revision3.18.25.pdf),
-// checked against carminestogo.com's Dinner Menu page; ask Kelly where they differ (CLAUDE.md, "Current menus").
-// p: price (number), or [a, b] for two printed prices; v: options as [label, price, isAddOn].
-const MENU = [
-  { id: "appetizers", title: "Section name", items: [
-    { n: "Dish name", d: "Description transcribed from the current menu", p: null, ph: true },
-    { n: "Dish name", d: "Description transcribed from the current menu", p: null, ph: true },
-  ]},
-  { id: "pasta", title: "Section name", items: [
-    { n: "Dish name", d: "Description transcribed from the current menu", p: null, ph: true },
-    { n: "Dish name", d: "Description transcribed from the current menu", p: null, ph: true },
-  ]},
-];
-
-// Pasta choices for "Create Your Own Bowl", as printed on the March 2025 dinner menu (names only; the $2 upcharges and
-// the sauces get transcribed with the rest of the menu). [label, drawing]
-const BOWL_PASTA = [["Spaghetti", "spaghetti"], ["Linguine", "linguine"], ["Angel hair", "angelhair"], ["Fussili", "fussili"], ["Penne", "penne"], ["Gnocchi", "gnocchi"], ["Ravioli", "ravioli"], ["Tortellini", "tortellini"]];
+// content/menu.json, transcribed from her newest printed dinner menu (see its "source" field). The owner menu editor
+// (/admin/) edits the same shape. p: price or null; v: options as [label, price]; feature: printed in a wine band.
+const MENU_DOC = JSON.parse(readFileSync("content/menu.json", "utf8"));
+const MENU = MENU_DOC.sections;
+const BOWL = MENU.find((s) => s.id === "bowl");
+const findItem = (name) => MENU.flatMap((s) => s.items).find((i) => i.n === name);
 
 // ---------- Catering & banquets ----------
 // PLACEHOLDER. Transcribe from Dropbox 2025/carminescatering 5.14.26.pdf (newest) and CarminesBanquetMenu10-24.pdf,
@@ -61,8 +50,9 @@ const HOURS = [
 ];
 
 // ---------- helpers ----------
-const money = (n) => (typeof n === "number" ? `$${Number.isInteger(n) ? n : n.toFixed(2)}` : n === "mp" ? "Market" : "$ —");
-const priceText = (i) => (Array.isArray(i.p) ? i.p.map(money).join(" / ") : i.p != null ? money(i.p) : i.when || "$ —");
+// Prices print the way her menus do: 28.99, no dollar sign.
+const money = (n) => (typeof n === "number" ? n.toFixed(2) : n === "mp" ? "Market" : "$ —");
+const priceText = (i) => (i.p != null ? money(i.p) : i.v && i.v.length ? i.v.map(([l, p]) => `${l} ${money(p)}`).join(" · ") : "$ —");
 const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 // Stand-in for a photo that hasn't been chosen or cleared yet.
 const phPhoto = (label, ratio = "4/3") => `<div class="ph ph-block" style="aspect-ratio:${ratio};display:grid;place-items:center;text-align:center;margin:0">[Photo: ${label}]</div>`;
@@ -90,13 +80,14 @@ const schema = {
   ],
 };
 
-const itemOffers = (i) => (typeof i.p === "number" ? [{ "@type": "Offer", price: i.p.toFixed(2), priceCurrency: "USD" }] : []);
-const realItems = (s) => s.items.filter((i) => !i.ph);
+const offer = (price, name) => ({ "@type": "Offer", ...(name ? { name } : {}), price: price.toFixed(2), priceCurrency: "USD" });
+const itemOffers = (i) => [...(typeof i.p === "number" ? [offer(i.p)] : []), ...(i.v || []).map(([l, p]) => offer(p, `${i.n}, ${l.toLowerCase()}`))];
+const realItems = (s) => s.items.filter((i) => !i.ph && !i.hidden);
 // Only real, transcribed items go into the structured data. Placeholders never do.
 const menuSchema = MENU.some((s) => realItems(s).length) ? [{
   "@context": "https://schema.org", "@type": "Menu", name: "Dinner Menu", inLanguage: "en",
   hasMenuSection: MENU.filter((s) => realItems(s).length).map((s) => ({ "@type": "MenuSection", name: s.title,
-    hasMenuItem: realItems(s).map((i) => { const o = itemOffers(i); return { "@type": "MenuItem", name: i.n, description: i.d, ...(o.length ? { offers: o[0] } : {}) }; }) })),
+    hasMenuItem: realItems(s).map((i) => { const o = itemOffers(i); return { "@type": "MenuItem", name: i.n, description: i.d, ...(o.length ? { offers: o.length === 1 ? o[0] : o } : {}) }; }) })),
 }] : [];
 
 const orderBtn = (cls = "ghost") => R.ubereats
@@ -154,9 +145,8 @@ const hoursList = `<ul class="info-list">${HOURS.map(([d, h]) => `<li><span>${d}
 
 // ---------- Home: laid out like the cover of her menu ----------
 // Dishes the current site calls favorites. Descriptions and prices get transcribed from the menu.
-const FAVORITES = [
-  { n: "Chicken Piccata" }, { n: "Al's Fussili" }, { n: "Risotto" },
-];
+// The current site names Chicken Piccata, Al's Fussili and "Risotto" as favorites. Which risotto is a question for Kelly.
+const FAVORITES = ["Piccata", "Al’s Fussili w/ Chicken", null];
 
 const home = page(
   "Carmine's Italiano | Italian Restaurant on Transit Road, Williamsville NY",
@@ -179,20 +169,23 @@ const home = page(
   ${ruleHead("Create Your Own Bowl")}
   <p class="sub-caps">Pick a pasta &amp; a sauce</p>
   <div class="shelf" style="--n:8">
-    ${BOWL_PASTA.map(([label, art]) => `<figure>${pastaSVG(art)}<figcaption>${label}</figcaption></figure>`).join("\n    ")}
+    ${BOWL.pasta.map(([label, up, art]) => `<figure>${pastaSVG(art)}<figcaption>${label}${up ? ` <span class="price">+${up}</span>` : ""}</figcaption></figure>`).join("\n    ")}
   </div>
-  <p class="note" style="margin-top:22px">Staging note: pasta choices from the March 2025 dinner menu. Sauces and prices come in with the menu transcription.</p>
+  <p class="center" style="margin-top:22px">${BOWL.items.map((i) => `<b>${i.n}</b><span class="price">${money(i.p)}</span>`).join(" &nbsp;·&nbsp; ")}</p>
+  <p class="sub-caps" style="margin:10px 0 0">${BOWL.served} · ${BOWL.gf}</p>
 </div></section>
 
-<div class="band"><div class="wrap">
-  <div class="caps">Stuffed Eggplant Parmesan <span class="price">$ —</span></div>
-  <p>${ph("Description from the current menu")}</p>
-</div></div>
+${MENU.flatMap((s) => s.items).filter((i) => i.feature).slice(0, 1).map((i) => `<div class="band"><div class="wrap">
+  <div class="caps">${i.n} <span class="price">${priceText(i)}</span></div>
+  <p>${i.d}</p>
+</div></div>`).join("")}
 
 <section><div class="wrap">
   ${ruleHead("House Favorites")}
   <div class="dishes">
-    ${FAVORITES.map((f) => `<article class="dish">${phPhoto(f.n)}<h3>${f.n}<span class="price">$ —</span></h3><p>${ph("Description from the current menu")}</p></article>`).join("\n    ")}
+    ${FAVORITES.map((n) => { const i = n && findItem(n); return i
+      ? `<article class="dish">${phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}<span class="price">${i.v ? money(i.v[0][1]) : money(i.p)}</span></h3><p>${i.d}</p></article>`
+      : `<article class="dish">${phPhoto("Risotto")}<h3>Risotto</h3><p>${ph("Which risotto is the award winner? The menu has Filet Mignon Mushroom Risotto and Salmon & Asparagus Risotto.")}</p></article>`; }).join("\n    ")}
   </div>
   <p class="center" style="margin-top:34px"><a class="btn ghost" href="/menu.html">The full menu</a></p>
 </div></section>
@@ -224,20 +217,31 @@ const home = page(
 );
 
 // ---------- Menu ----------
-const itemRow = (i) => `<div class="item"><div class="head"><span class="nm">${i.ph ? ph(i.n) : i.n}</span><span class="pr">${priceText(i)}</span>${i.h ? `<span class="heritage">${i.h}</span>` : ""}</div><div class="ds">${i.ph ? ph(i.d) : i.d}</div>${i.v ? `<ul class="opts">${i.v.map(([l, p, add]) => `<li>${l} ${add ? "+" : ""}${money(p)}</li>`).join("")}</ul>` : ""}</div>`;
+// As printed: name, then price in wine italics; two-way prices ("Chicken 30.99 Veal 32.99") on the same line.
+const itemRow = (i) => `<div class="item${i.feature ? " feature" : ""}${i.hidden ? " is-hidden" : ""}"><div class="head"><span class="nm">${i.n}</span>${i.p != null ? `<span class="pr">${money(i.p)}</span>` : ""}${i.v && i.p == null && i.v.length <= 2 && !i.d.includes("instead") ? i.v.map(([l, p]) => ` <span class="pr"><span class="opt-l">${l}</span> ${money(p)}</span>`).join("") : ""}</div>${i.d ? `<div class="ds">${i.d}</div>` : ""}${i.v && (i.p != null) ? `<ul class="opts">${i.v.map(([l, p]) => `<li>${l} ${money(p)}</li>`).join("")}</ul>` : ""}</div>`;
+const addsRow = (s) => s.adds ? `<p class="adds">${s.adds.map(([l, p]) => `${l} <b>${money(p)}</b>`).join(" · ")}</p>` : "";
+const sectionBody = (s) => s.id === "bowl" ? `
+    <p class="sub-caps" style="margin-top:-6px">${s.sub}</p>
+    <p class="center small" style="margin:0 0 8px">${s.served}</p>
+    <div class="shelf" style="--n:4">${s.pasta.map(([label, up, art]) => `<figure>${pastaSVG(art)}<figcaption>${label}${up ? ` +${up}` : ""}</figcaption></figure>`).join("")}</div>
+    <p class="sub-caps" style="margin:10px 0 4px;font-size:12px">${s.gf}</p>
+    ${s.items.map(itemRow).join("\n    ")}
+    <h3 class="rule-head sm" style="margin-top:18px">Pasta Add-Ons</h3>${addsRow(s)}`
+  : `${s.items.map(itemRow).join("\n    ")}${s.adds ? addsRow(s) : ""}`;
 const menuPage = page(
   "Menu | Carmine's Italiano, Williamsville NY",
   "Dinner menu at Carmine's Italiano, 7170 Transit Road, Williamsville NY.",
   "Menu",
   `
-${pageHead("The Menu", "Dishes come with soup or salad and bread &amp; butter. " + ph("confirm against the current menu"))}
+${pageHead("The Menu", MENU_DOC.note)}
 <section class="tight"><div class="wrap">
-  <p class="note">Staging note: the menu hasn't been transcribed yet. It will come from her newest printed menu, checked against carminestogo.com, with real prices.</p>
-  <div class="menu-nav">${MENU.map((s, k) => `<a href="#${s.id}">Section ${k + 1}</a>`).join("")}</div>
+  <p class="note">Staging note: transcribed from the March 18, 2025 printed menu. Kelly to confirm nothing has changed since.</p>
+  <div class="menu-nav">${MENU.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}</div>
   <div class="menu-cols">${MENU.map((s, k) => `
-  <div class="menu-section" id="${s.id}">${ruleHead(s.title === "Section name" ? `Section ${k + 1}` : s.title)}
-    ${s.items.map(itemRow).join("\n    ")}
+  <div class="menu-section" id="${s.id}">${ruleHead(s.title)}
+    ${sectionBody(s)}
   </div>`).join("")}</div>
+  <p class="note" style="margin-top:30px">${MENU_DOC.allergy}</p>
   <p class="center" style="margin-top:40px">${orderBtn("primary")} <a class="btn ghost" href="/catering.html">Catering &amp; banquets</a></p>
 </div></section>`,
   menuSchema, "/menu.html"
@@ -310,10 +314,11 @@ ${pageHead("Catering &amp; Banquets", CATERING.intro)}
 
 // ---------- Shared data for the admin editor and the concierge ----------
 const menuData = {
-  updated: null,
-  source: "not transcribed yet",
+  updated: MENU_DOC.updated,
+  source: "printed dinner menu, " + MENU_DOC.updated,
+  menu: MENU_DOC, // full document for the owner menu editor
   restaurant: { name: R.name, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday", catering: CATERING.intro },
-  sections: MENU.map((s) => ({ id: s.id, title: s.title, items: s.items.map((i) => ({ n: i.n, d: i.d, p: typeof i.p === "number" ? i.p : null, price: priceText(i), ...(i.ph ? { ph: true } : {}) })) })),
+  sections: MENU.map((s) => ({ id: s.id, title: s.title, items: s.items.filter((i) => !i.hidden).map((i) => ({ n: i.n, d: i.d, p: typeof i.p === "number" ? i.p : null, price: priceText(i) })) })),
 };
 
 // ---------- GEO / crawler files ----------

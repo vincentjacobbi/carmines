@@ -224,3 +224,13 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--wine)}
 .chat-input input{flex:1;border:0;padding:13px 14px}
 .chat-input button{border:0;background:var(--wine);color:#fff;padding:0 16px;font:600 13px var(--caps);text-transform:uppercase;letter-spacing:var(--track);cursor:pointer}
 .typing{opacity:.6;font-style:italic}
+
+/* menu details from the printed menu */
+.item .opt-l{font-style:italic;font-weight:400;color:var(--wine)}
+/* the menu's solid wine panel for a signature dish (as printed, no border) */
+.item.feature{background:var(--wine);color:#fff;padding:14px 18px;margin:10px 0}
+.item.feature .nm{font:600 20px/1.2 var(--caps);text-transform:uppercase;letter-spacing:.1em}
+.item.feature .pr,.item.feature .ds{color:#f3e6e3;opacity:1}
+.menu-section .shelf .pasta{height:70px}
+.menu-section .shelf figcaption{font-size:11.5px}
+.adds b{font-style:normal}
