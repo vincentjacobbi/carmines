@@ -5,3 +5,5 @@ source/
 # Local preview config
 .claude/
 .DS_Store
+.vercel
+.env*
