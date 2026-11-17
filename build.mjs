@@ -392,11 +392,25 @@ ${pageHead("Catering &amp; Banquets", CATERING.intro)}
 </div></section>`, [], "/catering.html"
 );
 
+// ---------- Market prices (admin/insights.html) ----------
+// content/market.json: real competitor prices from their published menus. Carmine's price is looked up from the
+// dinner menu so it stays current. A row whose Carmine's dish can't be found fails the build instead of guessing.
+const MARKET_DOC = JSON.parse(readFileSync("content/market.json", "utf8"));
+const carminesPrice = ([name, opt]) => {
+  const i = findItem(name);
+  if (!i) throw new Error(`market.json: no dish "${name}" on the dinner menu`);
+  if (opt) { const v = (i.v || []).find(([l]) => l === opt); if (!v) throw new Error(`market.json: no option "${opt}" for "${name}"`); return v[1]; }
+  if (typeof i.p !== "number") throw new Error(`market.json: "${name}" has no single price`);
+  return i.p;
+};
+const MARKET = { ...MARKET_DOC, rows: MARKET_DOC.rows.map((r) => ({ ...r, carmines: carminesPrice(r.c), carminesName: r.c.join(", ") })) };
+
 // ---------- Shared data for the admin editor and the concierge ----------
 const menuData = {
   updated: MENU_DOC.updated,
   source: "printed dinner menu, " + MENU_DOC.updated,
   menu: MENU_DOC, // full document for the owner menu editor
+  market: MARKET, // real competitor prices for the insights dashboard
   restaurant: { name: R.name, owners: R.owners, founded: R.founded, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary by night, and holiday hours are posted on Google", catering: CATERING.intro },
   catering: { packages: CATER.dropoff.packages, fullService: CATER.fullservice.p, banquets: BANQ.packages.map((k) => ({ n: k.n, p: k.p })), room: BANQ.room },
   sections: MENU.map((s) => ({ id: s.id, title: s.title, items: s.items.filter((i) => !i.hidden).map((i) => ({ n: i.n, d: i.d, p: typeof i.p === "number" ? i.p : null, price: priceText(i) })) })),

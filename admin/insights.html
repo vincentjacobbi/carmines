@@ -74,7 +74,7 @@ label{display:grid;gap:5px;font:700 12px var(--type);text-transform:uppercase}
 @media (max-width:900px){.app{grid-template-columns:1fr}aside{position:static;height:auto}aside .foot{position:static;margin-top:16px}.kpis{grid-template-columns:1fr 1fr}.r21,.r11{grid-template-columns:1fr}main{padding:20px}}
 </style>
 </head><body>
-<div class="banner"><b>Demo dashboard</b> · Every number here is <b>sample data</b>, and the menu hasn't been transcribed yet. The live version would pull sales from the Shift4 SkyTab POS.</div>
+<div class="banner"><b>Demo dashboard</b> · Sales, profit and campaign numbers are <b>sample data</b>; the live version would pull sales from the Shift4 SkyTab POS. Market prices are real, from published menus.</div>
 <div class="app">
 <aside>
   <div class="brand">Carmine's<small>Owner dashboard</small></div>
@@ -137,10 +137,10 @@ label{display:grid;gap:5px;font:700 12px var(--type);text-transform:uppercase}
 <!-- MARKET -->
 <section class="tab" id="t-market">
   <h1>Market prices</h1>
-  <p class="lede">How your prices compare with other Italian restaurants nearby. The live version would refresh this from public menus each month.</p>
-  <div class="card"><h3>Your price vs. the nearby average</h3><p class="hint">Sample comparison with three anonymized nearby restaurants</p><div class="chartbox" style="height:300px"><canvas id="cMarket"></canvas></div></div>
-  <div class="card" style="margin-top:16px"><table id="mktTbl"><thead><tr><th>Dish</th><th class="n">Carmine's</th><th class="n">Nearby A</th><th class="n">Nearby B</th><th class="n">Nearby C</th><th class="n">vs. average</th><th>Suggestion</th></tr></thead><tbody></tbody></table>
-  <p class="src">Sample data, including Carmine's own column until the menu is transcribed. Competitor names stay hidden; never put real names next to invented prices.</p></div>
+  <p class="lede">How your dinner prices compare with Falletta’s, Italian Village and Linguine’s, from their published menus.</p>
+  <div class="card"><h3>Same dish, four menus</h3><p class="hint">Each dot is one restaurant’s price. Linguine’s (hollow) is from an older listing.</p><div class="chartbox" style="height:560px"><canvas id="cMarket"></canvas></div></div>
+  <div class="card" style="margin-top:16px;overflow-x:auto"><table id="mktTbl"><thead><tr><th>Dish</th><th class="n">Carmine’s</th><th class="n">Falletta’s</th><th class="n">Italian Village</th><th class="n">Linguine’s*</th><th class="n">vs. current avg</th></tr></thead><tbody></tbody></table>
+  <div class="src" id="mktSrc"></div></div>
 </section>
 
 <!-- CAMPAIGNS -->
@@ -230,10 +230,26 @@ profitTbl.tBodies[0].innerHTML=[...ITEMS].sort((a,b)=>(b.p-b.c)*b.u-(a.p-a.c)*a.
 new Chart(cMatrix,{type:'scatter',data:{datasets:[{data:ITEMS.map(x=>({x:x.u,y:x.p-x.c,n:x.n})),backgroundColor:ITEMS.map(x=>({Star:'#2f6409',Plowhorse:'#3d5a73',Puzzle:'#9a6a10',Rethink:'#bb1016'})[cls(x)[0]]),pointRadius:8}]},
  options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.n}: ${c.raw.x} sold, $${c.raw.y.toFixed(2)}/plate`}}},scales:{x:{title:{display:true,text:'Units sold (28 days)'}},y:{title:{display:true,text:'Profit per plate'},ticks:{callback:v=>'$'+v}}}}});
 
-// ---------- market (all sample, anonymized) ----------
-const MK=ITEMS.slice(0,6).map(x=>[x.n,x.p,Math.round(x.p*1.06),Math.round(x.p*.97),Math.round(x.p*1.1)]);
-mktTbl.tBodies[0].innerHTML=MK.map(([n,g,a,b,c])=>{const av=(a+b+c)/3,d=g-av;return `<tr><td><b>${n}</b></td><td class="n"><b>$${g}</b></td><td class="n">$${a}</td><td class="n">$${b}</td><td class="n">$${c}</td><td class="n ${d<0?'down':'up'}">${d<0?'−':'+'}$${Math.abs(d).toFixed(2)}</td><td>${d<-1?'Room to raise about $1':'Priced in line'}</td></tr>`}).join('');
-new Chart(cMarket,{type:'bar',data:{labels:MK.map(x=>x[0]),datasets:[{label:"Carmine's (sample)",data:MK.map(x=>x[1]),backgroundColor:'#bb1016'},{label:'Nearby average (sample)',data:MK.map(x=>((x[2]+x[3]+x[4])/3).toFixed(2)),backgroundColor:'#d8cfbd'}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>'$'+v}}}}});
+// ---------- market (real published prices; content/market.json via SITE_DATA.market) ----------
+{
+ const M=D.market, P=M.places, $=n=>'$'+n.toFixed(2);
+ const cur=r=>['fallettas','village'].map(k=>r[k]).filter(Boolean).map(x=>x[0]);
+ const avg=a=>a.reduce((x,y)=>x+y,0)/a.length;
+ const cell=(r,k,st='')=>r[k]?`<td class="n" title="${r[k][1]}"${st}>${$(r[k][0])}</td>`:'<td class="n" style="color:#aaa">—</td>';
+ mktTbl.tBodies[0].innerHTML=M.rows.map(r=>{const c=cur(r),d=c.length?r.carmines-avg(c):null;
+  return `<tr><td><b>${r.dish}</b><br><small style="color:#777">Carmine’s: ${r.carminesName}</small></td><td class="n"><b>${$(r.carmines)}</b></td>${cell(r,'fallettas')}${cell(r,'village')}${cell(r,'linguines',' style="color:#888"')}<td class="n ${d==null?'':d<0?'down':'up'}">${d==null?'—':Math.abs(d)<0.005?'even':(d<0?'−':'+')+$(Math.abs(d))}</td></tr>`}).join('');
+ const when=new Date(M.checked+'T12:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+ mktSrc.innerHTML=`<p><b>Checked ${when}.</b> “vs. current avg” compares Carmine’s with the average of Falletta’s and Italian Village, whose menus are current. Hover a price to see the competitor’s dish name.</p>
+  <p><b>What comes with it:</b> Carmine’s: ${M.carminesIncludes} ${Object.values(P).map(p=>`${p.name}: ${p.includes}`).join(' ')}</p>
+  <p><b>Sources:</b> ${Object.values(P).map(p=>`<a href="${p.url}" target="_blank" rel="noopener">${p.name}</a>, ${p.where} (${p.source})`).join(' · ')}</p>
+  <p>* Linguine’s has no current menu online, so its prices are likely low. Delivery-app prices (DoorDash, Uber Eats) were left out because they are marked up.</p>`;
+ const rows=[...M.rows].sort((a,b)=>b.carmines-a.carmines);
+ const ds=(label,key,color,hollow)=>({label,data:rows.map(r=>key==='c'?r.carmines:r[key]?r[key][0]:null),showLine:false,pointRadius:key==='c'?7:5.5,pointHoverRadius:8,
+   borderColor:color,backgroundColor:hollow?'#fff':color,borderWidth:hollow?2:1});
+ new Chart(cMarket,{type:'line',data:{labels:rows.map(r=>r.dish),datasets:[ds("Carmine’s",'c','#5f1722'),ds('Falletta’s','fallettas','#3d5a73'),ds('Italian Village','village','#9a6a10'),ds('Linguine’s (older listing)','linguines','#8a8a8a',true)]},
+  options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{usePointStyle:true}},tooltip:{callbacks:{label:c=>`${c.dataset.label}: $${c.raw.toFixed(2)}`}}},
+   scales:{x:{position:'top',ticks:{callback:v=>'$'+v},title:{display:true,text:'Dinner price'}},y:{grid:{color:'#efeae0'}}}}});
+}
 
 // ---------- campaign email (facts only from SITE_DATA; anything else is a [placeholder]) ----------
 function draft(){

@@ -67,6 +67,7 @@ Her designer's InDesign packages, organized by year. Local copies of the files w
 
 ## Structure (static, no build step needed to host)
 - `content/catering.json` and `content/banquet.json` feed `catering.html`.
+- `content/market.json`: real competitor prices (Falletta's via its Toast menu, Italian Village via italianvillagewny.com, Linguine's via an older AllMenus listing), checked 2026-11-17. Carmine's side is looked up from `menu.json` at build time, and a missing dish fails the build. It shows in the Market prices tab of `admin/insights.html`. Re-check the prices every few months and update `checked`. Leave delivery-app prices out because they are marked up.
 - `content/menu.json` is the dinner menu (sections → items: `n`, `d`, `p` or `v` options, `feature`, `hidden`; the bowl section adds `pasta`, `served`, `gf`; `adds` = add-ons). `build.mjs` generates `index.html`, `menu.html`, `story.html`, `catering.html`, `assets/menu-data.js` (`window.SITE_DATA`, shared by the admin and the concierge), `llms.txt` and `robots.txt`. Edit content there, then run `node build.mjs`.
 - `ph("...")` renders a striped `[placeholder]` label; unpriced items show `$ —`. Placeholders never go into the JSON-LD schema.
 - `logo.mjs` → `logoSVG({ script, word, italiano })` draws the logo from `logo-paths.json` (vector paths from the .ai, counters masked so they stay transparent). `node render-logo.mjs` writes `assets/img/logo*.svg`, the favicon, apple-touch-icon and og-image (headless Chrome).
@@ -75,7 +76,7 @@ Her designer's InDesign packages, organized by year. Local copies of the files w
 - `pasta.mjs` draws her menus' pasta line drawings from `pasta-paths.json` (converted from `Carmines_pasta_*.ai`; confirm the designer's permission before launch).
 - `assets/site.css`: the menu look (tokens at the top). `assets/chat.js`: scripted demo concierge (reads `SITE_DATA`). `assets/chart.umd.js`: vendored Chart.js.
 - `admin/index.html`: **Kelly's owner home**, kept deliberately simple (big type, works on a phone). Menu editor over `SITE_DATA.menu`: edit, hide, reorder, add, delete; drafts live in localStorage (`carmines-menu-draft`); **Preview** opens `menu.html?preview=1`, where `assets/menu-preview.js` re-renders the menu from the draft; **Publish** is a demo; **Download file** exports `menu.json`. Social posts tab: captions built only from real menu text, with `[brackets]` for what only she knows.
-- `admin/insights.html`: the sample-data dashboard (sales & forecast, profitability, market prices with anonymized competitors (never real names next to invented prices), email campaigns, "Ask your business"). **Every number is labeled sample data.**
+- `admin/insights.html`: the sample-data dashboard (sales & forecast, profitability, market prices, email campaigns, "Ask your business"). Sales, profit and campaign numbers are labeled sample data; **market prices are real and sourced** (never put real names next to invented prices).
 - Social plan and the open questions for Kelly: Claude Doc "Carmine's Social Plan & Questions for Kelly" (https://claude.ai/artifact/Y9SwtT9MVUY1vhu81ZD2dK).
 - Later phase for real publishing: the editor commits `content/menu.json` (GitHub API or a Git-backed CMS such as Decap) and Vercel rebuilds.
 

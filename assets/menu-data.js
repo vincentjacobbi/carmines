@@ -447,6 +447,340 @@ window.SITE_DATA = {
    }
   ]
  },
+ "market": {
+  "checked": "2026-11-17",
+  "note": "Real prices from each restaurant's published menu, checked on the date above. Dishes are matched by name and description; portions and what comes with them differ, so read the 'includes' notes. Carmine's prices come from content/menu.json at build time.",
+  "carminesIncludes": "Entrées come with soup or salad and bread & butter.",
+  "places": {
+   "fallettas": {
+    "name": "Falletta’s",
+    "where": "8255 Clarence Center Rd, East Amherst",
+    "url": "https://www.toasttab.com/local/order/fallettas-restaurant",
+    "source": "Their own Toast ordering menu",
+    "current": true,
+    "includes": "Entrées come with a dinner salad, bread & butter and a vegetable."
+   },
+   "village": {
+    "name": "Italian Village",
+    "where": "6354 Transit Rd, Depew",
+    "url": "https://italianvillagewny.com/dinner-menu/",
+    "source": "Their website's dinner menu",
+    "current": true,
+    "includes": "Chicken and veal come with a side of pasta; no salad listed."
+   },
+   "linguines": {
+    "name": "Linguine’s",
+    "where": "5354 Genesee St, Bowmansville",
+    "url": "https://www.allmenus.com/ny/bowmansville/1004737-linguines-italian-restaurant/menu/",
+    "source": "Grubhub's AllMenus listing (2023 or earlier; no current menu online)",
+    "current": false,
+    "includes": "Not listed."
+   }
+  },
+  "rows": [
+   {
+    "dish": "Chicken Parmesan",
+    "c": [
+     "Parmesan",
+     "Chicken"
+    ],
+    "fallettas": [
+     35.99,
+     "Chicken Parmigiana"
+    ],
+    "village": [
+     22.99,
+     "Parmigiana"
+    ],
+    "linguines": [
+     21,
+     "Chicken Parmesan"
+    ],
+    "carmines": 27.99,
+    "carminesName": "Parmesan, Chicken"
+   },
+   {
+    "dish": "Veal Parmesan",
+    "c": [
+     "Parmesan",
+     "Veal"
+    ],
+    "fallettas": [
+     37.99,
+     "Veal Parmigiana"
+    ],
+    "village": [
+     25.99,
+     "Parmigiana with veal"
+    ],
+    "linguines": [
+     23,
+     "Veal Parmesan"
+    ],
+    "carmines": 31.99,
+    "carminesName": "Parmesan, Veal"
+   },
+   {
+    "dish": "Chicken Marsala",
+    "c": [
+     "Marsala",
+     "Chicken"
+    ],
+    "fallettas": [
+     37.99,
+     "Chicken Marsala"
+    ],
+    "village": [
+     24.99,
+     "Marsala with chicken"
+    ],
+    "linguines": [
+     23,
+     "Chicken Marsala"
+    ],
+    "carmines": 30.99,
+    "carminesName": "Marsala, Chicken"
+   },
+   {
+    "dish": "Veal Marsala",
+    "c": [
+     "Marsala",
+     "Veal"
+    ],
+    "fallettas": [
+     38.99,
+     "Veal Marsala"
+    ],
+    "village": [
+     26.99,
+     "Marsala with veal"
+    ],
+    "linguines": [
+     25,
+     "Veal Marsala"
+    ],
+    "carmines": 32.99,
+    "carminesName": "Marsala, Veal"
+   },
+   {
+    "dish": "Eggplant Parmesan",
+    "c": [
+     "Stuffed Eggplant Parmesan"
+    ],
+    "fallettas": [
+     30.99,
+     "Eggplant Parmigiana"
+    ],
+    "village": [
+     20.99,
+     "Eggplant Parmigiano"
+    ],
+    "linguines": [
+     18,
+     "Eggplant Parmesan"
+    ],
+    "carmines": 28.99,
+    "carminesName": "Stuffed Eggplant Parmesan"
+   },
+   {
+    "dish": "Chicken Cacciatore",
+    "c": [
+     "Sausage or Chicken Cacciatore"
+    ],
+    "village": [
+     26.99,
+     "Cacciatore"
+    ],
+    "carmines": 27.99,
+    "carminesName": "Sausage or Chicken Cacciatore"
+   },
+   {
+    "dish": "Braciole",
+    "c": [
+     "Sicilian Beef Braciole"
+    ],
+    "village": [
+     27.99,
+     "Sicilian Braciole"
+    ],
+    "carmines": 28.99,
+    "carminesName": "Sicilian Beef Braciole"
+   },
+   {
+    "dish": "Lasagna",
+    "c": [
+     "Lasagna"
+    ],
+    "fallettas": [
+     27.99,
+     "Lasagna Meat and Cheese (special)"
+    ],
+    "village": [
+     21.99,
+     "Lasagna"
+    ],
+    "linguines": [
+     17,
+     "Baked Lasagna"
+    ],
+    "carmines": 26.99,
+    "carminesName": "Lasagna"
+   },
+   {
+    "dish": "Stuffed Shells",
+    "c": [
+     "Stuffed Shells"
+    ],
+    "village": [
+     19.99,
+     "Stuffed Shells"
+    ],
+    "carmines": 25.99,
+    "carminesName": "Stuffed Shells"
+   },
+   {
+    "dish": "Pasta Bolognese",
+    "c": [
+     "Bolognese"
+    ],
+    "fallettas": [
+     30.99,
+     "Pasta Bolognese (special)"
+    ],
+    "village": [
+     24.99,
+     "Pasta Bolognese"
+    ],
+    "carmines": 19.99,
+    "carminesName": "Bolognese"
+   },
+   {
+    "dish": "Penne Vodka",
+    "c": [
+     "Pink Vodka"
+    ],
+    "village": [
+     21.99,
+     "Penne Alla Vodka"
+    ],
+    "carmines": 20.99,
+    "carminesName": "Pink Vodka"
+   },
+   {
+    "dish": "Pasta Alfredo",
+    "c": [
+     "Alfredo"
+    ],
+    "fallettas": [
+     27.99,
+     "Pasta Alfredo"
+    ],
+    "village": [
+     19.99,
+     "Fettucini Alfredo"
+    ],
+    "linguines": [
+     17,
+     "Linguine Alfredo"
+    ],
+    "carmines": 19.99,
+    "carminesName": "Alfredo"
+   },
+   {
+    "dish": "Pasta Marinara",
+    "c": [
+     "Marinara"
+    ],
+    "fallettas": [
+     24.99,
+     "Linguini or Rigatoni, marinara"
+    ],
+    "linguines": [
+     17,
+     "Linguine Marinara"
+    ],
+    "carmines": 18.99,
+    "carminesName": "Marinara"
+   },
+   {
+    "dish": "Antipasto",
+    "c": [
+     "Antipasto"
+    ],
+    "village": [
+     23.99,
+     "Sicilian Antipasto"
+    ],
+    "linguines": [
+     17,
+     "Antipasto"
+    ],
+    "carmines": 17.99,
+    "carminesName": "Antipasto"
+   },
+   {
+    "dish": "Fried Calamari",
+    "c": [
+     "Calamari Fritti"
+    ],
+    "village": [
+     19.99,
+     "Fried Calamari"
+    ],
+    "linguines": [
+     13,
+     "Fried Calamari"
+    ],
+    "carmines": 16.99,
+    "carminesName": "Calamari Fritti"
+   },
+   {
+    "dish": "Arancini",
+    "c": [
+     "Arancini"
+    ],
+    "village": [
+     14.99,
+     "Arancini (two)"
+    ],
+    "carmines": 15.99,
+    "carminesName": "Arancini"
+   },
+   {
+    "dish": "Caesar Salad",
+    "c": [
+     "Classic Caesar"
+    ],
+    "village": [
+     14.99,
+     "Caesar Salad, large"
+    ],
+    "linguines": [
+     10,
+     "Caesar Salad"
+    ],
+    "carmines": 14.99,
+    "carminesName": "Classic Caesar"
+   },
+   {
+    "dish": "Garlic Bread with Cheese",
+    "c": [
+     "Garlic Toast",
+     "With cheese"
+    ],
+    "fallettas": [
+     16.99,
+     "Garlic Bread with Cheese"
+    ],
+    "village": [
+     11.99,
+     "Garlic Bread"
+    ],
+    "carmines": 11.99,
+    "carminesName": "Garlic Toast, With cheese"
+   }
+  ]
+ },
  "restaurant": {
   "name": "Carmine's Italiano",
   "owners": "Kelly & Alex Jacobbi",
