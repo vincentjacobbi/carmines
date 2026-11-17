@@ -242,6 +242,7 @@ ${pageHead("The Menu", MENU_DOC.note)}
     ${sectionBody(s)}
   </div>`).join("")}</div>
   <p class="note" style="margin-top:30px">${MENU_DOC.allergy}</p>
+  <script src="/assets/menu-preview.js"></script>
   <p class="center" style="margin-top:40px">${orderBtn("primary")} <a class="btn ghost" href="/catering.html">Catering &amp; banquets</a></p>
 </div></section>`,
   menuSchema, "/menu.html"

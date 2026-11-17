@@ -1,277 +1,232 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Owner Dashboard (Demo) · Carmine's</title>
+<title>Owner Home · Carmine's</title>
 <meta name="robots" content="noindex,nofollow">
-<script src="/assets/chart.umd.js"></script>
-<script src="/assets/menu-data.js"></script>
 <link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@600&display=swap" rel="stylesheet">
+<script src="/assets/menu-data.js"></script>
 <style>
-/* BRAND PLACEHOLDER: neutral type and the logo's red/green until the brand pass restyles this with the site. */
-:root{--bg:#f7f3ea;--panel:#fff;--ink:#231f20;--muted:#625a52;--line:#d8cfbd;--red:#bb1016;--green:#2f6409;--blue:#3d5a73;--good:#2f6409;--warn:#9a6a10;--bad:#bb1016;
-  --serif:Georgia,"Times New Roman",serif;--type:"Courier New",Courier,monospace}
+/* Kelly's owner home. Kept deliberately plain: big type, one job per screen, works on a phone. */
+:root{--ink:#282624;--wine:#5f1722;--wine-dk:#46101a;--paper:#f4f0e4;--paper-2:#ebe5d4;--line:#cfc6b2;--muted:#6a6157;--ok:#2f6409;
+  --serif:"Bitter",Georgia,serif;--caps:"Josefin Sans","Century Gothic",sans-serif}
 *{box-sizing:border-box}
-body{margin:0;font-family:var(--serif);background:var(--bg);color:var(--ink);font-size:15px}
-.banner{background:var(--ink);color:#efe7d8;text-align:center;font:13px var(--type);padding:8px}
-.banner b{color:#fff}
-.app{display:grid;grid-template-columns:232px 1fr;min-height:calc(100vh - 34px)}
-aside{background:var(--ink);color:#e6ded0;padding:22px 14px;position:sticky;top:0;height:calc(100vh - 34px)}
-aside .brand{font:700 21px var(--serif);color:#fff;padding:0 10px 4px}
-aside .brand small{display:block;font:11px var(--type);letter-spacing:.2em;text-transform:uppercase;color:#b9ae9e;margin-top:2px}
-aside nav{margin-top:26px;display:grid;gap:2px}
-aside button{all:unset;cursor:pointer;padding:10px 12px;font:14px var(--type);display:flex;gap:10px;align-items:center;border-left:3px solid transparent}
-aside button:hover{background:rgba(255,255,255,.07)}
-aside button.on{border-left-color:var(--red);color:#fff;background:rgba(255,255,255,.06)}
-aside .foot{position:absolute;bottom:18px;left:14px;right:14px;font-size:12px;color:#b9ae9e;padding:0 10px}
-aside .foot a{color:#fff}
-main{padding:28px 34px 60px;max-width:1240px}
-h1{font:700 32px var(--serif);margin:0 0 4px}
-.lede{color:var(--muted);margin:0 0 22px}
+body{margin:0;font:18px/1.5 var(--serif);color:var(--ink);background:var(--paper)}
+a{color:var(--wine)}
+.banner{background:var(--ink);color:#e9e2d2;text-align:center;font:13px var(--caps);letter-spacing:.04em;padding:8px 14px}
+header{border-bottom:1px solid var(--ink);box-shadow:0 3px 0 -1px var(--paper),0 4px 0 0 var(--ink);background:var(--paper);position:sticky;top:0;z-index:5}
+header .in{max-width:980px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header img{height:40px}
+header nav{display:flex;gap:4px;flex-wrap:wrap}
+header nav button{all:unset;cursor:pointer;font:600 14px var(--caps);text-transform:uppercase;letter-spacing:.12em;padding:10px 12px;border-bottom:3px solid transparent}
+header nav button.on{border-color:var(--wine);color:var(--wine)}
+main{max-width:980px;margin:0 auto;padding:26px 20px 90px}
+h1{font:700 34px/1.1 var(--serif);margin:6px 0 6px}
+.lede{color:var(--muted);margin:0 0 20px;max-width:640px}
+.caps{font:600 13px var(--caps);text-transform:uppercase;letter-spacing:.12em}
 .tab{display:none}.tab.on{display:block}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
-.card{background:var(--panel);border-top:3px solid var(--ink);padding:18px 20px}
-.kpi .l{color:var(--muted);font:700 12px var(--type);text-transform:uppercase;letter-spacing:.06em}
-.kpi .v{font-size:28px;font-weight:700;margin-top:6px;font-variant-numeric:tabular-nums}
-.kpi .d{font-size:13px;margin-top:2px}
-.up{color:var(--good)}.down{color:var(--bad)}
-.row{display:grid;gap:16px;margin-bottom:16px}
-.r21{grid-template-columns:2fr 1fr}.r11{grid-template-columns:1fr 1fr}
-.card h3{margin:0 0 4px;font-size:16px}
-.card .hint{color:var(--muted);font-size:13px;margin:0 0 12px}
-.chartbox{position:relative;height:270px}
-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
-th{text-align:left;font:700 12px var(--type);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line)}
-td{padding:10px;border-bottom:1px dotted var(--line)}
-td.n,th.n{text-align:right}
-.tag{font:700 12px var(--type);text-transform:uppercase;letter-spacing:.04em}
-.p-star{color:var(--good)}.p-plow{color:var(--blue)}.p-puz{color:var(--warn)}.p-dog{color:var(--bad)}
-.insight{border-left:3px solid var(--red);padding:6px 14px;margin:12px 0}
-.insight b{display:block;margin-bottom:2px}
-.ai{font:700 11px var(--type);letter-spacing:.08em;text-transform:uppercase;color:var(--red)}
-.btn{all:unset;cursor:pointer;padding:9px 16px;font:700 13px var(--type);text-transform:uppercase;letter-spacing:.04em;display:inline-flex;gap:6px;align-items:center;border:2px solid var(--ink)}
-.btn.pri{background:var(--red);border-color:var(--red);color:#fff}.btn.pri:hover{background:#8e0c11}
-.btn.sec:hover{background:var(--bg)}
-input,select,textarea{font:inherit;padding:8px 2px;border:0;border-bottom:2px solid var(--ink);background:transparent;width:100%}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--red)}
-textarea{resize:vertical}
-label{display:grid;gap:5px;font:700 12px var(--type);text-transform:uppercase}
-.stack{display:grid;gap:14px}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 18px;font-size:14px;opacity:0;transition:.25s;pointer-events:none}
+.btn{all:unset;cursor:pointer;display:inline-block;padding:12px 18px 10px;font:600 14px var(--caps);text-transform:uppercase;letter-spacing:.1em;border:2px solid var(--ink);text-align:center}
+.btn:hover{background:var(--paper-2)}
+.btn.pri{background:var(--wine);border-color:var(--wine);color:#fff}.btn.pri:hover{background:var(--wine-dk)}
+.btn.sm{padding:6px 10px 5px;font-size:12px;border-width:1.5px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+/* home tiles: plain lists split by rules, not cards */
+.jobs{list-style:none;margin:10px 0 0;padding:0;border-top:1px solid var(--ink)}
+.jobs li{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line)}
+.jobs b{font-size:21px}.jobs p{margin:2px 0 0;color:var(--muted);font-size:16px}
+/* menu editor */
+.sec{margin-top:34px}
+.sec h2{display:flex;align-items:center;gap:14px;color:var(--wine);font:600 22px var(--caps);text-transform:uppercase;letter-spacing:.1em;margin:0 0 6px}
+.sec h2::after{content:"";flex:1;height:6px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.dish{display:grid;grid-template-columns:1fr 150px;gap:6px 16px;padding:14px 0;border-bottom:1px dotted var(--muted)}
+.dish.hidden{opacity:.45}
+.dish input,.dish textarea{width:100%;font:inherit;border:0;border-bottom:1.5px solid var(--line);background:transparent;padding:4px 2px;color:var(--ink)}
+.dish input:focus,.dish textarea:focus{outline:none;border-color:var(--wine)}
+.dish .nm{font-weight:700;font-size:20px}
+.dish textarea{font-size:15.5px;resize:vertical;min-height:44px}
+.dish .prices{display:grid;gap:4px}
+.dish .prices label{display:flex;align-items:center;gap:6px;font:600 11px var(--caps);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.dish .prices input{text-align:right;font:italic 700 18px var(--serif);color:var(--wine)}
+.dish .tools{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.changed{background:#fff7cf}
+@media (max-width:620px){.dish{grid-template-columns:1fr}.jobs li{flex-direction:column;align-items:flex-start}}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:#fff;z-index:6}
+.bar .in{max-width:980px;margin:0 auto;padding:10px 20px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.bar .btn{border-color:#fff;color:#fff}.bar .btn.pri{border-color:var(--wine)}
+.bar .btn:hover{background:rgba(255,255,255,.1)}
+#count{font:600 13px var(--caps);letter-spacing:.08em;text-transform:uppercase}
+/* social */
+.form{display:grid;gap:14px;max-width:640px}
+.form label{display:grid;gap:4px;font:600 12px var(--caps);text-transform:uppercase;letter-spacing:.08em}
+.form select,.form input{font:18px var(--serif);border:0;border-bottom:1.5px solid var(--ink);background:transparent;padding:6px 2px}
+.post{margin-top:22px;border-top:5px solid var(--wine);background:#fffdf6;padding:18px 20px;max-width:640px;white-space:pre-wrap;font-size:17px}
+.tips{margin-top:16px;max-width:640px;color:var(--muted);font-size:16px}
+.tips li{margin:4px 0}
+.ph{background:#fff3a6;padding:0 3px}
+.toast{position:fixed;left:50%;bottom:76px;transform:translateX(-50%);background:var(--wine);color:#fff;padding:12px 18px;font:15px var(--serif);opacity:0;transition:.25s;pointer-events:none;max-width:90vw;z-index:9}
 .toast.on{opacity:1}
-.email-prev{background:var(--panel);border-top:3px solid var(--red)}
-.email-prev .eh{padding:18px 22px 0;font:700 22px var(--serif)}
-.email-prev .eb{padding:12px 22px 18px;white-space:pre-wrap;line-height:1.6}
-.chatlog{height:340px;overflow:auto;display:flex;flex-direction:column;gap:10px;padding:4px}
-.m{max-width:80%;padding:10px 14px;line-height:1.5}
-.m.u{align-self:flex-end;background:var(--ink);color:#fff}
-.m.a{align-self:flex-start;border-left:3px solid var(--red);background:var(--bg)}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
-.chips button{all:unset;cursor:pointer;border-bottom:2px solid var(--ink);padding:4px 2px;margin-right:10px;font:13px var(--type)}
-.chips button:hover{color:var(--red);border-color:var(--red)}
-.src{font-size:12px;color:var(--muted);margin-top:8px}
-.ph{background:repeating-linear-gradient(-45deg,#fff3a6 0 8px,#ffe97a 8px 16px);color:#5a4a00;font-family:var(--type);padding:0 4px}
-.app>*,.row>*{min-width:0}.card{overflow-x:auto}
-@media (max-width:900px){.app{grid-template-columns:1fr}aside{position:static;height:auto}aside .foot{position:static;margin-top:16px}.kpis{grid-template-columns:1fr 1fr}.r21,.r11{grid-template-columns:1fr}main{padding:20px}}
 </style>
 </head><body>
-<div class="banner"><b>Demo dashboard</b> · Every number here is <b>sample data</b>, and the menu hasn't been transcribed yet. The live version would pull sales from the Shift4 SkyTab POS.</div>
-<div class="app">
-<aside>
-  <div class="brand">Carmine's<small>Owner dashboard</small></div>
+<div class="banner"><b>Demo</b> · Changes stay in this browser. In the live version, "Publish" updates carminestogo.com in about a minute.</div>
+<header><div class="in">
+  <a href="/" title="View the website"><img src="/assets/img/logo.svg" alt="Carmine's"></a>
   <nav>
-    <button data-t="overview" class="on">Sales &amp; forecast</button>
-    <button data-t="menu">Menu editor</button>
-    <button data-t="profit">Menu profitability</button>
-    <button data-t="market">Market prices</button>
-    <button data-t="campaigns">Marketing campaigns</button>
-    <button data-t="ask">Ask your business</button>
+    <button data-t="home" class="on">Home</button>
+    <button data-t="menu">Menu</button>
+    <button data-t="social">Social posts</button>
+    <button onclick="location.href='/admin/insights.html'">Insights</button>
   </nav>
-  <div class="foot">Signed in as <b>Owner</b> (demo)<br><a href="/">← View website</a></div>
-</aside>
+</div></header>
 <main>
 
-<!-- OVERVIEW -->
-<section class="tab on" id="t-overview">
-  <h1>Good evening</h1>
-  <p class="lede">How the last 4 weeks went and what the next two are likely to look like. <b>Sample data.</b></p>
-  <div class="kpis" id="kpis"></div>
-  <div class="row r21">
-    <div class="card"><h3>Daily sales, with a 14-day forecast</h3><p class="hint">Solid line is actual sales. The dashed line is the forecast, based on each weekday's recent average and trend.</p><div class="chartbox"><canvas id="cSales"></canvas></div></div>
-    <div class="card"><span class="ai">Insights (sample)</span>
-      <div class="insight"><b>Your slowest open night</b>The live version names the weakest night from SkyTab sales and suggests a happy hour or take-out special to build it.</div>
-      <div class="insight"><b>What to prep for the weekend</b>The live version turns the forecast into prep counts for the best-selling dishes.</div>
-      <div class="insight"><b>Catering trend</b>The live version tracks catering requests week to week and suggests when to send a campaign.</div>
-    </div>
-  </div>
-  <div class="row r11">
-    <div class="card"><h3>Top menu items (last 28 days)</h3><p class="hint">Units sold · sample dishes</p><div class="chartbox"><canvas id="cTop"></canvas></div></div>
-    <div class="card"><h3>Sales by channel</h3><p class="hint">Dine-in, take-out, Uber Eats and catering</p><div class="chartbox"><canvas id="cChan"></canvas></div></div>
-  </div>
+<section class="tab on" id="t-home">
+  <h1>Hi Kelly</h1>
+  <p class="lede">What would you like to do?</p>
+  <ul class="jobs">
+    <li><div><b>Change the menu</b><p>Update a price, fix a description, add or hide a dish.</p></div><button class="btn pri" onclick="go('menu')">Edit menu</button></li>
+    <li><div><b>Write a social post</b><p>Pick a dish and the kind of post. You get a caption, a photo idea and when to post it.</p></div><button class="btn" onclick="go('social')">Write a post</button></li>
+    <li><div><b>See how business is going</b><p>Sales, best sellers, nearby prices and email campaigns (sample numbers for now).</p></div><a class="btn" href="/admin/insights.html">Insights</a></li>
+    <li><div><b>Look at the website</b><p>See what customers see.</p></div><a class="btn" href="/">Open website</a></li>
+  </ul>
 </section>
 
-<!-- MENU EDITOR -->
 <section class="tab" id="t-menu">
-  <h1>Menu editor</h1>
-  <p class="lede">Change a price or description here and the website, the chatbot and the AI-search data all update together. Loaded from <span id="menuSrc"></span>.</p>
-  <div class="card">
-    <table id="menuTbl"><thead><tr><th>Item</th><th>Section</th><th>Description</th><th class="n">Price</th></tr></thead><tbody></tbody></table>
-    <div style="display:flex;gap:10px;margin-top:16px"><button class="btn sec" onclick="addItem()">+ Add item</button><button class="btn pri" onclick="toast('Demo: in the live version this publishes to the website instantly')">Publish changes</button></div>
+  <h1>Menu</h1>
+  <p class="lede">Type right over anything. Changed items turn yellow. Press <b>Preview</b> to see the real menu page with your changes, then <b>Publish</b>.</p>
+  <div id="editor"></div>
+</section>
+
+<section class="tab" id="t-social">
+  <h1>Social posts</h1>
+  <p class="lede">Built from the real menu, in Carmine's voice. Anything in yellow brackets is for you to fill in: only you know it.</p>
+  <div class="form">
+    <label>What kind of post?<select id="kind">
+      <option value="dish">Dish of the week</option>
+      <option value="weekend">Weekend reminder</option>
+      <option value="takeout">Take-out special</option>
+      <option value="happy">Happy hour</option>
+      <option value="catering">Catering</option>
+      <option value="kitchen">Behind the kitchen door</option>
+    </select></label>
+    <label>Which dish?<select id="dish"></select></label>
+    <div class="row"><button class="btn pri" onclick="makePost()">Write it</button><button class="btn" onclick="copyPost()">Copy</button></div>
   </div>
+  <div class="post" id="post">Pick a kind of post and a dish, then press Write it.</div>
+  <ul class="tips" id="tips"></ul>
 </section>
 
-<!-- PROFIT -->
-<section class="tab" id="t-profit">
-  <h1>Menu profitability</h1>
-  <p class="lede">Which dishes earn the most per plate, and which ones sell. Food cost comes from recipe quantities and supplier prices. <b>Sample dishes and numbers.</b></p>
-  <div class="row r11">
-    <div class="card"><h3>Popularity vs. profit per plate</h3><p class="hint">Top right are Stars. Bottom left are worth rethinking.</p><div class="chartbox" style="height:330px"><canvas id="cMatrix"></canvas></div></div>
-    <div class="card"><span class="ai">How to read it</span>
-      <div class="insight"><b>Stars</b>Sell a lot and earn a lot per plate. Keep them visible.</div>
-      <div class="insight"><b>Plowhorses</b>Sell a lot but earn less. Check portions or a small price change.</div>
-      <div class="insight"><b>Puzzles</b>Earn well but sell slowly. Feature them on table tents or as specials.</div>
-    </div>
+</main>
+<div class="bar" id="bar" hidden><div class="in">
+  <span id="count">No changes</span>
+  <div class="row">
+    <button class="btn sm" onclick="resetMenu()">Undo all</button>
+    <button class="btn sm" onclick="downloadMenu()">Download file</button>
+    <button class="btn sm" onclick="preview()">Preview</button>
+    <button class="btn sm pri" onclick="publish()">Publish</button>
   </div>
-  <div class="card"><table id="profitTbl"><thead><tr><th>Item</th><th class="n">Price</th><th class="n">Food cost</th><th class="n">Food cost %</th><th class="n">Profit / plate</th><th class="n">Sold (28d)</th><th class="n">Total profit</th><th>Class</th></tr></thead><tbody></tbody></table></div>
-</section>
-
-<!-- MARKET -->
-<section class="tab" id="t-market">
-  <h1>Market prices</h1>
-  <p class="lede">How your prices compare with other Italian restaurants nearby. The live version would refresh this from public menus each month.</p>
-  <div class="card"><h3>Your price vs. the nearby average</h3><p class="hint">Sample comparison with three anonymized nearby restaurants</p><div class="chartbox" style="height:300px"><canvas id="cMarket"></canvas></div></div>
-  <div class="card" style="margin-top:16px"><table id="mktTbl"><thead><tr><th>Dish</th><th class="n">Carmine's</th><th class="n">Nearby A</th><th class="n">Nearby B</th><th class="n">Nearby C</th><th class="n">vs. average</th><th>Suggestion</th></tr></thead><tbody></tbody></table>
-  <p class="src">Sample data, including Carmine's own column until the menu is transcribed. Competitor names stay hidden; never put real names next to invented prices.</p></div>
-</section>
-
-<!-- CAMPAIGNS -->
-<section class="tab" id="t-campaigns">
-  <h1>Marketing campaigns</h1>
-  <p class="lede">Pick a list and an occasion, let AI draft the email in the restaurant's voice, then review it and send.</p>
-  <div class="row r11">
-    <div class="card stack">
-      <label>Audience<select id="aud"><option>Past catering customers (sample)</option><option>Newsletter (sample)</option><option>Everyone (sample)</option></select></label>
-      <label>Occasion<select id="occ"><option value="catering">Catering</option><option value="happy">Happy hour</option><option value="takeout">Take-out special</option><option value="holiday">Holiday parties</option></select></label>
-      <label>Offer (optional)<input id="offer" placeholder="Type the real offer here"></label>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn pri" onclick="draft()">Draft with AI</button><button class="btn sec" onclick="toast('Demo: sending is turned off. The live version sends through an email service with unsubscribe handling.')">Send campaign</button></div>
-    </div>
-    <div class="email-prev"><div class="eh">Carmine's Italiano</div><div class="eb" id="emailBody">Choose an occasion, then click "Draft with AI."</div></div>
-  </div>
-</section>
-
-<!-- ASK -->
-<section class="tab" id="t-ask">
-  <h1>Ask your business</h1>
-  <p class="lede">Ask about sales, menu and catering in plain English.</p>
-  <div class="card">
-    <div class="chatlog" id="log"><div class="m a">Ask me about the restaurant's numbers. Try one of the questions below. (Answers use the sample data on this page.)</div></div>
-    <div class="chips" id="askChips"></div>
-    <form id="askForm" style="display:flex;gap:10px"><input id="askIn" placeholder="e.g. What was our best night last month?"><button class="btn pri">Ask</button></form>
-  </div>
-</section>
-
-</main></div>
+</div></div>
 <div class="toast" id="toast"></div>
 
 <script>
-// ---------- sample data (deterministic) ----------
-let seed=7; const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
-const fmt=n=>'$'+Math.round(n).toLocaleString();
-const D=window.SITE_DATA;
-// SAMPLE dishes: p price, c food cost, u units (28 days). Generic names on purpose: swap in real dishes once the menu is transcribed.
-const ITEMS=[['Sample dish A',22,6.8,520],['Sample dish B',19,5.2,470],['Sample dish C',24,7.9,390],['Sample dish D',17,4.1,350],
- ['Sample dish E',26,10.8,210],['Sample dish F',21,5.6,180],['Sample dish G',29,12.6,95]].map(([n,p,c,u])=>({n,p,c,u}));
-// 28 days actual; closed Mon/Tue
-const today=new Date(); today.setHours(0,0,0,0);
-const base={0:4200,3:2900,4:3400,5:5600,6:6100}; // Sun, Wed, Thu, Fri, Sat
-const days=[];
-for(let i=27;i>=0;i--){const d=new Date(today);d.setDate(d.getDate()-i);const w=d.getDay();const open=w in base;
-  days.push({d,open,v:open?base[w]*(0.86+rnd()*0.28)*(1+(27-i)*0.004):null});}
-const fc=[];
-for(let i=1;i<=14;i++){const d=new Date(today);d.setDate(d.getDate()+i);const w=d.getDay();const open=w in base;
-  const hist=days.filter(x=>x.open&&x.d.getDay()===w).map(x=>x.v);
-  const avg=hist.length?hist.reduce((a,b)=>a+b)/hist.length:null; fc.push({d,open,v:open?avg*1.03:null});}
-const total=days.reduce((a,x)=>a+(x.v||0),0);
-const covers=Math.round(total/38);
-const lbl=d=>d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+const KEY = "carmines-menu-draft";
+const ORIGINAL = window.SITE_DATA.menu;
+let draft;
+try { draft = JSON.parse(localStorage.getItem(KEY)) || null; } catch (e) { draft = null; }
+if (!draft || draft.updated !== ORIGINAL.updated) draft = structuredClone(ORIGINAL);
+const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+const fmt = (n) => (typeof n === "number" ? n.toFixed(2) : "");
+function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("on"), 3200); }
 
-document.getElementById('kpis').innerHTML=[
- ['Sales (28 days)',fmt(total),'Sample',''],
- ['Guests served',covers.toLocaleString(),'Sample',''],
- ['Average check',fmt(total/covers),'Sample',''],
- ['Next 14 days (forecast)',fmt(fc.reduce((a,x)=>a+(x.v||0),0)),'Sample',''],
-].map(([l,v,d,c])=>`<div class="card kpi"><div class="l">${l}</div><div class="v">${v}</div><div class="d ${c}">${d}</div></div>`).join('');
-
-Chart.defaults.font.family='Georgia, serif'; Chart.defaults.color='#625a52';
-new Chart(cSales,{type:'line',data:{labels:[...days,...fc].map(x=>lbl(x.d)),datasets:[
- {label:'Actual',data:[...days.map(x=>x.v),...fc.map(()=>null)],borderColor:'#bb1016',tension:.3,spanGaps:true,pointRadius:2},
- {label:'Forecast',data:[...days.map((x,i)=>i===days.length-1?x.v:null),...fc.map(x=>x.v)],borderColor:'#2f6409',borderDash:[6,5],tension:.3,spanGaps:true,pointRadius:2}]},
- options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>'$'+v/1000+'k'}},x:{ticks:{maxTicksLimit:10}}}}});
-const topItems=[...ITEMS].sort((a,b)=>b.u-a.u);
-new Chart(cTop,{type:'bar',data:{labels:topItems.map(x=>x.n),datasets:[{data:topItems.map(x=>x.u),backgroundColor:'#bb1016'}]},options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-new Chart(cChan,{type:'doughnut',data:{labels:['Dine-in','Take-out','Uber Eats','Catering'],datasets:[{data:[55,18,12,15],backgroundColor:['#bb1016','#2f6409','#3d5a73','#9a6a10']}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'right'}},cutout:'62%'}});
-
-// ---------- menu editor (reads the site's menu data; placeholders until transcribed) ----------
-const esc=t=>String(t).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
-const ALL=D.sections.flatMap(sec=>sec.items.map(x=>({...x,s:sec.title})));
-menuSrc.innerHTML=D.updated?`${esc(D.source)}, ${esc(D.updated)}`:'<span class="ph">[menu not transcribed yet]</span>';
-function renderMenu(){menuTbl.tBodies[0].innerHTML=ALL.map((x,i)=>`<tr>
- <td><input value="${esc(x.n)}" onchange="ALL[${i}].n=this.value"></td>
- <td style="width:150px">${esc(x.s)}</td>
- <td><input value="${esc(x.d)}" onchange="ALL[${i}].d=this.value"></td>
- <td class="n" style="width:110px">${typeof x.p==='number'?`<input value="${x.p}" type="number" step="0.25" onchange="ALL[${i}].p=+this.value" style="text-align:right">`:esc(x.price)}</td></tr>`).join('');}
-function addItem(){ALL.push({n:'New dish',s:ALL[0]?ALL[0].s:'',p:null,price:'$ —',d:'Describe the dish'});renderMenu();}
-renderMenu();
-
-// ---------- profitability ----------
-const avgU=ITEMS.reduce((a,x)=>a+x.u,0)/ITEMS.length, avgM=ITEMS.reduce((a,x)=>a+(x.p-x.c),0)/ITEMS.length;
-const cls=x=>{const hiU=x.u>=avgU,hiM=(x.p-x.c)>=avgM;return hiU&&hiM?['Star','p-star']:hiU?['Plowhorse','p-plow']:hiM?['Puzzle','p-puz']:['Rethink','p-dog']};
-profitTbl.tBodies[0].innerHTML=[...ITEMS].sort((a,b)=>(b.p-b.c)*b.u-(a.p-a.c)*a.u).map(x=>{const[c,k]=cls(x);const pct=x.c/x.p*100;
- return `<tr><td><b>${x.n}</b></td><td class="n">$${x.p.toFixed(2)}</td><td class="n">$${x.c.toFixed(2)}</td><td class="n" style="color:${pct>35?'var(--bad)':'inherit'}">${pct.toFixed(0)}%</td><td class="n">$${(x.p-x.c).toFixed(2)}</td><td class="n">${x.u}</td><td class="n"><b>${fmt((x.p-x.c)*x.u)}</b></td><td><span class="tag ${k}">${c}</span></td></tr>`}).join('');
-new Chart(cMatrix,{type:'scatter',data:{datasets:[{data:ITEMS.map(x=>({x:x.u,y:x.p-x.c,n:x.n})),backgroundColor:ITEMS.map(x=>({Star:'#2f6409',Plowhorse:'#3d5a73',Puzzle:'#9a6a10',Rethink:'#bb1016'})[cls(x)[0]]),pointRadius:8}]},
- options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.n}: ${c.raw.x} sold, $${c.raw.y.toFixed(2)}/plate`}}},scales:{x:{title:{display:true,text:'Units sold (28 days)'}},y:{title:{display:true,text:'Profit per plate'},ticks:{callback:v=>'$'+v}}}}});
-
-// ---------- market (all sample, anonymized) ----------
-const MK=ITEMS.slice(0,6).map(x=>[x.n,x.p,Math.round(x.p*1.06),Math.round(x.p*.97),Math.round(x.p*1.1)]);
-mktTbl.tBodies[0].innerHTML=MK.map(([n,g,a,b,c])=>{const av=(a+b+c)/3,d=g-av;return `<tr><td><b>${n}</b></td><td class="n"><b>$${g}</b></td><td class="n">$${a}</td><td class="n">$${b}</td><td class="n">$${c}</td><td class="n ${d<0?'down':'up'}">${d<0?'−':'+'}$${Math.abs(d).toFixed(2)}</td><td>${d<-1?'Room to raise about $1':'Priced in line'}</td></tr>`}).join('');
-new Chart(cMarket,{type:'bar',data:{labels:MK.map(x=>x[0]),datasets:[{label:"Carmine's (sample)",data:MK.map(x=>x[1]),backgroundColor:'#bb1016'},{label:'Nearby average (sample)',data:MK.map(x=>((x[2]+x[3]+x[4])/3).toFixed(2)),backgroundColor:'#d8cfbd'}]},options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{ticks:{callback:v=>'$'+v}}}}});
-
-// ---------- campaign email (facts only from SITE_DATA; anything else is a [placeholder]) ----------
-function draft(){
- const o=occ.value, offer=document.getElementById('offer').value.trim()||'[the real offer, in Kelly\'s words]';
- const R=D.restaurant;
- const subj={catering:'Let Carmine\'s cater your next gathering',happy:'Happy hour at Carmine\'s',takeout:'This week\'s take-out special',holiday:'Book your holiday party with Carmine\'s'}[o];
- const lead={catering:R.catering,happy:'[Happy hour days, times and specials]',takeout:'[The take-out special and when it runs]',holiday:'[Holiday party details: banquet room, packages, dates]'}[o];
- emailBody.textContent=`Subject: ${subj}
-
-${lead}
-
-${offer}
-
-Call ${R.phone} to order or book.
-
-${R.name}
-${R.address}
-
-Unsubscribe`;
- toast('Draft ready. Fill in the bracketed parts before sending.');
+// ---------- tabs ----------
+function go(t) {
+  document.querySelectorAll("header nav button[data-t]").forEach((b) => b.classList.toggle("on", b.dataset.t === t));
+  document.querySelectorAll(".tab").forEach((x) => x.classList.toggle("on", x.id === "t-" + t));
+  document.getElementById("bar").hidden = t !== "menu";
+  window.scrollTo(0, 0);
 }
+document.querySelectorAll("header nav button[data-t]").forEach((b) => (b.onclick = () => go(b.dataset.t)));
 
-// ---------- ask ----------
-const best=days.filter(x=>x.open).sort((a,b)=>b.v-a.v)[0];
-const QA=[
- ['What was our best night?',()=>`In the sample data, the best night in the last 28 days was ${best.d.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'})} at ${fmt(best.v)}.`],
- ['What should we prep for Saturday?',()=>`Saturday is forecast at ${fmt(fc.find(x=>x.d.getDay()===6).v)} (sample). With real SkyTab data this turns into prep counts per dish.`],
- ['Which dish earns the most?',()=>{const t=[...ITEMS].sort((a,b)=>(b.p-b.c)*b.u-(a.p-a.c)*a.u)[0];return `${t.n} (sample) earns the most in total: ${fmt((t.p-t.c)*t.u)} over 28 days.`}],
-];
-askChips.innerHTML=QA.map((q,i)=>`<button onclick="ask(${i})">${q[0]}</button>`).join('');
-function say(t,c){const d=document.createElement('div');d.className='m '+c;d.textContent=t;log.append(d);log.scrollTop=log.scrollHeight;}
-function ask(i){say(QA[i][0],'u');setTimeout(()=>say(QA[i][1](),'a'),500);}
-askForm.onsubmit=e=>{e.preventDefault();const q=askIn.value.trim();if(!q)return;askIn.value='';say(q,'u');
- const s=q.toLowerCase();const i=/best|record|biggest/.test(s)?0:/prep|saturday|forecast/.test(s)?1:/earn|profit|dish/.test(s)?2:-1;
- setTimeout(()=>say(i>=0?QA[i][1]():'In the live version I\'d answer that from your real SkyTab sales. For this demo, try one of the suggested questions.','a'),500);};
+// ---------- menu editor ----------
+const origItem = (si, ii) => ORIGINAL.sections[si]?.items[ii];
+const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+function priceInputs(it, si, ii) {
+  if (it.v && it.v.length) return it.v.map(([l, p], k) => `<label>${esc(l)}<input inputmode="decimal" value="${fmt(p)}" data-si="${si}" data-ii="${ii}" data-v="${k}"></label>`).join("");
+  return `<label>Price<input inputmode="decimal" value="${fmt(it.p)}" data-si="${si}" data-ii="${ii}" data-f="p"></label>`;
+}
+function render() {
+  document.getElementById("editor").innerHTML = draft.sections.map((s, si) => `
+    <div class="sec"><h2>${esc(s.title)}</h2>
+    ${s.items.map((it, ii) => `
+      <div class="dish ${it.hidden ? "hidden" : ""} ${same(it, origItem(si, ii)) ? "" : "changed"}">
+        <div><input class="nm" value="${esc(it.n)}" data-si="${si}" data-ii="${ii}" data-f="n" aria-label="Dish name">
+          <textarea rows="2" data-si="${si}" data-ii="${ii}" data-f="d" aria-label="Description">${esc(it.d)}</textarea></div>
+        <div class="prices">${priceInputs(it, si, ii)}</div>
+        <div class="tools">
+          <button class="btn sm" onclick="toggleHide(${si},${ii})">${it.hidden ? "Show on menu" : "Hide (sold out / seasonal)"}</button>
+          <button class="btn sm" onclick="move(${si},${ii},-1)" aria-label="Move up">↑</button>
+          <button class="btn sm" onclick="move(${si},${ii},1)" aria-label="Move down">↓</button>
+          <button class="btn sm" onclick="removeDish(${si},${ii})">Delete</button>
+        </div>
+      </div>`).join("")}
+    <p><button class="btn sm" onclick="addDish(${si})">+ Add a dish to ${esc(s.title)}</button></p></div>`).join("");
+  updateBar();
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(draft)); } catch (e) {} updateBar(); }
+function changes() { let n = 0; draft.sections.forEach((s, si) => { if (s.items.length !== ORIGINAL.sections[si].items.length) n++; s.items.forEach((it, ii) => { if (!same(it, origItem(si, ii))) n++; }); }); return n; }
+function updateBar() { const n = changes(); document.getElementById("count").textContent = n ? `${n} change${n > 1 ? "s" : ""} not published` : "No changes"; }
+document.getElementById("editor").addEventListener("input", (e) => {
+  const t = e.target, si = +t.dataset.si, ii = +t.dataset.ii, it = draft.sections[si]?.items[ii];
+  if (!it) return;
+  if (t.dataset.v != null) { const v = parseFloat(t.value); it.v[+t.dataset.v][1] = isNaN(v) ? null : v; }
+  else if (t.dataset.f === "p") { const v = parseFloat(t.value); it.p = isNaN(v) ? null : v; }
+  else it[t.dataset.f] = t.value;
+  t.closest(".dish").classList.toggle("changed", !same(it, origItem(si, ii)));
+  save();
+});
+function toggleHide(si, ii) { const it = draft.sections[si].items[ii]; it.hidden = !it.hidden; if (!it.hidden) delete it.hidden; save(); render(); }
+function move(si, ii, d) { const a = draft.sections[si].items, j = ii + d; if (j < 0 || j >= a.length) return; [a[ii], a[j]] = [a[j], a[ii]]; save(); render(); }
+function removeDish(si, ii) { const it = draft.sections[si].items[ii]; if (!confirm(`Delete "${it.n}" from the menu? (Tip: "Hide" keeps it for later.)`)) return; draft.sections[si].items.splice(ii, 1); save(); render(); }
+function addDish(si) { draft.sections[si].items.push({ n: "New dish", d: "", p: null }); save(); render(); const all = document.querySelectorAll(`[data-si="${si}"][data-f="n"]`); all[all.length - 1].select(); }
+function resetMenu() { if (!confirm("Undo every change since the last publish?")) return; draft = structuredClone(ORIGINAL); save(); render(); }
+function preview() { save(); window.open("/menu.html?preview=1", "_blank"); }
+function publish() { save(); toast("Demo: in the live version this saves the menu and the website, the chatbot and Google's menu data all update in about a minute."); }
+function downloadMenu() {
+  const blob = new Blob([JSON.stringify({ ...draft, updated: new Date().toISOString().slice(0, 10) }, null, 1)], { type: "application/json" });
+  const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "menu.json" }); a.click();
+}
+render();
 
-// ---------- tabs + toast ----------
-document.querySelectorAll('aside nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('aside nav button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',t.id==='t-'+b.dataset.t));window.scrollTo(0,0)});
-function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),2600);}
+// ---------- social post helper ----------
+// Uses only real menu text. Anything only Kelly knows is left as a [bracket].
+const dishes = draft.sections.filter((s) => s.id !== "bowl").flatMap((s) => s.items.filter((i) => !i.hidden).map((i) => ({ ...i, s: s.title })));
+document.getElementById("dish").innerHTML = dishes.map((d, k) => `<option value="${k}">${esc(d.n)}</option>`).join("");
+const priceLine = (d) => d.p != null ? fmt(d.p) : (d.v || []).map(([l, p]) => `${l} ${fmt(p)}`).join(" · ");
+const tidy = (d) => d.d.replace(/\.$/, "");
+const R = window.SITE_DATA.restaurant;
+const SIGN = `📍 7170 Transit Rd, Williamsville · 📞 ${R.phone}`;
+const POSTS = {
+  dish: (d) => ({ text: `${d.n} 🍝\n\n${tidy(d)}.\n\n[One line from you: why you love this dish, or who orders it every week]\n\nDinner Wednesday–Sunday from 4pm. Call ahead for take-out.\n${SIGN}`,
+    photo: `One plate, shot from a low angle by a window, steam showing if you can. No filter. Phone camera is fine.`, when: "Wednesday or Thursday, 3–4pm (people are planning dinner)" }),
+  weekend: (d) => ({ text: `This weekend at Carmine's: ${d.n}.\n\n${tidy(d)}.\n\nReservations are a good idea on Fridays and Saturdays, and for parties of 6 or more. Give us a call!\n${SIGN}`,
+    photo: `The dining room set for Friday, or the dish at the pass right before it goes out.`, when: "Thursday 5–7pm" }),
+  takeout: (d) => ({ text: `Take-out special: ${d.n} [deal, e.g. "add a Caesar for $X"] 🥡\n\n${tidy(d)}.\n\nValid [days/dates]. Call ${R.phone} to order${R.ubereats ? " or find us on Uber Eats" : ""}.\n📍 7170 Transit Rd, Williamsville`,
+    photo: `The dish in the take-out container with the lid half open, on the counter with a Carmine's bag.`, when: "Tuesday afternoon, then again Friday at 2pm" }),
+  happy: (d) => ({ text: `Happy hour at the bar 🍷 [days & times]\n\n[Drink and food specials]\n\nPull up a seat. ${SIGN}`,
+    photo: `Two drinks on the bar in the late-afternoon light, a small plate of ${d.n.toLowerCase()} beside them.`, when: "The day of, about an hour before it starts" }),
+  catering: (d) => ({ text: `Planning a party? Let Carmine's do the cooking. 🎉\n\nDrop-off catering for 10 or more, delivered anywhere in the 716, seven days a week. Crowd favorite: ${d.n}.\n\n[Upcoming occasion: graduations, holidays, Bills games…]\n\nCall ${R.phone} to plan your order.\n📍 7170 Transit Rd, Williamsville`,
+    photo: `A full catering tray of ${d.n.toLowerCase()}, foil peeled back, shot from straight above.`, when: "Monday morning, 2–3 weeks before the occasion" }),
+  kitchen: (d) => ({ text: `Behind the kitchen door 👨‍🍳\n\n[Who's cooking and how long they've been with Carmine's]\n\nToday they're making ${d.n}: ${tidy(d).charAt(0).toLowerCase() + tidy(d).slice(1)}.\n\n${SIGN}`,
+    photo: `Hands at work: rolling, saucing or plating. Ask before showing anyone's face.`, when: "Saturday morning" }),
+};
+const TAGS = "#CarminesItaliano #Williamsville #BuffaloEats #716Eats #ItalianFood";
+function makePost() {
+  const d = dishes[+document.getElementById("dish").value], p = POSTS[document.getElementById("kind").value](d);
+  const price = priceLine(d);
+  document.getElementById("post").innerHTML = esc(p.text + (price && document.getElementById("kind").value === "dish" ? `\n\n${price}` : "") + "\n\n" + TAGS).replace(/\[([^\]]+)\]/g, '<span class="ph">[$1]</span>');
+  document.getElementById("tips").innerHTML = `<li><b>Photo:</b> ${esc(p.photo)}</li><li><b>Best time to post:</b> ${esc(p.when)}</li><li><b>Post it once</b> in Meta Business Suite and tick both Facebook and Instagram.</li>`;
+}
+function copyPost() { const t = document.getElementById("post").innerText; navigator.clipboard?.writeText(t).then(() => toast("Copied. Fill in anything in brackets before posting."), () => toast("Select the text and copy it.")); }
+if (location.hash === "#menu") go("menu"); if (location.hash === "#social") go("social");
 </script>
 </body></html>
