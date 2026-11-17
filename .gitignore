@@ -1,0 +1,7 @@
+# Family recipe cards stay private until the family approves each one
+recipes/
+# Raw brand files downloaded from Drive for reference (PSDs, menus, photos); copy only finished web assets into assets/
+source/
+# Local preview config
+.claude/
+.DS_Store
