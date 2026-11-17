@@ -25,7 +25,21 @@ This repo is a **staging demo** to show Kelly what's possible. It is not the liv
 - Older Carmine's print pieces (napkin, 2013) show **4715 Transit Rd.** and (716) 632-2318, and the Giacobbi's repo says Carmine's on Transit Road closed after a 2015 fire. Drive has "GrandOpening" files from 2017. The move to 7170 Transit and the reopening date need Kelly's own wording before any history goes on the site.
 - The site's contact email is a personal address. Don't publish it in this repo; ask what address the site should use.
 
-## Source material (user's Google Drive: `Carmines2.0/`)
+## Source material: Dropbox `/Carmines` (newest; the source of truth)
+Her designer's InDesign packages, organized by year. Local copies of the files we use go in `source/dropbox/` (git-ignored).
+- **Dinner menu:** `2025/CarminesDinnerMenu_Revision3.18.25.pdf` (newest found; Jan, Feb and Mar 2025 revisions, plus 2021–2023). 11×17, two pages.
+- **Catering:** `2025/carminescatering 5.14.26.pdf` (May 2026, newest). Standard $19.99 and Deluxe $23.99 per person, parties of 10 or more. Also Sept 2025 versions.
+- **Banquet:** `CarminesBanquetMenu Folder/CarminesBanquetMenu10-24.pdf` (newest found; also 3-29-23 and 10-19-22).
+- `ACTUAL LOGOS/`: same logo files as Drive, plus `Carmines_Vector.pdf` and `Carmines_PNG.png`.
+- `SIGN/` and `OLD_FILES/SIGN/`: photos of the building sign at 7170 Transit (red channel-letter script, green "Italiano" panel) and the old awning ("Italiano Carmine's · Cocktails & Cuisine").
+- `Menu/…/Links/Carmines_pasta_*.ai`: vector line drawings of pasta shapes used on the menus. `Italylogo.ai`: the round "Italy / Republica Italiana" map stamp used as the menu watermark. Its origin isn't known (designer or stock?), so check before using it; note the stamp spells it "REPUBLICA" (Italian is "Repubblica").
+- `Desserts/`, `TSHIRT/`, `Napkin/`, `OLD_FILES/Old_Menus/` (2013–2016 menus, happy hour, gluten-free, lunch).
+- `Carmines_Mural/` is mostly downloaded reference images (one filename is a stock-vector preview). Don't use those. `GirlOnVespa.jpg`: origin unknown, don't use.
+- Dropbox `/CarminesMenus` holds only 2017–2018 packages (older than `/Carmines`).
+
+**Two brand looks exist.** The building sign and the 2013 logo files use the red script with a green "Italiano". Every printed menu since 2017 (dinner, catering, banquet, through May 2026) uses the script alone in charcoal `#282624` with deep wine `#5f1722`, Clarendon Text for dish names, Caecilia bold italic for prices, Mensch / TrendHM Sans wide caps for section heads with triple rules, an aged-paper background and the Italy stamp watermark. The user is choosing between them (Nov 2026). Those fonts are commercial; the site needs licensed web versions or free lookalikes.
+
+## Source material (user's Google Drive: `Carmines2.0/`, older snapshot from 2017–2018)
 - `Carmine's/ACTUAL LOGOS/`: the official logo. **`LARGE_CARMINES_LOGO.ai` and `Carmines_Vector.ai` are real vector files** (PDF-compatible), so the logo was converted, not traced. Also `LARGE_CARMINES_LOGO(COLOR).jpg` (red script, green "Italiano") and black versions.
 - `CarminesDinnerMenuPrinter1/2.jpg` and `.pdf` (2017): printed dinner menu. **Outdated prices**; use it only as a style reference (dark plum/charcoal, slab-serif dish names, wide display caps with triple rules, line drawings of pasta shapes).
 - `CarminesCateringMenu_Final2.pdf` (2017), `Carmines logo.pdf`, `GrandOpening.jpg/png` (2017).
@@ -34,7 +48,7 @@ This repo is a **staging demo** to show Kelly what's possible. It is not the liv
 - Download raw Drive files into `source/` (git-ignored). Only finished, web-sized assets go into `assets/img/`.
 
 ## Current menus
-The live menus are HTML pages on carminestogo.com: `Carmines_Italiano_-_Dinner_Menu.html`, `_Wine_List`, `_Catering_Menu`, `_Banquet_Menu`, `_Take-out_Menu` (all under `/Carmines/`). Transcribe `MENU` and `CATERING` in `build.mjs` from those, with real prices, and note the date. Re-check when they change.
+Two sources: the newest Dropbox PDFs above, and the HTML menu pages on carminestogo.com (`Carmines_Italiano_-_Dinner_Menu.html`, `_Wine_List`, `_Catering_Menu`, `_Banquet_Menu`, `_Take-out_Menu`, all under `/Carmines/`). Compare them, ask Kelly which is current where they differ, then transcribe `MENU` and `CATERING` in `build.mjs` with real prices and note the source and date. Re-check when they change.
 
 ## Structure (static, no build step needed to host)
 - `build.mjs` generates `index.html`, `menu.html`, `story.html`, `catering.html`, `assets/menu-data.js` (`window.SITE_DATA`, shared by the admin and the concierge), `llms.txt` and `robots.txt`. Edit content there, then run `node build.mjs`.
@@ -46,7 +60,7 @@ The live menus are HTML pages on carminestogo.com: `Carmines_Italiano_-_Dinner_M
 - `admin/index.html`: demo owner dashboard. **Every number is labeled sample data.** Tabs: sales & forecast, menu editor, profitability, market prices (anonymized competitors; never put real competitor names next to invented prices), marketing campaigns, "Ask your business".
 
 ## Brand (not decided yet)
-The logo is settled: the red brush-script "Carmine's" with its swash and the green slab-serif "Italiano". Sampled colors: red `#bb1016`, green `#2f6409`. Everything else (palette, type, the feel, references, stickers) waits on Kelly's answers. The current CSS tokens and system fonts are stand-ins.
+The script lettering is settled (vector paths in `logo-paths.json`; `logoSVG({ italiano: false, script: "#282624" })` gives the menu version). Which look to build around (sign red/green vs. menu charcoal/wine) is open; see "Two brand looks" above. Everything else (palette, type, the feel, references, stickers) waits on Kelly's answers. The current CSS tokens and system fonts are stand-ins.
 
 ## Rules
 - **Never invent facts, dishes or prices.** Placeholders must look like placeholders (`[striped label]`, `$ —`, "Staging note", "Sample").
