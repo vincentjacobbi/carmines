@@ -1,22 +1,76 @@
 {
   "note": "Every photo on the site, with where it came from and what permission is still needed. Web copies (EXIF stripped) are in assets/img/photos/.",
   "dishes": [
-    { "f": "piccata", "dish": "Piccata", "alt": "Chicken piccata with mushrooms and artichoke hearts in a lemon white wine sauce" },
-    { "f": "parmesan", "dish": "Parmesan", "alt": "Chicken parmesan with melted mozzarella and red sauce" },
-    { "f": "lasagna", "dish": "Lasagna", "alt": "A square of layered lasagna in red sauce" },
-    { "f": "penne-palermo", "dish": "Penne Palermo", "alt": "Penne with peppers, sliced sausage and shaved asiago" },
-    { "f": "fruitti-di-mare", "dish": "Fruitti di Mare", "alt": "Linguine with mussels, clams and shrimp in tomato sauce" },
-    { "f": "greens-n-beans", "dish": "Greens N Beans", "alt": "Greens and cannellini beans with pancetta" }
+    {
+      "f": "piccata",
+      "dish": "Piccata",
+      "alt": "Chicken piccata with mushrooms and artichoke hearts in a lemon white wine sauce"
+    },
+    {
+      "f": "parmesan",
+      "dish": "Parmesan",
+      "alt": "Chicken parmesan with melted mozzarella and red sauce"
+    },
+    {
+      "f": "lasagna",
+      "dish": "Lasagna",
+      "alt": "A square of layered lasagna in red sauce"
+    },
+    {
+      "f": "penne-palermo",
+      "dish": "Penne Palermo",
+      "alt": "Penne with peppers, sliced sausage and shaved asiago"
+    },
+    {
+      "f": "fruitti-di-mare",
+      "dish": "Fruitti di Mare",
+      "alt": "Linguine with mussels, clams and shrimp in tomato sauce"
+    },
+    {
+      "f": "greens-n-beans",
+      "dish": "Greens N Beans",
+      "alt": "Greens and cannellini beans with pancetta"
+    }
   ],
   "dishSource": "Giacobbi's Cucina Citta food photos (~/code/giacobbis/giacobbis-staging, Drive 'Food Gallery'). Same family recipes, different plates. Stand-ins until Carmine's own photo shoot; labeled on the page.",
   "kitchen": [
-    { "f": "ea-sign", "alt": "The Carmine's sign over the awning at the East Amherst restaurant", "cap": "East Amherst, 2017" },
-    { "f": "ea-sauce", "alt": "A cook lifting a pan of red sauce", "cap": "Red sauce on the line" },
-    { "f": "ea-flame", "alt": "A pan flaring up on the grill", "cap": "On the grill" },
-    { "f": "ea-plating", "alt": "A cook finishing plates at the pass", "cap": "At the pass" },
-    { "f": "ea-bar", "alt": "The beer taps and bottles behind the bar", "cap": "The bar" },
-    { "f": "ea-toss", "alt": "Pasta tossed in a pan, black and white", "cap": "Pasta in the pan" }
+    {
+      "f": "ea-sign",
+      "alt": "The Carmine's sign over the awning at the East Amherst restaurant",
+      "cap": "East Amherst, 2017"
+    },
+    {
+      "f": "ea-sauce",
+      "alt": "A cook lifting a pan of red sauce",
+      "cap": "Red sauce on the line"
+    },
+    {
+      "f": "ea-flame",
+      "alt": "A pan flaring up on the grill",
+      "cap": "On the grill"
+    },
+    {
+      "f": "ea-plating",
+      "alt": "A cook finishing plates at the pass",
+      "cap": "At the pass"
+    },
+    {
+      "f": "ea-bar",
+      "alt": "The beer taps and bottles behind the bar",
+      "cap": "The bar"
+    },
+    {
+      "f": "ea-toss",
+      "alt": "Pasta tossed in a pan, black and white",
+      "cap": "Pasta in the pan"
+    },
+    {
+      "f": "mural",
+      "alt": "The Carmine's Vino mural",
+      "cap": "The Carmine's Vino mural"
+    }
   ],
   "kitchenSource": "Drive Carmines2.0/Carmine's/Photos/Photos-1-001, files '2017-10-18 *.jpg' (Canon 5D Mark IV, same camera and evening as the JAX files: the Jackson shoot at 9430 Transit Rd, East Amherst, Oct 18, 2017). Taken by the user's friend: get their OK and the photo credit before launch.",
-  "notUsed": "DSC_* files are The Buffalo News 'Smiles' shoot (paper owns them; needs written permission). '2017-10-19 *.jpg' have no camera data and an unknown photographer. Photos of guests are left out until the family picks ones of themselves."
+  "notUsed": "DSC_* files are The Buffalo News 'Smiles' shoot (paper owns them; needs written permission). '2017-10-19 *.jpg' have no camera data and an unknown photographer. Photos of guests are left out until the family picks ones of themselves.",
+  "muralNote": "mural.jpg is '2017-10-18 17.19.08.jpg' (Jackson shoot, East Amherst). The mural painter is unknown: ask Kelly who painted it, whether it is at 7170 Transit today, and credit the artist."
 }

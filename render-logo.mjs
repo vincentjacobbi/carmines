@@ -13,7 +13,7 @@ writeFileSync("assets/img/logo-wine.svg", logoSVG({ script: BRAND.wine }));
 writeFileSync("assets/img/logo-sign.svg", logoSVG({ italiano: true, script: BRAND.red, word: BRAND.green }));
 
 // Favicon: the script "C" in paper on wine.
-const fav = logoSVG({ id: "fav", script: BRAND.paper }).replace(/viewBox="[^"]*"/, 'viewBox="58 178 192 192"').replace("<svg ", `<svg style="background:${BRAND.wine}" `);
+const fav = logoSVG({ id: "fav", script: BRAND.paper }).replace(/viewBox="[^"]*"/, 'viewBox="-40 130 860 860"').replace("<svg ", `<svg style="background:${BRAND.wine}" `);
 writeFileSync("assets/img/favicon.svg", fav);
 
 const chrome = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";

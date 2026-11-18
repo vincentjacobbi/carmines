@@ -15,4 +15,6 @@
 ## Pages
 - [Menu](https://carminestogo.com/menu.html)
 - [Our Story](https://carminestogo.com/story.html)
+- [Take-Out](https://carminestogo.com/takeout.html)
 - [Catering](https://carminestogo.com/catering.html)
+- [Banquets](https://carminestogo.com/banquets.html)

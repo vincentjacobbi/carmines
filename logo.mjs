@@ -14,12 +14,17 @@ export const BRAND = { ink: "#282624", wine: "#5f1722", paper: "#f4f0e4", red: "
 
 const part = (p, color, id) => `<mask id="${id}" maskUnits="userSpaceOnUse" x="${vx}" y="${vy}" width="${vw}" height="${vh}"><path fill="#fff" d="${p.fill}"/><path fill="#000" d="${p.holes}"/></mask><rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="${color}" mask="url(#${id})"/>`;
 
-// Default: the script mark alone in charcoal, as on every printed menu since 2017.
-// italiano: true adds the slab-serif "Italiano" (the sign lockup; use script: BRAND.red, word: BRAND.green for the sign colors).
+// The logo Kelly uses (every printed menu since 2017): traced from CarminesLogo.png, see logo-script-paths.json.
+const N = JSON.parse(readFileSync(new URL("./logo-script-paths.json", import.meta.url), "utf8"));
+export const SCRIPT_VIEWBOX = N.viewBox;
+
+// Default: the script logo in charcoal. italiano: true draws the older sign lockup instead
+// (red script + green "Italiano", from LARGE_CARMINES_LOGO.ai), kept only as logo-sign.svg.
 export function logoSVG({ script = BRAND.ink, word = BRAND.ink, italiano = false, title = "Carmine's Italiano", id = "lg", cls = "" } = {}) {
-  // Script alone: fit the script's own bounds (73–685 × 173–362). The old 178-unit height cut off the bottom of the C.
-  const box = italiano ? L.viewBox : "70 169 619 197";
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}"${cls ? ` class="${cls}"` : ""} role="img" aria-labelledby="${id}-t"><title id="${id}-t">${title}</title>
-${part(L.script, script, `${id}-s`)}${italiano ? part(L.italiano, word, `${id}-i`) : ""}
+  if (italiano) return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${L.viewBox}"${cls ? ` class="${cls}"` : ""} role="img" aria-labelledby="${id}-t"><title id="${id}-t">${title}</title>
+${part(L.script, script, `${id}-s`)}${part(L.italiano, word, `${id}-i`)}
+</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${N.viewBox}"${cls ? ` class="${cls}"` : ""} role="img" aria-labelledby="${id}-t"><title id="${id}-t">${title}</title>
+<path fill="${script}" transform="${N.transform}" d="${N.d}"/>
 </svg>`;
 }

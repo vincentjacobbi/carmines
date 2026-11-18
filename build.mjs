@@ -147,7 +147,7 @@ const nav = (active) => `
   <a class="brand" href="/" aria-label="Carmine's Italiano, home">${logoSVG({ id: "hdr" })}</a>
   <button class="menu-toggle" aria-label="Menu" onclick="document.querySelector('nav.links').classList.toggle('open')">☰</button>
   <nav class="links">
-    ${[["/menu.html", "Menu"], ["/catering.html", "Catering"], ["/story.html", "Our Story"], ["/#visit", "Visit"]]
+    ${[["/menu.html", "Menu"], ["/takeout.html", "Take-Out"], ["/catering.html", "Catering"], ["/banquets.html", "Banquets"], ["/story.html", "Our Story"], ["/#visit", "Visit"]]
       .map(([h, t]) => `<a href="${h}"${active === t ? ' aria-current="page"' : ""}>${t}</a>`).join("")}
     ${R.ubereats ? orderBtn() : ""}
     <a class="btn primary" href="tel:${R.tel}">Call ${R.phoneDots}</a>
@@ -216,25 +216,17 @@ const home = page(
 </div></section>
 
 <section class="tight"><div class="wrap">
-  ${ruleHead("Create Your Own Bowl")}
-  <p class="sub-caps">Pick a pasta &amp; a sauce</p>
-  <div class="shelf" style="--n:8">
-    ${BOWL.pasta.map(([label, up, art]) => `<figure>${pastaSVG(art)}<figcaption>${label}${up ? ` <span class="price">+${up}</span>` : ""}</figcaption></figure>`).join("\n    ")}
-  </div>
-  <p class="center" style="margin-top:22px">${BOWL.items.map((i) => `<b>${i.n}</b><span class="price">${money(i.p)}</span>`).join(" &nbsp;·&nbsp; ")}</p>
-  <p class="sub-caps" style="margin:10px 0 0">${BOWL.served} · ${BOWL.gf}</p>
+  <figure class="mural">
+    <img src="/assets/img/photos/mural.jpg" alt="Our painted mural: a Tuscan landscape of hills and cypress trees behind a still life of cheese, tomatoes and garlic, with a green Carmine's Vino jug" loading="lazy">
+    <figcaption><span>The Carmine’s Vino mural</span><span>${CREDIT}</span></figcaption>
+  </figure>
 </div></section>
-
-${MENU.flatMap((s) => s.items).filter((i) => i.feature).slice(0, 1).map((i) => `<div class="band"><div class="wrap">
-  <div class="caps">${i.n} <span class="price">${priceText(i)}</span></div>
-  <p>${i.d}</p>
-</div></div>`).join("")}
 
 <section><div class="wrap">
   ${ruleHead("House Favorites")}
   <div class="dishes">
     ${FAVORITES.map((n) => { const i = n && findItem(n); return i
-      ? `<article class="dish">${dishPhoto(i.n) ? snap(dishPhoto(i.n).f, dishPhoto(i.n).alt, STANDIN, "-1") : phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}<span class="price">${i.v ? money(i.v[0][1]) : money(i.p)}</span></h3><p>${i.d}</p>${DISH_NOTES[i.n] ? `<p class="dish-note">${DISH_NOTES[i.n]}</p>` : ""}</article>`
+      ? `<article class="dish">${dishPhoto(i.n) ? snap(dishPhoto(i.n).f, dishPhoto(i.n).alt, STANDIN, "-1") : phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}</h3><p>${i.d}</p>${DISH_NOTES[i.n] ? `<p class="dish-note">${DISH_NOTES[i.n]}</p>` : ""}</article>`
       : `<article class="dish">${phPhoto("Risotto")}<h3>Risotto</h3><p>${ph("Award-winning risotto: Kelly is sending the Taste of Buffalo records. The menu has Filet Mignon Mushroom Risotto and Salmon & Asparagus Risotto.")}</p></article>`; }).join("\n    ")}
   </div>
   <p class="center" style="margin-top:34px"><a class="btn ghost" href="/menu.html">The full menu</a></p>
@@ -294,7 +286,7 @@ const menuPage = page(
 ${pageHead("The Menu", MENU_DOC.note)}
 <section class="tight"><div class="wrap">
   <p class="note">Staging note: transcribed from the March 18, 2025 printed menu. Kelly to confirm nothing has changed since.</p>
-  <div class="menu-nav">${MENU.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}<a href="#takeout">Take-Out Specials</a></div>
+  <div class="menu-nav">${MENU.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}<a href="/takeout.html">Take-Out Specials</a></div>
   <div class="snaps five">
     ${PHOTOS.dishes.filter((d) => d.dish !== "Piccata").map((d, j) => snap(d.f, d.alt, d.dish === "Parmesan" ? "Chicken Parmesan" : d.dish, [1, -1.2, 0.8, -0.6, 1.3][j])).join("\n    ")}
   </div>
@@ -305,8 +297,8 @@ ${pageHead("The Menu", MENU_DOC.note)}
   </div>`).join("")}</div>
   <p class="note" style="margin-top:30px">${MENU_DOC.allergy}</p>
   <script src="/assets/menu-preview.js"></script>
-  <p class="center" style="margin-top:40px">${orderBtn("primary")} <a class="btn ghost" href="/catering.html">Catering &amp; banquets</a></p>
-</div></section>${takeoutSection()}`,
+  <p class="center" style="margin-top:40px">${orderBtn("primary")} <a class="btn ghost" href="/takeout.html">Take-out specials</a> <a class="btn ghost" href="/catering.html">Catering</a></p>
+</div></section>`,
   menuSchema, "/menu.html"
 );
 
@@ -350,14 +342,36 @@ ${pageHead("Our Story", `A casual family Italian restaurant since ${R.founded}, 
 </div></section>`, [], "/story.html"
 );
 
+// Quote / request form, shared by the catering and banquet pages.
+const quoteSection = (kind) => `
+<section class="tight" id="quote"><div class="wrap split" style="align-items:start">
+  <div>
+    ${ruleHead("Plan your party", "h2")}
+    <p>Tell us the date, how many guests and what you'd like, and we'll put it together. ${kind === "banquet" ? "Banquets are in our private room at the restaurant, with seating for 40." : "Drop-off trays come family-style, ready to serve, and the full-service package brings our staff to you."}</p>
+    <p>Call <a href="tel:${R.tel}">${R.phone}</a>, or send a request and we'll call you back.</p>
+  </div>
+  <div class="quote-form">
+    <h3>${kind === "banquet" ? "Ask about a banquet" : "Request a catering quote"}</h3>
+    <form class="stack" onsubmit="event.preventDefault();this.innerHTML='<p><b>Thank you!</b> Demo only, nothing was sent. In the live site this request goes to the catering inbox in the owner dashboard.</p>'">
+      <label>Name<input required></label>
+      <label>Email or phone<input required></label>
+      <label>Event date<input type="date" required></label>
+      <label>Guests<select><option>10–25</option><option>25–50</option><option>50–100</option><option>100+</option></select></label>
+      <label>What you need<select>${kind === "banquet" ? "<option>Banquet at the restaurant</option><option>Drop-off catering</option>" : "<option>Drop-off catering</option><option>Full-service party</option><option>Banquet at the restaurant</option>"}</select></label>
+      <label>Anything else?<textarea rows="3" placeholder="Dietary needs, favorite dishes, budget…"></textarea></label>
+      <button class="btn primary">Send request</button>
+    </form>
+  </div>
+</div></section>`;
+
 // ---------- Catering ----------
 const cateringPage = page(
-  "Catering & Banquets | Carmine's Italiano, Williamsville NY",
-  "Drop-off catering from Carmine's Italiano for gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week. Banquets at the restaurant.",
+  "Catering | Carmine's Italiano, Williamsville NY",
+  "Drop-off catering from Carmine's Italiano for gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week.",
   "Catering",
   `
-${pageHead("Catering &amp; Banquets", CATERING.intro)}
-<nav class="menu-nav wrap"><a href="#dropoff">Drop-off</a><a href="#full-service">Full service</a><a href="#trays">Just trays</a><a href="#banquets">Banquets</a><a href="#quote">Request a quote</a></nav>
+${pageHead("Catering", CATERING.intro)}
+<nav class="menu-nav wrap"><a href="#dropoff">Drop-off</a><a href="#full-service">Full service</a><a href="#trays">Just trays</a><a href="/banquets.html">Banquets</a><a href="#quote">Request a quote</a></nav>
 
 <section class="tight" id="dropoff"><div class="wrap">
   ${ruleHead(CATER.dropoff.title)}
@@ -399,36 +413,47 @@ ${pageHead("Catering &amp; Banquets", CATERING.intro)}
   <p class="note" style="margin-top:22px">${CATER.trays.fine}</p>
 </div></section>
 
+${quoteSection("catering")}`, [], "/catering.html"
+);
+
+// ---------- Banquets ----------
+const banquetsPage = page(
+  "Banquets | Carmine's Italiano, Williamsville NY",
+  "Banquets and private parties in Carmine's private room, seating 40, at 7170 Transit Road, Williamsville NY.",
+  "Banquets",
+  `
+${pageHead("Banquets", "Showers, birthdays, anniversaries and celebrations of life in our private room.")}
 <section class="tight" id="banquets"><div class="wrap">
-  ${ruleHead("Banquets")}
+  ${ruleHead("Banquet Packages")}
   <p class="sub-caps">${BANQ.room}</p>
   ${BANQ.packages.map(banquetPkg).join("\n  ")}
   <div class="cols2 ledgers" style="margin-top:40px">
     <div>${ruleHead("Add-ons", "h3", "sm")}<div class="ledger">${BANQ.addons.map((t) => ledgerRow(t.n, t.d, [trayPrice(t.p)])).join("")}</div></div>
     <div>${ruleHead("Miscellaneous", "h3", "sm")}<div class="ledger">${BANQ.misc.map((t) => ledgerRow(t.n, t.d, [trayPrice(t.p)])).join("")}</div></div>
   </div>
-  <p class="note" style="margin-top:22px">Staging note: catering from the May 14, 2026 menu; banquets from the October 2024 menu. carminestogo.com still shows the May 2024 banquet prices, so Kelly to confirm which is current.</p>
+  <p class="note" style="margin-top:22px">Staging note: from the October 2024 banquet menu. carminestogo.com still shows the May 2024 banquet prices, so Kelly to confirm which is current.</p>
 </div></section>
 
-<section class="tight" id="quote"><div class="wrap split" style="align-items:start">
+${quoteSection("banquet")}`, [], "/banquets.html"
+);
+
+// ---------- Take-out ----------
+const takeoutPage = page(
+  "Take-Out | Carmine's Italiano, Williamsville NY",
+  "Take-out from Carmine's Italiano: family-size specials that feed 4–6, and the full dinner menu. Call 716-636-3100.",
+  "Take-Out",
+  `
+${pageHead("Take-Out", `Call <a href="tel:${R.tel}">${R.phone}</a> and pick it up at ${R.streetShort}, across from T.J. Maxx. The full dinner menu is available to go.`)}
+${takeoutSection()}
+<section class="tight"><div class="wrap split" style="align-items:center">
+  <figure class="snap" style="transform:rotate(-1.2deg);max-width:440px;margin:0 auto"><a href="/assets/img/takeout-flier-2026-05-19.jpg" target="_blank" rel="noopener"><img src="/assets/img/takeout-flier-2026-05-19.jpg" alt="Carmine's take-out specials flier: Big Bucket of Pasta $39.99 and Chicken Parm Pack $64.99, feeds 4 to 6, take-out only" style="aspect-ratio:auto"></a><figcaption>The flier, May 2026</figcaption></figure>
   <div>
-    ${ruleHead("Plan your party", "h2")}
-    <p>Tell us the date, how many guests and what you'd like, and we'll put it together. Drop-off trays come family-style, ready to serve; the full-service package brings our staff to you; banquets are in our private room at the restaurant.</p>
-    <p>Call <a href="tel:${R.tel}">${R.phone}</a>, or send a request and we'll call you back.</p>
+    ${ruleHead("Ordering", "h2")}
+    <p>Call ahead and your order will be ready when you get here. We're open for dinner Wednesday through Sunday from 4pm.</p>
+    <p>${ph("Online ordering through SkyTab (pickup only) goes here once Kelly's Shift4 rep turns it on.")}</p>
+    <p><a class="btn primary" href="tel:${R.tel}">Call ${R.phoneDots}</a> <a class="btn ghost" href="/menu.html">The dinner menu</a></p>
   </div>
-  <div class="quote-form">
-    <h3>Request a catering quote</h3>
-    <form class="stack" onsubmit="event.preventDefault();this.innerHTML='<p><b>Thank you!</b> Demo only, nothing was sent. In the live site this request goes to the catering inbox in the owner dashboard.</p>'">
-      <label>Name<input required></label>
-      <label>Email or phone<input required></label>
-      <label>Event date<input type="date" required></label>
-      <label>Guests<select><option>10–25</option><option>25–50</option><option>50–100</option><option>100+</option></select></label>
-      <label>What you need<select><option>Drop-off catering</option><option>Banquet at the restaurant</option></select></label>
-      <label>Anything else?<textarea rows="3" placeholder="Dietary needs, favorite dishes, budget…"></textarea></label>
-      <button class="btn primary">Send request</button>
-    </form>
-  </div>
-</div></section>`, [], "/catering.html"
+</div></section>`, [], "/takeout.html"
 );
 
 // ---------- Market prices (admin/insights.html) ----------
@@ -474,13 +499,17 @@ const llms = `# Carmine's Italiano
 ## Pages
 - [Menu](${SITE}/menu.html)
 - [Our Story](${SITE}/story.html)
+- [Take-Out](${SITE}/takeout.html)
 - [Catering](${SITE}/catering.html)
+- [Banquets](${SITE}/banquets.html)
 `;
 
 writeFileSync("index.html", home);
 writeFileSync("menu.html", menuPage);
 writeFileSync("story.html", storyPage);
 writeFileSync("catering.html", cateringPage);
+writeFileSync("banquets.html", banquetsPage);
+writeFileSync("takeout.html", takeoutPage);
 writeFileSync("assets/menu-data.js", `// Generated by build.mjs. Do not edit by hand.\nwindow.SITE_DATA = ${JSON.stringify(menuData, null, 1)};\n`);
 writeFileSync("llms.txt", llms);
 // Staging: keep it out of search engines so it doesn't compete with the live site.
