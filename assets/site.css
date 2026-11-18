@@ -283,7 +283,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--wine)}
 @media (max-width:820px){.snaps,.snaps.five{grid-template-columns:repeat(2,1fr);gap:18px}.snaps.two{grid-template-columns:1fr}}
 
 /* ---------- home: the mural, full width like a print plate ---------- */
-.mural{margin:0 auto;max-width:820px;transform:rotate(-.6deg);background:#fff;padding:12px 12px 0;box-shadow:1px 2px 0 rgba(40,38,36,.14),3px 9px 22px -9px rgba(40,38,36,.45)}
-.mural img{display:block;width:100%;aspect-ratio:5/3;object-fit:cover}
+.mural{margin:0 auto;transform:rotate(-.4deg);background:#fff;padding:12px 12px 0;box-shadow:1px 2px 0 rgba(40,38,36,.14),3px 9px 22px -9px rgba(40,38,36,.45)}
+.mural img{display:block;width:100%;aspect-ratio:2/1;object-fit:cover;object-position:50% 48%}
+@media (max-width:640px){.mural img{aspect-ratio:4/3}}
 .mural figcaption{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:9px 2px 11px;font:600 12px var(--caps);text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
 .mural .ph{font-size:11px;letter-spacing:0;text-transform:none}

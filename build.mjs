@@ -217,8 +217,8 @@ const home = page(
 
 <section class="tight"><div class="wrap">
   <figure class="mural">
-    <img src="/assets/img/photos/mural.jpg" alt="Our painted mural: a Tuscan landscape of hills and cypress trees behind a still life of cheese, tomatoes and garlic, with a green Carmine's Vino jug" loading="lazy">
-    <figcaption><span>The Carmine’s Vino mural</span><span>${CREDIT}</span></figcaption>
+    <img src="/assets/img/library/building-mural.jpg" alt="A painted Buffalo mural on the side of the building at night: stained-glass colors around a script Carmine's over the word Buffalo" loading="lazy">
+    <figcaption><span>The Buffalo mural on the side of our building</span><span class="ph">Artist's name + credit</span></figcaption>
   </figure>
 </div></section>
 
