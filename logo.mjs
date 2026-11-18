@@ -17,7 +17,8 @@ const part = (p, color, id) => `<mask id="${id}" maskUnits="userSpaceOnUse" x="$
 // Default: the script mark alone in charcoal, as on every printed menu since 2017.
 // italiano: true adds the slab-serif "Italiano" (the sign lockup; use script: BRAND.red, word: BRAND.green for the sign colors).
 export function logoSVG({ script = BRAND.ink, word = BRAND.ink, italiano = false, title = "Carmine's Italiano", id = "lg", cls = "" } = {}) {
-  const box = italiano ? L.viewBox : `${vx} ${vy} ${vw} ${178}`;
+  // Script alone: fit the script's own bounds (73–685 × 173–362). The old 178-unit height cut off the bottom of the C.
+  const box = italiano ? L.viewBox : "70 169 619 197";
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${box}"${cls ? ` class="${cls}"` : ""} role="img" aria-labelledby="${id}-t"><title id="${id}-t">${title}</title>
 ${part(L.script, script, `${id}-s`)}${italiano ? part(L.italiano, word, `${id}-i`) : ""}
 </svg>`;

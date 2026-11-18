@@ -80,6 +80,12 @@ const money = (n) => (typeof n === "number" ? n.toFixed(2) : n === "mp" ? "Marke
 const priceText = (i) => (i.p != null ? money(i.p) : i.v && i.v.length ? i.v.map(([l, p]) => `${l} ${money(p)}`).join(" · ") : "$ —");
 const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 // Stand-in for a photo that hasn't been chosen or cleared yet.
+// content/photos.json: every photo, its source and the permission still needed.
+const PHOTOS = JSON.parse(readFileSync("content/photos.json", "utf8"));
+const dishPhoto = (n) => PHOTOS.dishes.find((d) => d.dish === n);
+const STANDIN = `<span class="ph">Sample: Giacobbi’s plate, same recipe</span>`;
+const CREDIT = `<span class="ph">Photo credit + OK from the photographer</span>`;
+const snap = (f, alt, cap, tilt = "") => `<figure class="snap"${tilt ? ` style="transform:rotate(${tilt}deg)"` : ""}><img src="/assets/img/photos/${f}.jpg" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`;
 const phPhoto = (label, ratio = "4/3") => `<div class="ph ph-block" style="aspect-ratio:${ratio};display:grid;place-items:center;text-align:center;margin:0">[Photo: ${label}]</div>`;
 // Catering prices print the way her catering menu does: whole dollars without cents.
 const trayPrice = (n) => (typeof n === "number" ? (Number.isInteger(n) ? String(n) : n.toFixed(2)) : n === "mp" ? "Mkt" : "—");
@@ -228,10 +234,18 @@ ${MENU.flatMap((s) => s.items).filter((i) => i.feature).slice(0, 1).map((i) => `
   ${ruleHead("House Favorites")}
   <div class="dishes">
     ${FAVORITES.map((n) => { const i = n && findItem(n); return i
-      ? `<article class="dish">${phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}<span class="price">${i.v ? money(i.v[0][1]) : money(i.p)}</span></h3><p>${i.d}</p>${DISH_NOTES[i.n] ? `<p class="dish-note">${DISH_NOTES[i.n]}</p>` : ""}</article>`
+      ? `<article class="dish">${dishPhoto(i.n) ? snap(dishPhoto(i.n).f, dishPhoto(i.n).alt, STANDIN, "-1") : phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}<span class="price">${i.v ? money(i.v[0][1]) : money(i.p)}</span></h3><p>${i.d}</p>${DISH_NOTES[i.n] ? `<p class="dish-note">${DISH_NOTES[i.n]}</p>` : ""}</article>`
       : `<article class="dish">${phPhoto("Risotto")}<h3>Risotto</h3><p>${ph("Award-winning risotto: Kelly is sending the Taste of Buffalo records. The menu has Filet Mignon Mushroom Risotto and Salmon & Asparagus Risotto.")}</p></article>`; }).join("\n    ")}
   </div>
   <p class="center" style="margin-top:34px"><a class="btn ghost" href="/menu.html">The full menu</a></p>
+</div></section>
+
+<section class="tight"><div class="wrap">
+  ${ruleHead("In the Kitchen")}
+  <div class="snaps">
+    ${PHOTOS.kitchen.slice(1, 5).map((k, j) => snap(k.f, k.alt, k.cap, [1.2, -0.8, 0.9, -1.3][j])).join("\n    ")}
+  </div>
+  <p class="center small" style="margin-top:14px">From our East Amherst kitchen, 2017. ${CREDIT}</p>
 </div></section>
 
 <section><div class="wrap split">
@@ -241,7 +255,7 @@ ${MENU.flatMap((s) => s.items).filter((i) => i.feature).slice(0, 1).map((i) => `
     <p class="sub">Carmine's opened its doors in 1993. A fire in 2015 changed our course, and we reopened in East Amherst in 2017 before finding our forever home here at 7170 Transit Road in September 2022. Family owned and operated by ${R.owners}.</p>
     <a class="btn primary" href="/story.html">Read our story</a>
   </div>
-  <figure class="photo">${phPhoto("a family or archive photo, with rights confirmed", "4/5")}</figure>
+  ${snap("ea-sign", PHOTOS.kitchen[0].alt, `East Amherst, 2017 · ${CREDIT}`, "-1.5")}
 </div></section>
 
 <section><div class="wrap cols2">
@@ -281,6 +295,10 @@ ${pageHead("The Menu", MENU_DOC.note)}
 <section class="tight"><div class="wrap">
   <p class="note">Staging note: transcribed from the March 18, 2025 printed menu. Kelly to confirm nothing has changed since.</p>
   <div class="menu-nav">${MENU.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}<a href="#takeout">Take-Out Specials</a></div>
+  <div class="snaps five">
+    ${PHOTOS.dishes.filter((d) => d.dish !== "Piccata").map((d, j) => snap(d.f, d.alt, d.dish === "Parmesan" ? "Chicken Parmesan" : d.dish, [1, -1.2, 0.8, -0.6, 1.3][j])).join("\n    ")}
+  </div>
+  <p class="center small" style="margin:10px 0 26px">${STANDIN} Real Carmine’s photos come from the photo shoot.</p>
   <div class="menu-cols">${MENU.map((s, k) => `
   <div class="menu-section" id="${s.id}">${ruleHead(s.title)}
     ${sectionBody(s)}
@@ -324,7 +342,10 @@ ${pageHead("Our Story", `A casual family Italian restaurant since ${R.founded}, 
     <div><h3>Kelly &amp; Alex Jacobbi</h3><p>Owners. Alex created Al’s Fussili, the dish that became a house favorite.</p></div>
     <div><h3>Chef Dave Marshal</h3><p>In our kitchen from 1997 to 2001, and again since 2023.</p></div>
   </div>
-  <p class="center" style="margin-top:30px">${phPhoto("the family and Chef Dave at the restaurant (Kelly is OK showing faces; photo shoot planned)", "3/2")}</p>
+  <div class="snaps two" style="margin-top:30px">
+    ${snap("ea-toss", PHOTOS.kitchen[5].alt, `East Amherst kitchen, 2017 · ${CREDIT}`, "-1")}
+    <figure class="snap" style="transform:rotate(1deg)">${phPhoto("the family and Chef Dave at the restaurant (Kelly is OK showing faces; photo shoot planned)", "4/3")}<figcaption>Coming from the photo shoot</figcaption></figure>
+  </div>
   ${RECIPES.length ? `${ruleHead("From the Kitchen")}<div class="recipes">${RECIPES.map(recipeCard).join("\n    ")}</div>` : ""}
 </div></section>`, [], "/story.html"
 );
