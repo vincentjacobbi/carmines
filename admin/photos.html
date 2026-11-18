@@ -74,9 +74,26 @@ dialog::backdrop{background:rgba(30,26,24,.78)}
 @media (max-width:760px){.view{grid-template-columns:1fr}.view .pic img{max-height:56vh}.grid{grid-template-columns:repeat(2,1fr);gap:18px 14px}.filters .lbl{width:100%}}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--wine);color:#fff;padding:12px 18px;font:15px var(--serif);opacity:0;transition:.25s;pointer-events:none;max-width:90vw;z-index:9}
 .toast.on{opacity:1}
+/* uploads + editing */
+.upload{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding:16px 0;border-bottom:1px solid var(--line);margin-bottom:6px}
+.upload p{margin:0;color:var(--muted);font-size:15px;flex:1;min-width:240px}
+.upload input{display:none}
+.progress{font:600 12px var(--caps);text-transform:uppercase;letter-spacing:.08em;color:var(--wine)}
+.new{color:#fff;background:var(--wine);font:600 10px var(--caps);letter-spacing:.08em;text-transform:uppercase;padding:2px 5px 1px;margin-left:4px;vertical-align:2px}
+.view .edit{display:grid;gap:8px}
+.view .edit label{display:grid;gap:2px;font:600 11px var(--caps);text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.view .edit input,.view .edit textarea,.view .edit select{font:16px var(--serif);color:var(--ink);border:0;border-bottom:1.5px solid var(--line);background:transparent;padding:5px 2px;text-transform:none;letter-spacing:0}
+.view .edit input:focus,.view .edit textarea:focus,.view .edit select:focus{outline:none;border-color:var(--wine)}
+.view .edit textarea{resize:vertical;min-height:40px}
+.btn.del{border-color:#a3341f;color:#a3341f}
+.trash{list-style:none;padding:0;margin:0;border-top:1px solid var(--ink)}
+.trash li{display:flex;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);font-size:16px}
+.trash img{width:72px;height:54px;object-fit:cover;background:#fff;padding:3px;box-shadow:1px 2px 6px -2px rgba(0,0,0,.35)}
+.trash li span{flex:1}
+.btn.sm{padding:6px 10px 5px;font-size:11.5px;border-width:1.5px}
 </style>
 </head><body>
-<div class="banner"><b>Demo</b> · Tag changes stay in this browser. Press “Save tags file” to keep them.</div>
+<div class="banner"><b>Demo</b> · Photos you add and changes you make are saved in this browser only, until we connect Dropbox.</div>
 <header><div class="in">
   <a href="/" title="View the website"><img src="/assets/img/logo.svg" alt="Carmine's"></a>
   <nav>
@@ -89,7 +106,13 @@ dialog::backdrop{background:rgba(30,26,24,.78)}
 </div></header>
 <main>
   <h1>Photos</h1>
-  <p class="lede">Every usable photo we have, in one place, so you don't need Dropbox to look through them. Small, blurry and duplicate photos were left out. Tap a photo to see it big, change its tags or download it.</p>
+  <p class="lede">Every usable photo we have, in one place. Add your own, give them a name and tags, and delete the ones you don't want. Tap a photo to see it big, change it or download it.</p>
+
+  <div class="upload">
+    <label class="btn pri" for="file">+ Add photos</label>
+    <input type="file" id="file" accept="image/*" multiple>
+    <p id="uphint">From your phone's camera roll or your computer. Sharp photos work best: at least 1200 pixels wide (any recent phone photo is).</p>
+  </div>
 
   <div class="filters">
     <div class="row" id="ftags"><span class="lbl">Show</span></div>
@@ -98,26 +121,43 @@ dialog::backdrop{background:rgba(30,26,24,.78)}
   <p class="count" id="count"></p>
   <div class="grid" id="grid"></div>
 
+  <section id="trashSec" hidden>
+    <h2>Deleted</h2>
+    <p class="lede" style="font-size:16px">Change your mind? Put it back. Deleting from here removes a photo you added for good.</p>
+    <ul class="trash" id="trash"></ul>
+  </section>
+
   <h2>Left out on purpose</h2>
   <ul class="out" id="out"></ul>
-  <p class="row" style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="save">Save tags file</button><button class="btn" id="reset">Undo my tag changes</button></p>
+  <p class="row" style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="save">Save my changes as a file</button><button class="btn" id="reset">Undo all my changes</button></p>
 </main>
 
 <dialog id="dlg"><div style="position:relative" class="view">
   <div class="pic"><img id="vimg" alt=""></div>
   <div class="info">
-    <h3 id="vtitle"></h3>
+    <div class="edit">
+      <label>Name<input id="etitle"></label>
+    </div>
     <div id="vstat"></div>
     <p class="note" id="vnote" hidden></p>
+    <div class="edit">
+      <label>Rights<select id="estatus"></select></label>
+      <label>Notes<textarea id="enote" rows="2" placeholder="Who took it, when, what dish…"></textarea></label>
+    </div>
     <p class="meta" id="vmeta"></p>
-    <fieldset><legend>Tags (where it could go)</legend><div class="tags" id="vtags"></div><p class="meta" id="vsaved" style="margin-top:6px;color:var(--ok)"></p></fieldset>
-    <div class="acts"><a class="btn pri" id="vdl" download>Download</a><a class="btn" id="vfull" target="_blank" rel="noopener">Open big</a></div>
+    <fieldset><legend>Tags (where it could go)</legend><div class="tags" id="vtags"></div></fieldset>
+    <p class="meta" id="vsaved" style="color:var(--ok);min-height:1.2em"></p>
+    <div class="acts"><a class="btn pri" id="vdl" download>Download</a><a class="btn" id="vfull" target="_blank" rel="noopener">Open big</a><button class="btn del" id="vdel">Delete</button></div>
   </div>
   <button class="x" id="vclose" aria-label="Close">Close ✕</button>
 </div></dialog>
 <div class="toast" id="toast"></div>
 
 <script>
+// Photo library. Built-in photos come from assets/library-data.js (content/library.json).
+// Kelly's own uploads, edits and deletions live in this browser only (IndexedDB + localStorage)
+// until Dropbox is connected. Uploads are resized here (1600 px + 480 px thumbnail); re-encoding
+// through a canvas also drops the location and camera data.
 const L = window.LIBRARY;
 const STATUS = {
   ours:    ["Ours to use", "The family's own photo."],
@@ -125,21 +165,46 @@ const STATUS = {
   standin: ["Stand-in (Giacobbi's)", "Giacobbi's plate of the same recipe. Use until we shoot our own."],
   check:   ["Ask first", "We don't know who took it."],
 };
-const KEY = "carmines-photo-tags";
-let edits = {};
-try { edits = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
-const tagsOf = (p) => edits[p.id] || p.tags;
-const saveEdits = () => { try { localStorage.setItem(KEY, JSON.stringify(edits)); } catch (e) {} };
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-const toast = (t) => { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2400); };
+const EDITS = "carmines-photo-edits", GONE = "carmines-photo-deleted";
+const load = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+const keep = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+let edits = load(EDITS, {}), gone = load(GONE, []);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const toast = (t) => { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2600); };
 const stat = (s) => `<span class="st ${s}">${STATUS[s][0]}</span>`;
+
+// ---------- browser storage for uploads (IndexedDB) ----------
+let db = null;
+const idb = () => new Promise((res, rej) => {
+  const r = indexedDB.open("carmines-photos", 1);
+  r.onupgradeneeded = () => r.result.createObjectStore("uploads", { keyPath: "id" });
+  r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+});
+const tx = (mode, fn) => new Promise((res, rej) => { const t = db.transaction("uploads", mode); const s = t.objectStore("uploads"); const out = fn(s); t.oncomplete = () => res(out && out.result); t.onerror = () => rej(t.error); });
+let uploads = []; // {id, title, tags, status, note, w, h, added, big: Blob, thumb: Blob, url, turl}
+async function loadUploads() {
+  try { db = await idb(); } catch (e) { db = null; }
+  if (!db) { document.getElementById("uphint").textContent = "This browser won't let the page save photos (private browsing?). Try a regular window."; document.querySelector("label[for=file]").style.display = "none"; return; }
+  const all = await tx("readonly", (s) => s.getAll());
+  uploads = (all || []).sort((a, b) => b.added - a.added).map((u) => ({ ...u, url: URL.createObjectURL(u.big), turl: URL.createObjectURL(u.thumb), mine: true }));
+}
+const putUpload = (u) => { const { url, turl, mine, ...rec } = u; return tx("readwrite", (s) => s.put(rec)); };
+const dropUpload = (id) => tx("readwrite", (s) => s.delete(id));
+
+// ---------- one list of everything ----------
+const builtins = () => L.photos.map((p) => ({ ...p, ...(edits[p.id] || {}), url: `/assets/img/library/${p.id}.jpg`, turl: `/assets/img/library/${p.id}-t.jpg` }));
+const everything = () => [...uploads.map((u) => ({ ...u, ...(edits[u.id] || {}) })), ...builtins()];
+const live = () => everything().filter((p) => !gone.includes(p.id));
+const find = (id) => everything().find((p) => p.id === id);
 
 let fTag = "All", fStat = "all";
 try { const h = decodeURIComponent(location.hash.slice(1)); if (L.tags.includes(h)) fTag = h; } catch (e) {}
 
 function filters() {
-  const n = (t) => L.photos.filter((p) => t === "All" || tagsOf(p).includes(t)).length;
-  document.getElementById("ftags").innerHTML = `<span class="lbl">Show</span>` + ["All", ...L.tags].filter((t) => n(t))
+  const ps = live();
+  const n = (t) => ps.filter((p) => t === "All" || (t === "Added by you" ? p.mine : p.tags.includes(t))).length;
+  const tagList = ["All", ...(uploads.length ? ["Added by you"] : []), ...L.tags];
+  document.getElementById("ftags").innerHTML = `<span class="lbl">Show</span>` + tagList.filter((t) => n(t) || t === fTag)
     .map((t) => `<button data-t="${esc(t)}" class="${t === fTag ? "on" : ""}">${esc(t)}<small>${n(t)}</small></button>`).join("");
   document.getElementById("fstat").innerHTML = `<span class="lbl">Rights</span>` + [["all", "Any"], ...Object.entries(STATUS).map(([k, v]) => [k, v[0]])]
     .map(([k, t]) => `<button data-s="${k}" class="${k === fStat ? "on" : ""}">${esc(t)}</button>`).join("");
@@ -149,48 +214,107 @@ function filters() {
 
 function render() {
   filters();
-  const list = L.photos.filter((p) => (fTag === "All" || tagsOf(p).includes(fTag)) && (fStat === "all" || p.status === fStat));
-  document.getElementById("count").textContent = `${list.length} photo${list.length === 1 ? "" : "s"}${fTag !== "All" ? ` tagged “${fTag}”` : ""}`;
-  document.getElementById("grid").innerHTML = list.length ? list.map((p) => `<button class="print" data-id="${p.id}">
-      <img src="/assets/img/library/${p.id}-t.jpg" alt="${esc(p.title)}" loading="lazy">
-      <b>${esc(p.title)}</b><span class="tg">${tagsOf(p).map(esc).join(" · ")}</span>${stat(p.status)}</button>`).join("")
-    : `<p class="empty">No photos match. Try “All”.</p>`;
+  const list = live().filter((p) => (fTag === "All" || (fTag === "Added by you" ? p.mine : p.tags.includes(fTag))) && (fStat === "all" || p.status === fStat));
+  document.getElementById("count").textContent = `${list.length} photo${list.length === 1 ? "" : "s"}${fTag !== "All" ? ` · ${fTag}` : ""}`;
+  document.getElementById("grid").innerHTML = list.length ? list.map((p) => `<button class="print" data-id="${esc(p.id)}">
+      <img src="${p.turl}" alt="${esc(p.title)}" loading="lazy">
+      <b>${esc(p.title)}${p.mine ? `<span class="new">Yours</span>` : ""}</b><span class="tg">${p.tags.map(esc).join(" · ") || "No tags yet"}</span>${stat(p.status)}</button>`).join("")
+    : `<p class="empty">No photos here yet.</p>`;
   document.querySelectorAll(".print").forEach((b) => (b.onclick = () => open(b.dataset.id)));
+  // trash
+  const del = everything().filter((p) => gone.includes(p.id));
+  document.getElementById("trashSec").hidden = !del.length;
+  document.getElementById("trash").innerHTML = del.map((p) => `<li><img src="${p.turl}" alt=""><span>${esc(p.title)}</span>
+      <button class="btn sm" data-restore="${esc(p.id)}">Put back</button>${p.mine ? `<button class="btn sm del" data-purge="${esc(p.id)}">Delete forever</button>` : ""}</li>`).join("");
+  document.querySelectorAll("[data-restore]").forEach((b) => (b.onclick = () => { gone = gone.filter((x) => x !== b.dataset.restore); keep(GONE, gone); render(); toast("Put back"); }));
+  document.querySelectorAll("[data-purge]").forEach((b) => (b.onclick = async () => {
+    const p = find(b.dataset.purge); if (!confirm(`Delete “${p.title}” for good? This can't be undone.`)) return;
+    await dropUpload(p.id); uploads = uploads.filter((u) => u.id !== p.id); gone = gone.filter((x) => x !== p.id); delete edits[p.id]; keep(GONE, gone); keep(EDITS, edits); render(); toast("Deleted for good");
+  }));
 }
 
+// ---------- viewer / editor ----------
 const dlg = document.getElementById("dlg");
+let cur = null;
+function setEdit(id, patch) {
+  const base = uploads.find((u) => u.id === id) || L.photos.find((p) => p.id === id);
+  const next = { ...(edits[id] || {}), ...patch };
+  for (const k of Object.keys(next)) if (JSON.stringify(next[k]) === JSON.stringify(base[k])) delete next[k];
+  if (Object.keys(next).length) edits[id] = next; else delete edits[id];
+  keep(EDITS, edits); render();
+  document.getElementById("vsaved").textContent = "✓ Saved in this browser";
+}
 function open(id) {
-  const p = L.photos.find((x) => x.id === id);
-  const big = `/assets/img/library/${p.id}.jpg`;
-  document.getElementById("vimg").src = big;
-  document.getElementById("vimg").alt = p.title;
-  document.getElementById("vtitle").textContent = p.title;
+  const p = find(id); cur = id;
+  document.getElementById("vimg").src = p.url; document.getElementById("vimg").alt = p.title;
+  const t = document.getElementById("etitle"); t.value = p.title; t.onchange = () => setEdit(id, { title: t.value.trim() || "Untitled photo" });
   document.getElementById("vstat").innerHTML = `${stat(p.status)}<div style="font-size:14.5px;color:var(--muted);margin-top:2px">${STATUS[p.status][1]}</div>`;
-  const note = document.getElementById("vnote"); note.hidden = !p.note; note.textContent = p.note || "";
-  document.getElementById("vmeta").innerHTML = `${p.dish ? `<b>On the menu:</b> ${esc(p.dish === "Piccata" ? "Chicken Piccata" : p.dish === "Parmesan" ? "Chicken Parmesan" : p.dish)}<br>` : ""}${p.year ? `<b>Taken:</b> ${p.year}, East Amherst<br>` : ""}<b>Original:</b> ${p.w} × ${p.h} pixels<br><b>Where:</b> ${esc(p.where)} › ${esc(p.file)}`;
-  document.getElementById("vtags").innerHTML = L.tags.map((t) => `<label><input type="checkbox" value="${esc(t)}"${tagsOf(p).includes(t) ? " checked" : ""}> ${esc(t)}</label>`).join("");
-  document.querySelectorAll("#vtags input").forEach((c) => (c.onchange = () => {
-    edits[p.id] = [...document.querySelectorAll("#vtags input:checked")].map((x) => x.value);
-    if (JSON.stringify(edits[p.id]) === JSON.stringify(p.tags)) delete edits[p.id];
-    saveEdits(); render(); document.getElementById("vsaved").textContent = "✓ Saved in this browser";
-  }));
-  const dl = document.getElementById("vdl"); dl.href = big; dl.setAttribute("download", `carmines-${p.id}.jpg`);
-  document.getElementById("vfull").href = big;
+  const note = document.getElementById("vnote"); const orig = (L.photos.find((x) => x.id === id) || {}).note; note.hidden = !orig || p.mine; note.textContent = orig || "";
+  const s = document.getElementById("estatus"); s.innerHTML = Object.entries(STATUS).map(([k, v]) => `<option value="${k}"${k === p.status ? " selected" : ""}>${v[0]}</option>`).join("");
+  s.onchange = () => { setEdit(id, { status: s.value }); document.getElementById("vstat").innerHTML = `${stat(s.value)}<div style="font-size:14.5px;color:var(--muted);margin-top:2px">${STATUS[s.value][1]}</div>`; };
+  const n = document.getElementById("enote"); n.value = p.mynote ?? ""; n.onchange = () => setEdit(id, { mynote: n.value });
+  document.getElementById("vmeta").innerHTML = `${p.dish ? `<b>On the menu:</b> ${esc(p.dish === "Piccata" ? "Chicken Piccata" : p.dish === "Parmesan" ? "Chicken Parmesan" : p.dish)}<br>` : ""}${p.year ? `<b>Taken:</b> ${p.year}, East Amherst<br>` : ""}${p.mine ? `<b>Added:</b> ${new Date(p.added).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })} (saved in this browser)<br>` : ""}<b>Size:</b> ${p.w} × ${p.h} pixels${p.w && Math.max(p.w, p.h) < 1200 ? ` <span class="ph">small: may look blurry on the website</span>` : ""}${p.where ? `<br><b>Where:</b> ${esc(p.where)} › ${esc(p.file)}` : ""}`;
+  document.getElementById("vtags").innerHTML = L.tags.map((t) => `<label><input type="checkbox" value="${esc(t)}"${p.tags.includes(t) ? " checked" : ""}> ${esc(t)}</label>`).join("");
+  document.querySelectorAll("#vtags input").forEach((c) => (c.onchange = () => setEdit(id, { tags: [...document.querySelectorAll("#vtags input:checked")].map((x) => x.value) })));
+  const dl = document.getElementById("vdl"); dl.href = p.url; dl.setAttribute("download", `carmines-${(p.title || "photo").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")}.jpg`);
+  document.getElementById("vfull").href = p.url;
   document.getElementById("vsaved").textContent = "";
   dlg.showModal();
 }
+document.getElementById("vdel").onclick = () => {
+  const p = find(cur); gone = [...new Set([...gone, cur])]; keep(GONE, gone); dlg.close(); render();
+  toast(`“${p.title}” moved to Deleted, at the bottom of the page`);
+};
 document.getElementById("vclose").onclick = () => dlg.close();
 dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
 
+// ---------- adding photos ----------
+const toBlob = (c, q) => new Promise((r) => c.toBlob(r, "image/jpeg", q));
+async function shrink(bmp, max, q) {
+  const s = Math.min(1, max / Math.max(bmp.width, bmp.height));
+  const c = document.createElement("canvas"); c.width = Math.round(bmp.width * s); c.height = Math.round(bmp.height * s);
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height);
+  return toBlob(c, q);
+}
+document.getElementById("file").onchange = async (e) => {
+  const files = [...e.target.files]; e.target.value = "";
+  if (!files.length) return;
+  const hint = document.getElementById("uphint"), was = hint.innerHTML;
+  let added = 0, bad = [];
+  for (const [i, f] of files.entries()) {
+    hint.innerHTML = `<span class="progress">Adding ${i + 1} of ${files.length}…</span>`;
+    let bmp;
+    try { bmp = await createImageBitmap(f, { imageOrientation: "from-image" }); }
+    catch (err) { bad.push(f.name); continue; }
+    const u = { id: "up-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      title: f.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").replace(/^(IMG|DSC|PXL)\s*\d+.*$/i, "New photo"),
+      tags: [], status: "ours", w: bmp.width, h: bmp.height, added: Date.now(),
+      big: await shrink(bmp, 1600, 0.85), thumb: await shrink(bmp, 480, 0.8) };
+    try { await putUpload(u); } catch (err) { bad.push(f.name + " (storage full?)"); continue; }
+    uploads.unshift({ ...u, url: URL.createObjectURL(u.big), turl: URL.createObjectURL(u.thumb), mine: true });
+    added++;
+  }
+  hint.innerHTML = was;
+  fTag = "Added by you"; fStat = "all"; render();
+  if (bad.length) alert(`Couldn't open: ${bad.join(", ")}.\nIf it's an iPhone HEIC photo on a computer, try adding it from the phone, or export it as JPEG first.`);
+  if (added) { toast(`Added ${added} photo${added === 1 ? "" : "s"}. Tap one to name and tag it.`); if (added === 1) open(uploads[0].id); }
+};
+
+// ---------- save / undo ----------
 document.getElementById("out").innerHTML = L.leftOut.map((x) => `<li>${esc(x.why)}</li>`).join("");
 document.getElementById("save").onclick = () => {
-  const out = L.photos.map((p) => ({ id: p.id, title: p.title, tags: tagsOf(p) }));
+  const out = { saved: new Date().toISOString(), changed: edits, deleted: gone,
+    added: uploads.map(({ id, title, tags, status, w, h, added }) => ({ id, ...{ title, tags, status }, ...(edits[id] || {}), w, h, added })) };
   const a = document.createElement("a");
   a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: "application/json" }));
-  a.download = "carmines-photo-tags.json"; a.click();
-  toast("Downloaded. Send it to Vincent to make it permanent.");
+  a.download = "carmines-photo-changes.json"; a.click();
+  toast(uploads.length ? "Saved. Download the photos you added too, and send them to Vincent." : "Saved. Send the file to Vincent to make it permanent.");
 };
-document.getElementById("reset").onclick = () => { edits = {}; saveEdits(); render(); toast("Back to the original tags"); };
+document.getElementById("reset").onclick = async () => {
+  if (!confirm("Undo all your changes? This puts deleted photos back and resets names and tags. Photos you added stay.")) return;
+  edits = {}; gone = []; keep(EDITS, edits); keep(GONE, gone); render(); toast("Back to the original");
+};
+loadUploads().then(render);
 render();
 </script>
 </body></html>
