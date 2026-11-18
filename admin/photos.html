@@ -111,6 +111,7 @@ dialog::backdrop{background:rgba(30,26,24,.78)}
   <div class="upload">
     <label class="btn pri" for="file">+ Add photos</label>
     <input type="file" id="file" accept="image/*" multiple>
+    <a class="btn" id="send" target="_blank" rel="noopener" hidden>Send to Vincent's Dropbox</a>
     <p id="uphint">From your phone's camera roll or your computer. Sharp photos work best: at least 1200 pixels wide (any recent phone photo is).</p>
   </div>
 
@@ -299,6 +300,19 @@ document.getElementById("file").onchange = async (e) => {
   if (bad.length) alert(`Couldn't open: ${bad.join(", ")}.\nIf it's an iPhone HEIC photo on a computer, try adding it from the phone, or export it as JPEG first.`);
   if (added) { toast(`Added ${added} photo${added === 1 ? "" : "s"}. Tap one to name and tag it.`); if (added === 1) open(uploads[0].id); }
 };
+
+// ---------- Dropbox file request ----------
+// The upload link is never stored in this page or the repo (anyone with it could upload).
+// Vincent sends Kelly photos.html#upload=<request id> once; her browser remembers it.
+(() => {
+  const KEYU = "carmines-upload-request";
+  const m = location.hash.match(/^#upload=([A-Za-z0-9]{8,40})$/);
+  if (m) { try { localStorage.setItem(KEYU, m[1]); } catch (e) {} history.replaceState(null, "", location.pathname); setTimeout(() => toast("All set: “Send to Vincent's Dropbox” now works on this device"), 300); }
+  let id = null; try { id = localStorage.getItem(KEYU); } catch (e) {}
+  if (!id) return;
+  const b = document.getElementById("send"); b.href = "https://www.dropbox.com/request/" + id; b.hidden = false;
+  document.getElementById("uphint").innerHTML = "<b>Send to Vincent's Dropbox</b> is the one that keeps photos for good: they go straight into the shared folder and don't use your Dropbox space. <b>Add photos</b> just keeps them here to sort and tag.";
+})();
 
 // ---------- save / undo ----------
 document.getElementById("out").innerHTML = L.leftOut.map((x) => `<li>${esc(x.why)}</li>`).join("");
