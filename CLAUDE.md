@@ -49,6 +49,9 @@ Her designer's InDesign packages, organized by year. Local copies of the files w
 
 **Two brand looks exist.** The building sign and the 2013 logo files use the red script with a green "Italiano". Every printed menu since 2017 (dinner, catering, banquet, through May 2026) uses the script alone in charcoal `#282624` with deep wine `#5f1722`, Clarendon Text for dish names, Caecilia bold italic for prices, Mensch / TrendHM Sans wide caps for section heads with triple rules, an aged-paper background and the Italy stamp watermark. **The user chose the menu look (Nov 17, 2026)**; the sign colors are kept only as `logo-sign.svg`. Those fonts are commercial; the site needs licensed web versions or free lookalikes.
 
+## Consolidated in Dropbox (Nov 17, 2026)
+Dropbox `/Carmines` (a shared folder) is now the one shared cloud for Kelly and the user. The whole Drive `Carmines2.0` folder was copied to `/Carmines/Google Drive archive (2011-2018)/` (file lists verified identical; nothing deleted from Drive yet). `/Carmines/Website photos/` holds the originals of the photos on the site, and `/Carmines/READ ME - what's in this folder.txt` explains the layout and photo rights. Paths below that say "Drive" now also exist under that archive folder.
+
 ## Source material (user's Google Drive: `Carmines2.0/`, older snapshot from 2017–2018)
 - `Carmine's/ACTUAL LOGOS/`: the official logo. **`LARGE_CARMINES_LOGO.ai` and `Carmines_Vector.ai` are real vector files** (PDF-compatible), so the logo was converted, not traced. Also `LARGE_CARMINES_LOGO(COLOR).jpg` (red script, green "Italiano") and black versions.
 - `CarminesDinnerMenuPrinter1/2.jpg` and `.pdf` (2017): printed dinner menu. **Outdated prices**; use it only as a style reference (dark plum/charcoal, slab-serif dish names, wide display caps with triple rules, line drawings of pasta shapes).
