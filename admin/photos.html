@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Photos · Carmine's</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" type="image/png" href="/assets/img/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Sans:wght@600&display=swap" rel="stylesheet">
+<script src="/assets/library-data.js"></script>
+<style>
+/* The photo library: same plain owner style as admin/index.html. Photos sit like prints, no cards. */
+:root{--ink:#282624;--wine:#5f1722;--wine-dk:#46101a;--paper:#f4f0e4;--paper-2:#ebe5d4;--line:#cfc6b2;--muted:#6a6157;--ok:#2f6409;--warn:#8a5a00;
+  --serif:"Bitter",Georgia,serif;--caps:"Josefin Sans","Century Gothic",sans-serif}
+*{box-sizing:border-box}
+body{margin:0;font:18px/1.5 var(--serif);color:var(--ink);background:var(--paper)}
+a{color:var(--wine)}
+.banner{background:var(--ink);color:#e9e2d2;text-align:center;font:13px var(--caps);letter-spacing:.04em;padding:8px 14px}
+header{border-bottom:1px solid var(--ink);box-shadow:0 3px 0 -1px var(--paper),0 4px 0 0 var(--ink);background:var(--paper);position:sticky;top:0;z-index:5}
+header .in{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header img{height:40px}
+header nav{display:flex;gap:4px;flex-wrap:wrap}
+header nav a{text-decoration:none;color:var(--ink);font:600 14px var(--caps);text-transform:uppercase;letter-spacing:.12em;padding:10px 12px;border-bottom:3px solid transparent}
+header nav a.on{border-color:var(--wine);color:var(--wine)}
+main{max-width:1180px;margin:0 auto;padding:26px 20px 90px}
+h1{font:700 34px/1.1 var(--serif);margin:6px 0 6px}
+h2{display:flex;align-items:center;gap:14px;color:var(--wine);font:600 20px var(--caps);text-transform:uppercase;letter-spacing:.1em;margin:44px 0 10px}
+h2::after{content:"";flex:1;height:6px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink)}
+.lede{color:var(--muted);margin:0 0 18px;max-width:720px}
+.caps{font:600 12px var(--caps);text-transform:uppercase;letter-spacing:.1em}
+.btn{all:unset;cursor:pointer;display:inline-block;padding:11px 16px 9px;font:600 13px var(--caps);text-transform:uppercase;letter-spacing:.1em;border:2px solid var(--ink);text-align:center}
+.btn:hover{background:var(--paper-2)}
+.btn.pri{background:var(--wine);border-color:var(--wine);color:#fff}.btn.pri:hover{background:var(--wine-dk)}
+/* filters: plain words with a rule under the chosen one */
+.filters{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:10px 0 8px;display:grid;gap:6px}
+.filters .row{display:flex;flex-wrap:wrap;gap:2px 16px;align-items:baseline}
+.filters .lbl{font:600 11px var(--caps);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);width:56px}
+.filters button{all:unset;cursor:pointer;font:600 13px var(--caps);text-transform:uppercase;letter-spacing:.08em;padding:5px 0 3px;border-bottom:2px solid transparent;color:var(--ink)}
+.filters button small{color:var(--muted);font-size:11px;margin-left:3px}
+.filters button.on{border-color:var(--wine);color:var(--wine)}
+.count{margin:14px 0 4px;color:var(--muted);font-size:15px}
+/* the prints */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:30px 26px;margin-top:14px}
+.print{all:unset;cursor:pointer;display:block;background:#fff;padding:8px 8px 10px;box-shadow:1px 2px 0 rgba(40,38,36,.12),2px 6px 14px -6px rgba(40,38,36,.4);transition:transform .15s}
+.print:nth-child(3n+1){transform:rotate(-.8deg)}.print:nth-child(3n+2){transform:rotate(.6deg)}
+.print:hover,.print:focus-visible{transform:rotate(0) scale(1.02);outline:2px solid var(--wine);outline-offset:2px}
+.print img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--paper-2)}
+.print b{display:block;font-size:15.5px;line-height:1.3;margin:8px 2px 2px}
+.print .tg{display:block;font:600 10.5px var(--caps);text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:0 2px}
+.st{display:inline-block;font:600 10.5px var(--caps);text-transform:uppercase;letter-spacing:.07em;margin:4px 2px 0}
+.st::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;vertical-align:0;background:currentColor}
+.st.ours{color:var(--ok)}.st.credit{color:var(--warn)}.st.standin{color:#3d5a73}.st.check{color:#a3341f}
+.empty{padding:30px 0;color:var(--muted)}
+/* left out */
+.out{list-style:none;padding:0;margin:0;border-top:1px solid var(--ink);max-width:820px}
+.out li{padding:12px 0;border-bottom:1px solid var(--line);font-size:16px}
+/* viewer */
+dialog{border:0;padding:0;max-width:min(1100px,96vw);width:100%;background:var(--paper);color:var(--ink);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+dialog::backdrop{background:rgba(30,26,24,.78)}
+.view{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr)}
+.view .pic{background:#1e1b19;display:grid;place-items:center;min-height:300px}
+.view .pic img{display:block;max-width:100%;max-height:82vh}
+.view .info{padding:22px 22px 20px;display:grid;gap:12px;align-content:start}
+.view h3{font:700 23px/1.2 var(--serif);margin:0}
+.view .note{background:#fff7cf;padding:8px 10px;font-size:15px}
+.view .meta{font-size:14px;color:var(--muted);margin:0}
+.view .meta b{color:var(--ink)}
+.view fieldset{border:0;border-top:1px solid var(--line);padding:10px 0 0;margin:0}
+.view legend{font:600 11px var(--caps);text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:0}
+.view .tags{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;margin-top:6px}
+.view .tags label{font-size:14.5px;display:flex;gap:6px;align-items:center;cursor:pointer}
+.view .tags input{accent-color:var(--wine)}
+.view .acts{display:flex;gap:8px;flex-wrap:wrap}
+.x{all:unset;position:absolute;top:8px;left:10px;cursor:pointer;color:#fff;font:600 13px var(--caps);letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.45);padding:6px 10px}
+@media (max-width:760px){.view{grid-template-columns:1fr}.view .pic img{max-height:56vh}.grid{grid-template-columns:repeat(2,1fr);gap:18px 14px}.filters .lbl{width:100%}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--wine);color:#fff;padding:12px 18px;font:15px var(--serif);opacity:0;transition:.25s;pointer-events:none;max-width:90vw;z-index:9}
+.toast.on{opacity:1}
+</style>
+</head><body>
+<div class="banner"><b>Demo</b> · Tag changes stay in this browser. Press “Save tags file” to keep them.</div>
+<header><div class="in">
+  <a href="/" title="View the website"><img src="/assets/img/logo.svg" alt="Carmine's"></a>
+  <nav>
+    <a href="/admin/">Home</a>
+    <a href="/admin/#menu">Menu</a>
+    <a href="/admin/#social">Social posts</a>
+    <a href="/admin/photos.html" class="on">Photos</a>
+    <a href="/admin/insights.html">Insights</a>
+  </nav>
+</div></header>
+<main>
+  <h1>Photos</h1>
+  <p class="lede">Every usable photo we have, in one place, so you don't need Dropbox to look through them. Small, blurry and duplicate photos were left out. Tap a photo to see it big, change its tags or download it.</p>
+
+  <div class="filters">
+    <div class="row" id="ftags"><span class="lbl">Show</span></div>
+    <div class="row" id="fstat"><span class="lbl">Rights</span></div>
+  </div>
+  <p class="count" id="count"></p>
+  <div class="grid" id="grid"></div>
+
+  <h2>Left out on purpose</h2>
+  <ul class="out" id="out"></ul>
+  <p class="row" style="margin-top:22px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="save">Save tags file</button><button class="btn" id="reset">Undo my tag changes</button></p>
+</main>
+
+<dialog id="dlg"><div style="position:relative" class="view">
+  <div class="pic"><img id="vimg" alt=""></div>
+  <div class="info">
+    <h3 id="vtitle"></h3>
+    <div id="vstat"></div>
+    <p class="note" id="vnote" hidden></p>
+    <p class="meta" id="vmeta"></p>
+    <fieldset><legend>Tags (where it could go)</legend><div class="tags" id="vtags"></div><p class="meta" id="vsaved" style="margin-top:6px;color:var(--ok)"></p></fieldset>
+    <div class="acts"><a class="btn pri" id="vdl" download>Download</a><a class="btn" id="vfull" target="_blank" rel="noopener">Open big</a></div>
+  </div>
+  <button class="x" id="vclose" aria-label="Close">Close ✕</button>
+</div></dialog>
+<div class="toast" id="toast"></div>
+
+<script>
+const L = window.LIBRARY;
+const STATUS = {
+  ours:    ["Ours to use", "The family's own photo."],
+  credit:  ["Needs photographer's OK", "From the 2017 photo shoot by Vincent's friend. Get their OK and credit them."],
+  standin: ["Stand-in (Giacobbi's)", "Giacobbi's plate of the same recipe. Use until we shoot our own."],
+  check:   ["Ask first", "We don't know who took it."],
+};
+const KEY = "carmines-photo-tags";
+let edits = {};
+try { edits = JSON.parse(localStorage.getItem(KEY) || "{}"); } catch (e) {}
+const tagsOf = (p) => edits[p.id] || p.tags;
+const saveEdits = () => { try { localStorage.setItem(KEY, JSON.stringify(edits)); } catch (e) {} };
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const toast = (t) => { const el = document.getElementById("toast"); el.textContent = t; el.classList.add("on"); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("on"), 2400); };
+const stat = (s) => `<span class="st ${s}">${STATUS[s][0]}</span>`;
+
+let fTag = "All", fStat = "all";
+try { const h = decodeURIComponent(location.hash.slice(1)); if (L.tags.includes(h)) fTag = h; } catch (e) {}
+
+function filters() {
+  const n = (t) => L.photos.filter((p) => t === "All" || tagsOf(p).includes(t)).length;
+  document.getElementById("ftags").innerHTML = `<span class="lbl">Show</span>` + ["All", ...L.tags].filter((t) => n(t))
+    .map((t) => `<button data-t="${esc(t)}" class="${t === fTag ? "on" : ""}">${esc(t)}<small>${n(t)}</small></button>`).join("");
+  document.getElementById("fstat").innerHTML = `<span class="lbl">Rights</span>` + [["all", "Any"], ...Object.entries(STATUS).map(([k, v]) => [k, v[0]])]
+    .map(([k, t]) => `<button data-s="${k}" class="${k === fStat ? "on" : ""}">${esc(t)}</button>`).join("");
+  document.querySelectorAll("#ftags button").forEach((b) => (b.onclick = () => { fTag = b.dataset.t; history.replaceState(null, "", fTag === "All" ? location.pathname : "#" + encodeURIComponent(fTag)); render(); }));
+  document.querySelectorAll("#fstat button").forEach((b) => (b.onclick = () => { fStat = b.dataset.s; render(); }));
+}
+
+function render() {
+  filters();
+  const list = L.photos.filter((p) => (fTag === "All" || tagsOf(p).includes(fTag)) && (fStat === "all" || p.status === fStat));
+  document.getElementById("count").textContent = `${list.length} photo${list.length === 1 ? "" : "s"}${fTag !== "All" ? ` tagged “${fTag}”` : ""}`;
+  document.getElementById("grid").innerHTML = list.length ? list.map((p) => `<button class="print" data-id="${p.id}">
+      <img src="/assets/img/library/${p.id}-t.jpg" alt="${esc(p.title)}" loading="lazy">
+      <b>${esc(p.title)}</b><span class="tg">${tagsOf(p).map(esc).join(" · ")}</span>${stat(p.status)}</button>`).join("")
+    : `<p class="empty">No photos match. Try “All”.</p>`;
+  document.querySelectorAll(".print").forEach((b) => (b.onclick = () => open(b.dataset.id)));
+}
+
+const dlg = document.getElementById("dlg");
+function open(id) {
+  const p = L.photos.find((x) => x.id === id);
+  const big = `/assets/img/library/${p.id}.jpg`;
+  document.getElementById("vimg").src = big;
+  document.getElementById("vimg").alt = p.title;
+  document.getElementById("vtitle").textContent = p.title;
+  document.getElementById("vstat").innerHTML = `${stat(p.status)}<div style="font-size:14.5px;color:var(--muted);margin-top:2px">${STATUS[p.status][1]}</div>`;
+  const note = document.getElementById("vnote"); note.hidden = !p.note; note.textContent = p.note || "";
+  document.getElementById("vmeta").innerHTML = `${p.dish ? `<b>On the menu:</b> ${esc(p.dish === "Piccata" ? "Chicken Piccata" : p.dish === "Parmesan" ? "Chicken Parmesan" : p.dish)}<br>` : ""}${p.year ? `<b>Taken:</b> ${p.year}, East Amherst<br>` : ""}<b>Original:</b> ${p.w} × ${p.h} pixels<br><b>Where:</b> ${esc(p.where)} › ${esc(p.file)}`;
+  document.getElementById("vtags").innerHTML = L.tags.map((t) => `<label><input type="checkbox" value="${esc(t)}"${tagsOf(p).includes(t) ? " checked" : ""}> ${esc(t)}</label>`).join("");
+  document.querySelectorAll("#vtags input").forEach((c) => (c.onchange = () => {
+    edits[p.id] = [...document.querySelectorAll("#vtags input:checked")].map((x) => x.value);
+    if (JSON.stringify(edits[p.id]) === JSON.stringify(p.tags)) delete edits[p.id];
+    saveEdits(); render(); document.getElementById("vsaved").textContent = "✓ Saved in this browser";
+  }));
+  const dl = document.getElementById("vdl"); dl.href = big; dl.setAttribute("download", `carmines-${p.id}.jpg`);
+  document.getElementById("vfull").href = big;
+  document.getElementById("vsaved").textContent = "";
+  dlg.showModal();
+}
+document.getElementById("vclose").onclick = () => dlg.close();
+dlg.addEventListener("click", (e) => { if (e.target === dlg) dlg.close(); });
+
+document.getElementById("out").innerHTML = L.leftOut.map((x) => `<li>${esc(x.why)}</li>`).join("");
+document.getElementById("save").onclick = () => {
+  const out = L.photos.map((p) => ({ id: p.id, title: p.title, tags: tagsOf(p) }));
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 1)], { type: "application/json" }));
+  a.download = "carmines-photo-tags.json"; a.click();
+  toast("Downloaded. Send it to Vincent to make it permanent.");
+};
+document.getElementById("reset").onclick = () => { edits = {}; saveEdits(); render(); toast("Back to the original tags"); };
+render();
+</script>
+</body></html>

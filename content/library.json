@@ -1,0 +1,521 @@
+{
+ "note": "The photo library on admin/photos.html. Hand-picked from Dropbox /Carmines (and Giacobbi's Drive for stand-in dishes), Nov 17, 2026. Run `python3 tools/photo-library.py` to (re)make the web copies in assets/img/library/ and library-data.js. `src` is relative to ~/Library/CloudStorage/. Status: ours = the family's own photo; credit = Jackson shoot, needs the photographer's OK and a credit; standin = Giacobbi's plate of the same recipe; check = source unknown, ask before using.",
+ "tags": [
+  "Home page",
+  "Menu items",
+  "Specials",
+  "Take-out",
+  "Catering",
+  "Banquets",
+  "Desserts",
+  "Bar & drinks",
+  "Dining room",
+  "Outside & signs",
+  "Kitchen",
+  "People",
+  "Our story",
+  "Social media"
+ ],
+ "photos": [
+  {
+   "id": "building-mural",
+   "src": "Dropbox/Carmines/Google Drive Photos/IMG_5502.heic",
+   "title": "The Buffalo mural on the side of the building",
+   "tags": [
+    "Home page",
+    "Outside & signs",
+    "Our story",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Who painted the mural? Credit the artist when it's used."
+  },
+  {
+   "id": "filet-risotto",
+   "src": "Dropbox/Carmines/Google Drive Photos/IMG_20190421_163256700.jpg",
+   "title": "Filet Mignon Mushroom Risotto",
+   "dish": "Filet Mignon Mushroom Risotto",
+   "tags": [
+    "Home page",
+    "Menu items",
+    "Specials",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "April 2019."
+  },
+  {
+   "id": "piccata",
+   "src": "Dropbox/Carmines/Google Drive Photos/IMG_4750.JPG",
+   "title": "Chicken Piccata",
+   "dish": "Piccata",
+   "tags": [
+    "Home page",
+    "Menu items",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "antipasto",
+   "src": "Dropbox/Carmines/Google Drive Photos/IMG_4094.heic",
+   "title": "Antipasto / charcuterie plate",
+   "tags": [
+    "Menu items",
+    "Catering",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Is this the Antipasto salad or the Charcuterie appetizer?"
+  },
+  {
+   "id": "pasta-meatball",
+   "src": "Dropbox/Carmines/Google Drive Photos/IMG_4352.JPG",
+   "title": "Pasta & meatball in Carmine's Red",
+   "tags": [
+    "Menu items",
+    "Take-out",
+    "Specials",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Good for Create Your Own Bowl or the Big Bucket of Pasta."
+  },
+  {
+   "id": "catering-trays",
+   "src": "Dropbox/Carmines/Google Drive Photos/4F530E70-155D-44BD-B798-3AA98E57272E.JPG",
+   "title": "Catering trays on the buffet",
+   "tags": [
+    "Catering",
+    "Banquets",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "bartender",
+   "src": "Dropbox/Carmines/Google Drive Photos/62268213-53AA-42A9-8D87-BD40250FFB5E.JPG",
+   "title": "Behind the bar",
+   "tags": [
+    "Bar & drinks",
+    "People",
+    "Social media"
+   ],
+   "status": "check",
+   "note": "A screenshot of a social post. Who took it, and is the bartender OK being shown?"
+  },
+  {
+   "id": "dessert-apple-granny",
+   "src": "Dropbox/Carmines/Desserts/Apple Granny.JPG",
+   "title": "Apple Granny",
+   "tags": [
+    "Desserts",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "dessert-cannoli",
+   "src": "Dropbox/Carmines/Desserts/Cannolli.JPG",
+   "title": "Cannoli",
+   "tags": [
+    "Desserts",
+    "Banquets",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "dessert-carrot-cake",
+   "src": "Dropbox/Carmines/Desserts/Carrot Cake.JPG",
+   "title": "Carrot cake",
+   "tags": [
+    "Desserts"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "dessert-carrot-cake-2",
+   "src": "Dropbox/Carmines/Desserts/CarrotCake.JPG",
+   "title": "Carrot cake (side)",
+   "tags": [
+    "Desserts",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "dessert-cheesecake",
+   "src": "Dropbox/Carmines/Desserts/Cheesecake.JPG",
+   "title": "Cheesecake",
+   "tags": [
+    "Desserts",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "dessert-tiramisu",
+   "src": "Dropbox/Carmines/Desserts/Iced Tira Misu.JPG",
+   "title": "Iced tiramisu",
+   "tags": [
+    "Desserts",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "dessert-pb-pie",
+   "src": "Dropbox/Carmines/Desserts/Peanut Butter Pie.JPG",
+   "title": "Peanut butter pie",
+   "tags": [
+    "Desserts",
+    "Social media"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "sign-night",
+   "src": "Dropbox/Carmines/SIGN/Carmine'sAtNight.jpg",
+   "title": "The red & green sign at night",
+   "tags": [
+    "Outside & signs",
+    "Our story"
+   ],
+   "status": "ours",
+   "note": "The older sign colors. Which location is this?"
+  },
+  {
+   "id": "sign-night-2",
+   "src": "Dropbox/Carmines/Old/Older files (2013-2016 menus, sign, napkin)/SIGN/IMG_0866.JPG",
+   "title": "The red & green sign at night (side)",
+   "tags": [
+    "Outside & signs",
+    "Our story"
+   ],
+   "status": "ours"
+  },
+  {
+   "id": "ea-sign",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44663.jpg",
+   "title": "Sign over the awning, East Amherst",
+   "tags": [
+    "Outside & signs",
+    "Our story"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-sign-2",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44736.jpg",
+   "title": "Sign over the awning (wider)",
+   "tags": [
+    "Outside & signs",
+    "Our story"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-window",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44654.jpg",
+   "title": "Logo on the front window",
+   "tags": [
+    "Home page",
+    "Outside & signs",
+    "Social media"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-window-2",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44655.jpg",
+   "title": "Logo on the front window (close)",
+   "tags": [
+    "Outside & signs"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-windows",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44657.jpg",
+   "title": "Front windows, black & white",
+   "tags": [
+    "Dining room"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-windows-2",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44658.jpg",
+   "title": "Front windows from inside",
+   "tags": [
+    "Dining room"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-patio",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44660.jpg",
+   "title": "The patio, black & white",
+   "tags": [
+    "Dining room",
+    "Outside & signs"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-patio-2",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44662.jpg",
+   "title": "The patio",
+   "tags": [
+    "Dining room",
+    "Outside & signs"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-dining",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44651.jpg",
+   "title": "The dining room booth",
+   "tags": [
+    "Dining room",
+    "Banquets"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-table",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44682.jpg",
+   "title": "A table set for dinner",
+   "tags": [
+    "Dining room",
+    "Banquets",
+    "Social media"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-host",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44671.jpg",
+   "title": "Greeting guests at the host stand",
+   "tags": [
+    "People",
+    "Dining room",
+    "Our story"
+   ],
+   "status": "credit",
+   "year": "2017",
+   "note": "A guest is in the shot: ask before posting."
+  },
+  {
+   "id": "ea-taste-poster",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44653.jpg",
+   "title": "Taste of Buffalo 2013 poster on the wall",
+   "tags": [
+    "Our story"
+   ],
+   "status": "credit",
+   "year": "2017",
+   "note": "Useful for the Taste of Buffalo story."
+  },
+  {
+   "id": "ea-wine-list",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44685.jpg",
+   "title": "The wine list",
+   "tags": [
+    "Bar & drinks"
+   ],
+   "status": "credit",
+   "year": "2017",
+   "note": "The wine list in the photo may be out of date."
+  },
+  {
+   "id": "ea-bar",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44700.jpg",
+   "title": "The bar taps",
+   "tags": [
+    "Bar & drinks",
+    "Social media"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-beer",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44706.jpg",
+   "title": "Pouring a draft, black & white",
+   "tags": [
+    "Bar & drinks",
+    "Social media"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-wine",
+   "src": "Dropbox/Carmines/Google Drive Photos/Photos/Jackson/JAX44723.jpg",
+   "title": "Wine bottles",
+   "tags": [
+    "Bar & drinks",
+    "Social media"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-mural-diners",
+   "src": "Dropbox/Carmines/Google Drive Photos/Carmine's/Photos/Photos-1-001/2017-10-18 18.14.06.jpg",
+   "title": "The Carmine's Vino mural over the dining room",
+   "tags": [
+    "Dining room",
+    "Home page",
+    "Our story"
+   ],
+   "status": "credit",
+   "year": "2017",
+   "note": "Guests at the table (seen from the side)."
+  },
+  {
+   "id": "ea-toss",
+   "src": "Dropbox/Carmines/Google Drive Photos/Carmine's/Photos/Photos-1-001/2017-10-18 18.26.42.jpg",
+   "title": "Pasta in the pan, black & white",
+   "tags": [
+    "Kitchen",
+    "Our story",
+    "Social media"
+   ],
+   "status": "credit",
+   "year": "2017"
+  },
+  {
+   "id": "ea-family-table",
+   "src": "Dropbox/Carmines/Google Drive Photos/Carmine's/Photos/Photos-1-001/2017-10-18 18.37.01-1.jpg",
+   "title": "Family at the table",
+   "tags": [
+    "People",
+    "Our story"
+   ],
+   "status": "credit",
+   "year": "2017",
+   "note": "Who's in it? Kelly is OK showing family faces."
+  },
+  {
+   "id": "ea-family-front",
+   "src": "Dropbox/Carmines/Google Drive Photos/Carmine's/Photos/Photos-1-001/2017-10-18 18.11.52.jpg",
+   "title": "Out front on opening night",
+   "tags": [
+    "People",
+    "Our story",
+    "Home page"
+   ],
+   "status": "credit",
+   "year": "2017",
+   "note": "Who's in it?"
+  },
+  {
+   "id": "gia-piccata",
+   "src": "Dropbox/Carmines/Website Photos/Giacobbi's dishes (same recipes, stand-ins)/chicken-pix.jpg",
+   "title": "Chicken Piccata (Giacobbi's plate)",
+   "dish": "Piccata",
+   "tags": [
+    "Menu items"
+   ],
+   "status": "standin"
+  },
+  {
+   "id": "gia-parm",
+   "src": "Dropbox/Carmines/Website Photos/Giacobbi's dishes (same recipes, stand-ins)/chicken-parm.jpg",
+   "title": "Chicken Parmesan (Giacobbi's plate)",
+   "dish": "Parmesan",
+   "tags": [
+    "Menu items",
+    "Take-out"
+   ],
+   "status": "standin"
+  },
+  {
+   "id": "gia-lasagna",
+   "src": "Dropbox/Carmines/Website Photos/Giacobbi's dishes (same recipes, stand-ins)/lasagna.jpg",
+   "title": "Lasagna (Giacobbi's plate)",
+   "dish": "Lasagna",
+   "tags": [
+    "Menu items",
+    "Catering"
+   ],
+   "status": "standin"
+  },
+  {
+   "id": "gia-lasagna-2",
+   "src": "GoogleDrive-vincentjacobbi@gmail.com/My Drive/Projects/Giacobbis/Food Gallery/Lasagna2.jpeg",
+   "title": "Lasagna, close (Giacobbi's plate)",
+   "dish": "Lasagna",
+   "tags": [
+    "Menu items"
+   ],
+   "status": "standin"
+  },
+  {
+   "id": "gia-penne-palermo",
+   "src": "Dropbox/Carmines/Website Photos/Giacobbi's dishes (same recipes, stand-ins)/penne-palermo.jpg",
+   "title": "Penne Palermo (Giacobbi's plate)",
+   "dish": "Penne Palermo",
+   "tags": [
+    "Menu items"
+   ],
+   "status": "standin"
+  },
+  {
+   "id": "gia-frutti",
+   "src": "Dropbox/Carmines/Website Photos/Giacobbi's dishes (same recipes, stand-ins)/frutti-di-mare.jpg",
+   "title": "Fruitti di Mare (Giacobbi's plate)",
+   "dish": "Fruitti di Mare",
+   "tags": [
+    "Menu items"
+   ],
+   "status": "standin"
+  },
+  {
+   "id": "gia-greens",
+   "src": "GoogleDrive-vincentjacobbi@gmail.com/My Drive/Projects/Giacobbis/Food Gallery/Beans+Greens.jpeg",
+   "title": "Greens N Beans (Giacobbi's plate)",
+   "dish": "Greens N Beans",
+   "tags": [
+    "Menu items"
+   ],
+   "status": "standin"
+  }
+ ],
+ "leftOut": [
+  {
+   "why": "The Buffalo News “Smiles” shoot: 15 DSC files, plus 8 renamed copies in Photos-1-001 dated 2017-10-19. The paper owns them; we'd need their written permission."
+  },
+  {
+   "why": "Too small (under 1200 pixels wide), mostly 800-pixel copies of the 2017 shoot. Their full-size originals are in the Jackson folder where they exist."
+  },
+  {
+   "why": "Duplicates: the same photo saved twice (we kept the larger one)."
+  },
+  {
+   "why": "Guests are the main subject (diners at a table, 2017). Ask before using."
+  },
+  {
+   "why": "Stock or unknown-source images: Pizza.jpg in the old menu folder, GirlOnVespa.jpg, the mural reference pictures."
+  },
+  {
+   "why": "Not photos: logos, menus, T-shirt and napkin art, grand opening graphic, other restaurants' logos. These live in Dropbox under Logo (current) and Old."
+  },
+  {
+   "why": "Giacobbi's own dining room, bar and cocktails (a different restaurant), and Giacobbi's dishes that Carmine's makes differently (gnocchi, calamari)."
+  }
+ ]
+}

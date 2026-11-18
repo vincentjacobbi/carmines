@@ -75,6 +75,7 @@ h1{font:700 34px/1.1 var(--serif);margin:6px 0 6px}
     <button data-t="home" class="on">Home</button>
     <button data-t="menu">Menu</button>
     <button data-t="social">Social posts</button>
+    <button onclick="location.href='/admin/photos.html'">Photos</button>
     <button onclick="location.href='/admin/insights.html'">Insights</button>
   </nav>
 </div></header>
@@ -86,6 +87,7 @@ h1{font:700 34px/1.1 var(--serif);margin:6px 0 6px}
   <ul class="jobs">
     <li><div><b>Change the menu</b><p>Update a price, fix a description, add or hide a dish.</p></div><button class="btn pri" onclick="go('menu')">Edit menu</button></li>
     <li><div><b>Write a social post</b><p>Pick a dish and the kind of post. You get a caption, a photo idea and when to post it.</p></div><button class="btn" onclick="go('social')">Write a post</button></li>
+    <li><div><b>Find a photo</b><p>All our usable photos in one place, tagged by where they could go: home page, menu, specials, catering.</p></div><a class="btn" href="/admin/photos.html">Photos</a></li>
     <li><div><b>See how business is going</b><p>Sales, best sellers, nearby prices and email campaigns (sample numbers for now).</p></div><a class="btn" href="/admin/insights.html">Insights</a></li>
     <li><div><b>Look at the website</b><p>See what customers see.</p></div><a class="btn" href="/">Open website</a></li>
   </ul>
@@ -146,6 +148,7 @@ function go(t) {
   window.scrollTo(0, 0);
 }
 document.querySelectorAll("header nav button[data-t]").forEach((b) => (b.onclick = () => go(b.dataset.t)));
+if (["menu", "social"].includes(location.hash.slice(1))) go(location.hash.slice(1));
 
 // ---------- menu editor ----------
 const origItem = (si, ii) => ORIGINAL.sections[si]?.items[ii];
