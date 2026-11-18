@@ -61,9 +61,11 @@
     if (/(book|reserv|table|tonight|party of)/.test(s))
       return reply(`We take reservations by phone. They're suggested for parties of 6 or more and on Fridays and Saturdays. Call ${tel}.`);
     if (/(order|pickup|pick up|take.?out|deliver)/.test(s))
-      return reply(R.ubereats
+      return reply(R.orderOnline
+        ? `Order online for pickup, or call ${tel}.<br><a class="btn primary" href="${R.orderOnline}" target="_blank" rel="noopener">Order online</a>`
+        : R.ubereats
         ? `You can order on Uber Eats, or call ${tel} for take-out.<br><a class="btn primary" href="${R.ubereats}" target="_blank" rel="noopener">Order on Uber Eats</a>`
-        : `Call ${tel} for take-out.${(window.SITE_DATA.takeout || []).length ? ` Feeding a crowd? Our take-out specials feed 4–6: ${window.SITE_DATA.takeout.map((k) => `<b>${esc(k.n)}</b> $${k.p.toFixed(2)}`).join(" or ")}. <a href="/takeout.html">See what's included</a>.` : ""} <small>(Staging: the Uber Eats link isn't added yet.)</small>`);
+        : `Call ${tel} for take-out.${(window.SITE_DATA.takeout || []).length ? ` Feeding a crowd? Our take-out specials feed 4–6: ${window.SITE_DATA.takeout.map((k) => `<b>${esc(k.n)}</b> $${k.p.toFixed(2)}`).join(" or ")}. <a href="/takeout.html">See what's included</a>.` : ""} <small>(Staging: online ordering isn't connected yet.)</small>`);
     if (/(cater|party|event|office|tray|banquet)/.test(s)) {
       flow = { step: 0, data: {} };
       return reply(`${esc(R.catering)} <a href="/catering.html">See catering</a>.<br>To start a quote: what's the date of your event?`, []);

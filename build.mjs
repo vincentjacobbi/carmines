@@ -22,6 +22,8 @@ const R = {
   facebook: "https://www.facebook.com/CarminesToGo/",
   instagram: "https://www.instagram.com/carminestogo/",
   // Placeholders: Kelly uses Uber Eats for online ordering; the store link isn't confirmed yet. No reservation system.
+  // Shift4 Online Ordering "Menu URL" (pickup only). Paste it here once Kelly turns ordering on; every order button switches to it.
+  orderOnline: "https://online.skytab.com/5236d831a504b72d60cf56459a158868",
   ubereats: null,
   // From Kelly (Nov 2026): owners Kelly & Alex Jacobbi; opened in 1993.
   owners: "Kelly & Alex Jacobbi",
@@ -137,7 +139,9 @@ const menuSchema = MENU.some((s) => realItems(s).length) ? [{
     hasMenuItem: realItems(s).map((i) => { const o = itemOffers(i); return { "@type": "MenuItem", name: i.n, description: i.d, ...(o.length ? { offers: o.length === 1 ? o[0] : o } : {}) }; }) })),
 }] : [];
 
-const orderBtn = (cls = "ghost") => R.ubereats
+const orderBtn = (cls = "ghost") => R.orderOnline
+  ? `<a class="btn ${cls}" href="${R.orderOnline}" target="_blank" rel="noopener">Order online for pickup</a>`
+  : R.ubereats
   ? `<a class="btn ${cls}" href="${R.ubereats}" target="_blank" rel="noopener">Order on Uber Eats</a>`
   : `<a class="btn ${cls}" href="tel:${R.tel}">Call for take-out</a>`;
 
@@ -149,7 +153,7 @@ const nav = (active) => `
   <nav class="links">
     ${[["/menu.html", "Menu"], ["/takeout.html", "Take-Out"], ["/catering.html", "Catering"], ["/banquets.html", "Banquets"], ["/story.html", "Our Story"], ["/#visit", "Visit"]]
       .map(([h, t]) => `<a href="${h}"${active === t ? ' aria-current="page"' : ""}>${t}</a>`).join("")}
-    ${R.ubereats ? orderBtn() : ""}
+    ${R.orderOnline ? `<a class="btn ghost" href="${R.orderOnline}" target="_blank" rel="noopener">Order online</a>` : R.ubereats ? orderBtn() : ""}
     <a class="btn primary" href="tel:${R.tel}">Call ${R.phoneDots}</a>
   </nav>
 </div></header>`;
@@ -443,14 +447,15 @@ const takeoutPage = page(
   "Take-out from Carmine's Italiano: family-size specials that feed 4–6, and the full dinner menu. Call 716-636-3100.",
   "Take-Out",
   `
-${pageHead("Take-Out", `Call <a href="tel:${R.tel}">${R.phone}</a> and pick it up at ${R.streetShort}, across from T.J. Maxx. The full dinner menu is available to go.`)}
+${pageHead("Take-Out", `${R.orderOnline ? `Order online and pick it up at ${R.streetShort}, across from T.J. Maxx, or call <a href="tel:${R.tel}">${R.phone}</a>.` : `Call <a href="tel:${R.tel}">${R.phone}</a> and pick it up at ${R.streetShort}, across from T.J. Maxx.`} The full dinner menu is available to go.`)}
+${R.orderOnline ? `<p class="center" style="margin:-10px 0 10px"><a class="btn primary" href="${R.orderOnline}" target="_blank" rel="noopener">Order online for pickup</a></p>` : ""}
 ${takeoutSection()}
 <section class="tight"><div class="wrap split" style="align-items:center">
   <figure class="snap" style="transform:rotate(-1.2deg);max-width:440px;margin:0 auto"><a href="/assets/img/takeout-flier-2026-05-19.jpg" target="_blank" rel="noopener"><img src="/assets/img/takeout-flier-2026-05-19.jpg" alt="Carmine's take-out specials flier: Big Bucket of Pasta $39.99 and Chicken Parm Pack $64.99, feeds 4 to 6, take-out only" style="aspect-ratio:auto"></a><figcaption>The flier, May 2026</figcaption></figure>
   <div>
     ${ruleHead("Ordering", "h2")}
     <p>Call ahead and your order will be ready when you get here. We're open for dinner Wednesday through Sunday from 4pm.</p>
-    <p>${ph("Online ordering through SkyTab (pickup only) goes here once Kelly's Shift4 rep turns it on.")}</p>
+    <p>${R.orderOnline ? `Or order online and pick it up: pay ahead and skip the call. <a href="${R.orderOnline}" target="_blank" rel="noopener">Order online</a>.` : ph("Online ordering (pickup only) goes here once Kelly turns on Shift4 Online Ordering and sends the Menu URL.")}</p>
     <p><a class="btn primary" href="tel:${R.tel}">Call ${R.phoneDots}</a> <a class="btn ghost" href="/menu.html">The dinner menu</a></p>
   </div>
 </div></section>`, [], "/takeout.html"
@@ -476,7 +481,7 @@ const menuData = {
   menu: MENU_DOC, // full document for the owner menu editor
   takeout: TAKEOUT.specials.map((k) => ({ n: k.n, p: k.p, includes: k.includes })),
   market: MARKET, // real competitor prices for the insights dashboard
-  restaurant: { name: R.name, owners: R.owners, founded: R.founded, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary by night, and holiday hours are posted on Google", catering: CATERING.intro },
+  restaurant: { name: R.name, owners: R.owners, founded: R.founded, address: `${R.street}, ${R.city}, ${R.region} ${R.zip}`, phone: R.phone, tel: R.tel, orderOnline: R.orderOnline, ubereats: R.ubereats, hours: "Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary by night, and holiday hours are posted on Google", catering: CATERING.intro },
   catering: { packages: CATER.dropoff.packages, fullService: CATER.fullservice.p, banquets: BANQ.packages.map((k) => ({ n: k.n, p: k.p })), room: BANQ.room },
   sections: MENU.map((s) => ({ id: s.id, title: s.title, items: s.items.filter((i) => !i.hidden).map((i) => ({ n: i.n, d: i.d, p: typeof i.p === "number" ? i.p : null, price: priceText(i) })) })),
 };

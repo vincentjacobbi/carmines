@@ -38,15 +38,15 @@ main{overflow-x:clip}
 /* ---------- header ---------- */
 header.nav{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--ink);box-shadow:0 3px 0 -1px var(--paper),0 4px 0 0 var(--ink)}
 header.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:78px;gap:16px}
-header.nav .brand{display:block;line-height:0;width:170px}
+header.nav .brand{display:block;line-height:0;width:170px;flex-shrink:0}
 header.nav .brand svg{width:100%;height:auto}
-nav.links{display:flex;gap:22px;align-items:center;white-space:nowrap}
+nav.links{display:flex;gap:16px;align-items:center;white-space:nowrap}
 nav.links a:not(.btn){color:var(--ink);text-decoration:none;font:600 14px var(--caps);text-transform:uppercase;letter-spacing:var(--track)}
 nav.links a:not(.btn):hover,nav.links a[aria-current]{color:var(--wine)}
 nav.links a[aria-current]{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:7px}
 .menu-toggle{display:none;background:none;border:0;font:600 14px var(--caps);text-transform:uppercase;letter-spacing:var(--track);padding:6px 0;cursor:pointer;color:var(--ink)}
 .menu-toggle::before{content:"Menu ";}
-@media (max-width:1080px){
+@media (max-width:1240px){
   header.nav .wrap{height:66px}
   header.nav .brand{width:132px}
   nav.links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--paper);flex-direction:column;align-items:flex-start;padding:18px 24px;border-bottom:1px solid var(--ink)}

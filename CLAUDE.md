@@ -6,6 +6,7 @@ This repo is a **staging demo** to show Kelly what's possible. It is not the liv
 
 ## Today's setup (from Kelly, Nov 2026)
 - **Website:** carminestogo.com, built by "Me Web Design". Jeremy manages it, and every change goes through him. Kelly wants us to host it or teach her to edit it herself.
+- **Online ordering is live (Nov 17, 2026):** Shift4 Online Ordering, https://online.skytab.com/5236d831a504b72d60cf56459a158868 (the user says it also feeds Uber Eats). `R.orderOnline` in build.mjs switches every order button on the site and the chat to it; the nav shows a short "Order online" button, so the hamburger breakpoint is 1240px. Its menu is entered separately in Shift4 Menu Manager and has description mix-ups customers can see (Arancini shows the clams-casino shrimp text, Salmon & Asparagus Risotto shows Fruitti di Mare's, Gnocchi Salerno shows an angel-hair dish, French Onion shows Neptune Bisque's, Side Caesar shows Greens N Beans'), plus items that differ from the March 2025 printed menu (4 Cheese Meatball Flatbread, Shrimp & Asparagus Risotto, Filet Dinner, desserts). Kelly fixes those in Menu Manager.
 - **POS:** Shift4 SkyTab. **Online ordering:** Uber Eats (store link not added yet). **Reservations:** no integration; by phone.
 - **Her repetitive work:** menu updates, website updates, social media posts.
 - **Wishlist:** average competitor prices, all marketing campaigns, happy hour incentives, take-out specials, dessert table tents, an updated menu look and style.

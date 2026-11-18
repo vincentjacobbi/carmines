@@ -809,6 +809,7 @@ window.SITE_DATA = {
   "address": "7170 Transit Road, Williamsville, NY 14221",
   "phone": "(716) 636-3100",
   "tel": "+17166363100",
+  "orderOnline": "https://online.skytab.com/5236d831a504b72d60cf56459a158868",
   "ubereats": null,
   "hours": "Wednesday–Sunday from 4pm; closed Monday and Tuesday. Closing times vary by night, and holiday hours are posted on Google",
   "catering": "Drop-off catering for gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening."
