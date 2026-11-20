@@ -87,7 +87,11 @@ const PHOTOS = JSON.parse(readFileSync("content/photos.json", "utf8"));
 const dishPhoto = (n) => PHOTOS.dishes.find((d) => d.dish === n);
 const STANDIN = `<span class="ph">Sample: Giacobbi’s plate, same recipe</span>`;
 const CREDIT = `<span class="ph">Photo credit + OK from the photographer</span>`;
-const snap = (f, alt, cap, tilt = "") => `<figure class="snap"${tilt ? ` style="transform:rotate(${tilt}deg)"` : ""}><img src="/assets/img/photos/${f}.jpg" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`;
+// f is a file in assets/img/photos/, or "lib:<id>" for a photo-library thumbnail (assets/img/library/<id>-t.jpg, 480 px).
+const photoSrc = (f) => (f.startsWith("lib:") ? `/assets/img/library/${f.slice(4)}-t.jpg` : `/assets/img/photos/${f}.jpg`);
+const snap = (f, alt, cap, tilt = "") => `<figure class="snap"${tilt ? ` style="transform:rotate(${tilt}deg)"` : ""}><img src="${photoSrc(f)}" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`;
+// content/awards.json: Kelly's Taste of Buffalo records.
+const AWARDS = JSON.parse(readFileSync("content/awards.json", "utf8"));
 const phPhoto = (label, ratio = "4/3") => `<div class="ph ph-block" style="aspect-ratio:${ratio};display:grid;place-items:center;text-align:center;margin:0">[Photo: ${label}]</div>`;
 // Catering prices print the way her catering menu does: whole dollars without cents.
 const trayPrice = (n) => (typeof n === "number" ? (Number.isInteger(n) ? String(n) : n.toFixed(2)) : n === "mp" ? "Mkt" : "—");
@@ -198,9 +202,9 @@ const hoursList = `<ul class="info-list">${HOURS.map(([d, h]) => `<li><span>${d}
 // ---------- Home: laid out like the cover of her menu ----------
 // Dishes the current site calls favorites. Descriptions and prices get transcribed from the menu.
 // The current site names Chicken Piccata, Al's Fussili and "Risotto" as favorites. Which risotto is a question for Kelly.
-const FAVORITES = ["Piccata", "Al’s Fussili w/ Chicken", null];
+const FAVORITES = ["Piccata", "Al’s Fussili w/ Chicken", "Salmon & Asparagus Risotto"];
 // Stories behind dish names, in Kelly's words (Nov 2026).
-const DISH_NOTES = { "Al’s Fussili w/ Chicken": "Created by our son Alex Jacobbi, and a house favorite ever since." };
+const DISH_NOTES = { "Al’s Fussili w/ Chicken": "Created by our son Alex Jacobbi, and a house favorite ever since.", "Salmon & Asparagus Risotto": "Our asiago-asparagus risotto won Chairman’s Choice at the 2021 Taste of Buffalo." };
 
 const home = page(
   "Carmine's Italiano | Italian Restaurant on Transit Road, Williamsville NY",
@@ -230,7 +234,7 @@ const home = page(
   ${ruleHead("House Favorites")}
   <div class="dishes">
     ${FAVORITES.map((n) => { const i = n && findItem(n); return i
-      ? `<article class="dish">${dishPhoto(i.n) ? snap(dishPhoto(i.n).f, dishPhoto(i.n).alt, STANDIN, "-1") : phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}</h3><p>${i.d}</p>${DISH_NOTES[i.n] ? `<p class="dish-note">${DISH_NOTES[i.n]}</p>` : ""}</article>`
+      ? `<article class="dish">${dishPhoto(i.n) ? snap(dishPhoto(i.n).f, dishPhoto(i.n).alt, "From our kitchen", "-1") : phPhoto(i.n)}<h3>${i.n === "Piccata" ? "Chicken Piccata" : i.n}</h3><p>${i.d}</p>${DISH_NOTES[i.n] ? `<p class="dish-note">${DISH_NOTES[i.n]}</p>` : ""}</article>`
       : `<article class="dish">${phPhoto("Risotto")}<h3>Risotto</h3><p>${ph("Award-winning risotto: Kelly is sending the Taste of Buffalo records. The menu has Filet Mignon Mushroom Risotto and Salmon & Asparagus Risotto.")}</p></article>`; }).join("\n    ")}
   </div>
   <p class="center" style="margin-top:34px"><a class="btn ghost" href="/menu.html">The full menu</a></p>
@@ -291,10 +295,9 @@ ${pageHead("The Menu", MENU_DOC.note)}
 <section class="tight"><div class="wrap">
   <p class="note">Staging note: transcribed from the March 18, 2025 printed menu. Kelly to confirm nothing has changed since.</p>
   <div class="menu-nav">${MENU.map((s) => `<a href="#${s.id}">${s.title}</a>`).join("")}<a href="/takeout.html">Take-Out Specials</a></div>
-  <div class="snaps five">
-    ${PHOTOS.dishes.filter((d) => d.dish !== "Piccata").map((d, j) => snap(d.f, d.alt, d.dish === "Parmesan" ? "Chicken Parmesan" : d.dish, [1, -1.2, 0.8, -0.6, 1.3][j])).join("\n    ")}
+  <div class="snaps" style="margin-bottom:30px">
+    ${PHOTOS.dishes.filter((d) => !["Piccata", "Salmon & Asparagus Risotto"].includes(d.dish)).map((d, j) => snap(d.f, d.alt, d.dish === "Parmesan" ? "Chicken Parmesan" : d.dish, [1, -1.2, 0.8, -0.6][j])).join("\n    ")}
   </div>
-  <p class="center small" style="margin:10px 0 26px">${STANDIN} Real Carmine’s photos come from the photo shoot.</p>
   <div class="menu-cols">${MENU.map((s, k) => `
   <div class="menu-section" id="${s.id}">${ruleHead(s.title)}
     ${sectionBody(s)}
@@ -315,7 +318,7 @@ const TIMELINE = [
   { y: "2017", t: "Back in business", d: "Carmine's reopened at 9430 Transit Road in East Amherst, our home for five years." },
   { y: "2022", t: "Our forever home", d: "In September 2022 we moved to 7170 Transit Road in Williamsville, where we are today." },
   { y: "2023", t: "Chef Dave comes back", d: "Dave Marshal first cooked for our family from 1997 to 2001, then went on to another career. He came back to our kitchen in 2023, and he's been a nice addition to the family." },
-  { y: "Year", t: "Taste of Buffalo", d: "Awards, years and dishes from Kelly's records", ph: true },
+  { y: "2003–2022", t: "Ten Taste of Buffalo awards", d: "From Best Vegetarian in 2003 to Best Seafood in 2022, including Chairman’s Choice three times and Best Seafood five times. The full list is below." },
 ];
 const tlItem = (x) => `<li class="tl"><div class="tl-y">${x.ph ? ph(x.y) : x.y}</div><div class="tl-body"><h3>${x.ph ? ph(x.t) : x.t}</h3><p>${x.ph ? ph(x.d) : x.d}</p>${x.clip ? `
       <figure class="clip"><a href="/assets/img/press/${x.clip.f}.jpg" target="_blank" rel="noopener"><img src="/assets/img/press/${x.clip.f}-sm.jpg" alt="${x.clip.alt}" loading="lazy"></a>
@@ -333,6 +336,9 @@ ${pageHead("Our Story", `A casual family Italian restaurant since ${R.founded}, 
   <ol class="timeline">
     ${TIMELINE.map(tlItem).join("\n    ")}
   </ol>
+  ${ruleHead("Taste of Buffalo")}
+  <p class="sub-caps">Our ten awards</p>
+  <div class="ledger awards">${AWARDS.awards.map((a) => `<div class="lrow"><span class="nm"><b>${a.y}</b> ${a.award}</span><span class="dots"></span><span class="pr">${a.dish || ph(a.ask)}</span></div>`).join("")}</div>
   ${ruleHead("The Family")}
   <div class="cols2 family">
     <div><h3>Kelly &amp; Alex Jacobbi</h3><p>Owners. Alex created Al’s Fussili, the dish that became a house favorite.</p></div>
@@ -497,6 +503,7 @@ const llms = `# Carmine's Italiano
 - History: opened in 1993; after a 2015 fire, reopened at 9430 Transit Road, East Amherst in 2017; at 7170 Transit Road, Williamsville since September 2022.
 - Reservations: suggested for parties of 6 or more and on Fridays and Saturdays (call)
 - Take-out specials (take-out only, feed 4–6): ${TAKEOUT.specials.map((k) => `${k.n} $${money(k.p)} (${k.includes.join(", ").toLowerCase()})`).join("; ")}
+- Taste of Buffalo awards: ${AWARDS.awards.map((a) => `${a.y} ${a.award}${a.dish ? ` (${a.dish})` : ""}`).join("; ")}
 - Catering: gatherings of 10 or more, delivered anywhere in the 716 area, seven days a week, afternoon through evening
 - Drop-off catering packages: ${CATER.dropoff.packages.map((k) => `${k.n} $${money(k.p)} per person (${k.d.toLowerCase()})`).join("; ")}. Full service party package $${money(CATER.fullservice.p)} per person. Trays by the full or half.
 - Banquets: private room seating 40. ${BANQ.packages.map((k) => `${k.n} $${money(k.p)} per person`).join("; ")}.

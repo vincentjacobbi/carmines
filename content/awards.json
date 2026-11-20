@@ -1,0 +1,16 @@
+{
+  "source": "Kelly's handwritten Taste of Buffalo records (three pages photographed Nov 2026; originals kept privately in source/taste/, git-ignored, because they list sales figures). Her list is titled \"10 Taste of Buffalo Awards\".",
+  "unsure": "2009 dish reads like \"Shrimp Cargo\" and the 2022 dish isn't written down: confirm both with Kelly. She also wasn't sure of the first year they took part (\"1996? maybe 94 or 95\"), so no start year is published.",
+  "awards": [
+    { "y": 2003, "award": "Best Vegetarian", "dish": "Portabella Salad" },
+    { "y": 2005, "award": "People's Choice", "dish": "Crab Cake Stuffed Shrimp" },
+    { "y": 2006, "award": "Best Seafood", "dish": "Crab Cake Stuffed Shrimp" },
+    { "y": 2007, "award": "Chairman's Choice", "dish": "Crab Cake Stuffed Shrimp" },
+    { "y": 2009, "award": "Best Seafood", "dish": null, "ask": "dish name to confirm (reads like “Shrimp Cargo”)" },
+    { "y": 2013, "award": "Best Seafood", "dish": "Seafood Stuffed Mushrooms with a lobster sauce" },
+    { "y": 2015, "award": "Best Seafood", "dish": "Bacon-Wrapped Shrimp" },
+    { "y": 2018, "award": "Chairman's Choice", "dish": "Crab Cake Stuffed Shrimp" },
+    { "y": 2021, "award": "Chairman's Choice", "dish": "Asiago-Asparagus Risotto" },
+    { "y": 2022, "award": "Best Seafood", "dish": null, "ask": "which dish?" }
+  ]
+}

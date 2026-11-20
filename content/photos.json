@@ -2,37 +2,37 @@
   "note": "Every photo on the site, with where it came from and what permission is still needed. Web copies (EXIF stripped) are in assets/img/photos/.",
   "dishes": [
     {
-      "f": "piccata",
+      "f": "lib:piccata",
       "dish": "Piccata",
-      "alt": "Chicken piccata with mushrooms and artichoke hearts in a lemon white wine sauce"
+      "alt": "Chicken piccata with lemon, capers and artichoke hearts"
     },
     {
-      "f": "parmesan",
+      "f": "lib:mom-salmon-risotto",
+      "dish": "Salmon & Asparagus Risotto",
+      "alt": "Grilled salmon on creamy asparagus risotto with a charred lemon"
+    },
+    {
+      "f": "lib:mom-chicken-parm",
       "dish": "Parmesan",
-      "alt": "Chicken parmesan with melted mozzarella and red sauce"
+      "alt": "Chicken parmesan with melted mozzarella and red sauce over penne"
     },
     {
-      "f": "lasagna",
-      "dish": "Lasagna",
-      "alt": "A square of layered lasagna in red sauce"
-    },
-    {
-      "f": "penne-palermo",
+      "f": "lib:mom-penne-palermo",
       "dish": "Penne Palermo",
-      "alt": "Penne with peppers, sliced sausage and shaved asiago"
+      "alt": "Penne Palermo with sliced sausage, peppers and asiago"
     },
     {
-      "f": "fruitti-di-mare",
-      "dish": "Fruitti di Mare",
-      "alt": "Linguine with mussels, clams and shrimp in tomato sauce"
+      "f": "lib:mom-calamari",
+      "dish": "Calamari Fritti",
+      "alt": "Fried calamari with lemon and a cup of marinara"
     },
     {
-      "f": "greens-n-beans",
-      "dish": "Greens N Beans",
-      "alt": "Greens and cannellini beans with pancetta"
+      "f": "lib:mom-everything-salmon",
+      "dish": "Everything Salmon",
+      "alt": "Everything-crusted salmon with vegetables"
     }
   ],
-  "dishSource": "Giacobbi's Cucina Citta food photos (~/code/giacobbis/giacobbis-staging, Drive 'Food Gallery'). Same family recipes, different plates. Stand-ins until Carmine's own photo shoot; labeled on the page.",
+  "dishSource": "Kelly's own photos (Dropbox /Carmines/Website Photos/From Mom, Nov 2026; Piccata from Google Drive Photos/IMG_4750). Served from the photo library (assets/img/library/<id>-t.jpg). The Giacobbi's stand-ins are no longer used on the site; they stay in the library.",
   "kitchen": [
     {
       "f": "ea-sign",

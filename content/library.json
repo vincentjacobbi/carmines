@@ -18,6 +18,91 @@
  ],
  "photos": [
   {
+   "id": "mom-salmon-risotto",
+   "src": "Dropbox/Carmines/Website Photos/From Mom/Kelly - IMG_5256.jpeg",
+   "title": "Salmon & Asparagus Risotto",
+   "dish": "Salmon & Asparagus Risotto",
+   "tags": [
+    "Home page",
+    "Menu items",
+    "Specials",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Added by Kelly, Nov 2026. The asiago-asparagus risotto won Chairman's Choice at the 2021 Taste of Buffalo."
+  },
+  {
+   "id": "mom-penne-palermo",
+   "src": "Dropbox/Carmines/Website Photos/From Mom/Kelly - IMG_5260.jpeg",
+   "title": "Penne Palermo",
+   "dish": "Penne Palermo",
+   "tags": [
+    "Menu items",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Added by Kelly, Nov 2026."
+  },
+  {
+   "id": "mom-calamari",
+   "src": "Dropbox/Carmines/Website Photos/From Mom/Kelly - IMG_9387.jpeg",
+   "title": "Calamari Fritti",
+   "dish": "Calamari Fritti",
+   "tags": [
+    "Menu items",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Added by Kelly, Nov 2026."
+  },
+  {
+   "id": "mom-chicken-parm",
+   "src": "Dropbox/Carmines/Website Photos/From Mom/Kelly Jacobbi - IMG_0299.jpeg",
+   "title": "Chicken Parmesan",
+   "dish": "Parmesan",
+   "tags": [
+    "Menu items",
+    "Take-out",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Added by Kelly, Nov 2026."
+  },
+  {
+   "id": "mom-shrimp-risotto",
+   "src": "Dropbox/Carmines/Website Photos/From Mom/Kelly Jacobbi - IMG_1955.jpeg",
+   "title": "Shrimp & Asparagus Risotto",
+   "tags": [
+    "Menu items",
+    "Specials",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Added by Kelly, Nov 2026. On the online ordering menu but not the March 2025 printed menu."
+  },
+  {
+   "id": "mom-everything-salmon",
+   "src": "Dropbox/Carmines/Website Photos/From Mom/Kelly Jacobbi - IMG_4370.jpeg",
+   "title": "Everything Salmon",
+   "dish": "Everything Salmon",
+   "tags": [
+    "Menu items",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Added by Kelly, Nov 2026."
+  },
+  {
+   "id": "mom-tartufo",
+   "src": "Dropbox/Carmines/Website Photos/From Mom/Kelly Jacobbi - IMG_8187.jpeg",
+   "title": "Tartufo dessert",
+   "tags": [
+    "Desserts"
+   ],
+   "status": "check",
+   "note": "Looks like a supplier's product photo (a picture of a picture). Ask Kelly where it's from before posting."
+  },
+  {
    "id": "building-mural",
    "src": "Dropbox/Carmines/Google Drive Photos/IMG_5502.heic",
    "title": "The Buffalo mural on the side of the building",
@@ -516,6 +601,9 @@
   },
   {
    "why": "Giacobbi's own dining room, bar and cocktails (a different restaurant), and Giacobbi's dishes that Carmine's makes differently (gnocchi, calamari)."
+  },
+  {
+   "why": "From Kelly's Nov 2026 batch: two near-duplicates of the salmon risotto and Penne Palermo, a phone screenshot, and two Chicken Parmesan photos under 1200 pixels. Her three Taste of Buffalo record pages are kept privately (they list sales figures), not in the library."
   }
  ]
 }
