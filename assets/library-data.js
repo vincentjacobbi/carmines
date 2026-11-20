@@ -27,7 +27,7 @@ window.LIBRARY = {
     "Social media"
    ],
    "status": "ours",
-   "note": "Sent by Kelly, Nov 2026. Confirm the spelling (Marshal or Marshall) before launch.",
+   "note": "Sent by Kelly, Nov 2026. Chef Dave Marchal (spelling confirmed Nov 20, 2026); he's OK being named on the site.",
    "w": 3024,
    "h": 4032,
    "where": "Dropbox › Carmines › Website Photos › From Mom",
@@ -196,7 +196,7 @@ window.LIBRARY = {
     "Social media"
    ],
    "status": "ours",
-   "note": "Who painted the mural? Credit the artist when it's used.",
+   "note": "Painted by Michael Biondo (Kelly, Nov 20, 2026). Credit him wherever it's used.",
    "w": 4032,
    "h": 3024,
    "where": "Dropbox › Carmines › Google Drive Photos",

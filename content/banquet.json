@@ -1,28 +1,27 @@
 {
-  "source": "Dropbox /Carmines/CarminesBanquetMenu Folder/CarminesBanquetMenu10-24.pdf (October 2024). carminestogo.com still links the May 27, 2024 version, which has different prices.",
-  "updated": "2024-10",
-  "edits": "Typos fixed: Mediteranian → Mediterranean, Saltimboca → Saltimbocca, Cannoli’s → Cannoli, Bloody Mary’s → Bloody Marys, Giambota → Giambotta. Her spelling “Fruitti Di Mare” kept.",
+  "source": "Banquet menu PDF dated May 27, 2024, linked from carminestogo.com (local copy source/live/banquet-2024-05-27.pdf). Kelly confirmed (Nov 20, 2026) that this one, not the October 2024 Dropbox version, is current.",
+  "updated": "2024-05-27",
+  "edits": "Typos fixed: Mediteranian → Mediterranean, Saltimboca → Saltimbocca, Picatta → Piccata, Giambota → Giambotta, Mini Cannolis → Mini cannoli. Her spelling “Fruitti Di Mare” kept.",
   "room": "Seating available for 40 guests in our private banquet room.",
   "packages": [
     {
-      "n": "Standard Family Buffet", "p": 25.99, "kids": 17,
-      "includes": ["Soup, Chef, Caesar or Mediterranean Salad", "Mixed Vegetables or Green Beans", "Roasted Red Potato or Penne Carmine’s Red", "Italian Bread & Butter", "Coffee, Tea & Soda", "Cannoli"],
-      "choose": "Choose 2, add another for $5",
-      "items": ["Chicken Piccata", "Chicken Parmesan", "Chicken Cacciatore", "Chicken Marsala", "Seafood Marinara over Linguine", "Haddock Italiano", "Italian Sausage w/ Peppers & Onions", "Stuffed Beef Roulades", "Lasagna", "Stuffed Shells", "Ravioli w/ Meatballs", "Tortellini Ala Carmine", "Breaded Pork Chops", "Eggplant Parmesan", "Penne Pink Vodka w/ Grilled Chicken", "Sautéed Tenderloin Tips Ala Marsala"],
+      "n": "Standard Family Buffet", "p": 29.99, "kids": 17, "min": "Minimum 25 adult guests",
+      "includes": ["Soup, Chef, Caesar or Mediterranean Salad", "Mixed Vegetables or Green Beans", "Roasted Red Potato or Penne Carmine’s Red", "Italian Bread & Butter", "Coffee, Tea & Soda"],
+      "choose": "Choose 2, add another for $7",
+      "items": ["Chicken Piccata", "Chicken Parmesan", "Chicken Cacciatore", "Chicken Marsala", "Haddock Italiano", "Italian Sausage w/ Peppers & Onions", "Stuffed Beef Roulades", "Lasagna", "Stuffed Shells", "Ravioli w/ Meatballs", "Tortellini Ala Carmine", "Breaded Pork Chops", "Eggplant Parmesan", "Penne Pink Vodka w/ Grilled Chicken"],
       "best": "Chicken Piccata"
     },
     {
-      "n": "Brunch", "p": 22.95, "kids": 17,
-      "includes": ["Orange Juice", "Chef, Caesar or Mediterranean Salad", "Home Fries", "Italian Bread & Butter", "Danishes or Cannoli", "Coffee, Tea & Soda"],
+      "n": "Brunch", "p": 24.99, "kids": 17,
+      "includes": ["Orange Juice", "Chef, Caesar or Mediterranean Salad", "Home Fries", "Italian Bread & Butter"],
       "choose": "Choose 3",
       "items": ["Sausage with Peppers & Onions", "Scrambled Eggs", "Frittata (Italian Omelet)", "Western Scramble", "Breakfast Sausage", "Ham", "Bacon", "French Toast", "Chicken Ala King w/ Biscuits", "Chicken Piccata", "Baked Ziti", "Giambotta"]
     },
     {
-      "n": "Deluxe Buffet Package", "p": 42.99, "kids": 18,
-      "lead": "Choice of homemade soup or individually served salad.",
-      "includes": ["Bruschetta or Stuffed Mushrooms", "Mixed Vegetable", "Roasted Red Potato or Penne Carmine’s Red", "Soup or Chef, Caesar or Mediterranean Salad", "Italian Bread & Butter", "Coffee, Tea & Soda", "Cannoli"],
+      "n": "Deluxe Buffet Package", "p": 46.99, "kids": 18, "min": "Minimum 25 adult guests",
+      "includes": ["Bruschetta or Stuffed Mushrooms", "Soup or Chef, Caesar or Mediterranean Salad", "Mixed Vegetable", "Roasted Red Potato or Penne Carmine’s Red", "Italian Bread & Butter", "Coffee, Tea & Soda"],
       "choose": "Choose 2",
-      "items": ["Grilled Petite Filet Steak", "Grilled Salmon", "Veal or Chicken Saltimbocca", "Roast Pork Loin with Stuffing", "Crab-Casino Stuffed Haddock", "Braciole", "Roasted Turkey with Stuffing & Gravy", "Neptune Supreme", "Stuffed Chicken Florentine", "Veal or Chicken Parmesan", "Chicken Oscar", "Shrimp Puttanesca", "Fruitti Di Mare"]
+      "items": ["Grilled Petite Filet Steak", "Grilled Salmon", "Veal or Chicken Saltimbocca", "Roast Pork Loin with Stuffing", "Casino Stuffed Haddock", "Roasted Turkey with Stuffing & Gravy", "Neptune Supreme", "Chicken Piccata", "Veal or Chicken Parmesan", "Chicken Bryan", "Shrimp Puttanesca", "Fruitti Di Mare"]
     }
   ],
   "addons": [
@@ -34,10 +33,12 @@
     { "n": "Fresh Fruit Bowl", "d": "Serves 25–30", "p": 75 }
   ],
   "misc": [
-    { "n": "Champagne", "d": "Serves approximately 30 punch glasses", "p": 60 },
-    { "n": "Wine", "d": "Serves approximately 30 punch glasses", "p": 55 },
-    { "n": "Fruit Punch", "d": "Serves approximately 30 punch glasses", "p": 50 },
-    { "n": "Mimosas", "p": 65 },
-    { "n": "Pitcher of Bloody Marys", "p": 32 }
+    { "n": "Champagne", "d": "Serves approximately 25 punch glasses", "p": 65 },
+    { "n": "Wine", "d": "Serves approximately 25 punch glasses", "p": 65 },
+    { "n": "Fruit Punch", "d": "Serves approximately 25 punch glasses", "p": 60 },
+    { "n": "Mimosa Bar", "d": "Per person", "p": 10 },
+    { "n": "Bloody Mary Bar", "d": "Per person", "p": 10 },
+    { "n": "Cake Cutting Fee", "p": 25 },
+    { "n": "Mini Cannoli", "d": "Per person", "p": 3 }
   ]
 }

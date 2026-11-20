@@ -833,15 +833,15 @@ window.SITE_DATA = {
   "banquets": [
    {
     "n": "Standard Family Buffet",
-    "p": 25.99
+    "p": 29.99
    },
    {
     "n": "Brunch",
-    "p": 22.95
+    "p": 24.99
    },
    {
     "n": "Deluxe Buffet Package",
-    "p": 42.99
+    "p": 46.99
    }
   ],
   "room": "Seating available for 40 guests in our private banquet room."

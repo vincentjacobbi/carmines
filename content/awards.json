@@ -1,6 +1,6 @@
 {
   "source": "Kelly's handwritten Taste of Buffalo records (three pages photographed Nov 2026; originals kept privately in source/taste/, git-ignored, because they list sales figures). Her list is titled \"10 Taste of Buffalo Awards\".",
-  "unsure": "2009 dish reads like \"Shrimp Cargo\": confirm with Kelly. 2022 confirmed by Kelly (Nov 20, 2026): the Cajun shrimp over spinach with gorgonzola cream, still on the menu as Char Grilled Cajun Shrimp. She wasn't sure of the first year they took part (\"1996? maybe 94 or 95\"), so no start year is published.",
+  "unsure": "2009 confirmed by Kelly (Nov 20, 2026): Shrimp Cargo, a stuffed mushroom with spinach and a whole shrimp, drizzled with lemon butter sauce. 2022 confirmed by Kelly (Nov 20, 2026): the Cajun shrimp over spinach with gorgonzola cream, still on the menu as Char Grilled Cajun Shrimp. She wasn't sure of the first year they took part (\"1996? maybe 94 or 95\"), so no start year is published.",
   "awards": [
     {
       "y": 2003,
@@ -25,8 +25,7 @@
     {
       "y": 2009,
       "award": "Best Seafood",
-      "dish": null,
-      "ask": "dish name to confirm (reads like “Shrimp Cargo”)"
+      "dish": "Shrimp Cargo: stuffed mushroom with spinach & shrimp"
     },
     {
       "y": 2013,

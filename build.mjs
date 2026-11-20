@@ -41,7 +41,7 @@ const BOWL = MENU.find((s) => s.id === "bowl");
 const findItem = (name) => MENU.flatMap((s) => s.items).find((i) => i.n === name);
 
 // ---------- Catering & banquets ----------
-// content/catering.json (May 14, 2026 catering menu) and content/banquet.json (October 2024 banquet menu),
+// content/catering.json (May 14, 2026 catering menu) and content/banquet.json (May 27, 2024 banquet menu, the one on carminestogo.com),
 // transcribed from her newest Dropbox PDFs. See each file's "source" and "edits" fields.
 // Confirmed on the current site: catering for gatherings of 10 or more, delivered anywhere in the 716 area,
 // seven days a week, afternoon through evening.
@@ -104,7 +104,7 @@ const ledgerRow = (n, d, prices) => `<div class="lrow"><span class="nm">${n}${d 
 const ledgerHead = (cols) => `<div class="lrow lhead"><span class="nm"></span><span class="dots" style="border:0"></span>${cols.map((c) => `<span class="pr">${c}</span>`).join("")}</div>`;
 const banquetPkg = (k) => `<article class="banquet">
     <h3 class="pkg-name">${k.n} <span class="price">${money(k.p)}</span></h3>
-    <p class="small-caps">per person · children 4–10 $${k.kids}</p>${k.lead ? `<p class="center">${k.lead}</p>` : ""}
+    <p class="small-caps">per person · children 4–10 $${k.kids}${k.min ? ` · ${k.min}` : ""}</p>${k.lead ? `<p class="center">${k.lead}</p>` : ""}
     <p class="includes"><b>Includes</b> ${k.includes.join(" · ")}</p>
     <p class="sub-caps choose">${k.choose}</p>
     <ul class="choice-list two">${k.items.map((n) => `<li>${n}${n === k.best ? ` <span class="best">Our best seller</span>` : ""}</li>`).join("")}</ul>
@@ -214,7 +214,7 @@ const home = page(
   `
 <figure class="hero">
   <img src="/assets/img/hero-mural.jpg" srcset="/assets/img/hero-mural-sm.jpg 1200w, /assets/img/hero-mural.jpg 2400w" sizes="100vw" alt="The painted Buffalo mural on the side of our building at night: stained-glass colors around a script Carmine's over the word Buffalo" fetchpriority="high">
-  <figcaption>The Buffalo mural on the side of our building · <span class="ph">Artist's name + credit</span></figcaption>
+  <figcaption>The Buffalo mural on the side of our building, painted by Michael Biondo</figcaption>
 </figure>
 <section class="cover"><div class="wrap">
   <h1 class="visually-hidden">Carmine's Italiano</h1>
@@ -335,7 +335,7 @@ const TIMELINE = [
   { y: "2015", t: "The fire", d: "A devastating fire changed the course of Carmine's." },
   { y: "2017", t: "Back in business", d: "Carmine's reopened at 9430 Transit Road in East Amherst, our home for five years." },
   { y: "2022", t: "Our forever home", d: "In September 2022 we moved to 7170 Transit Road in Williamsville, where we are today." },
-  { y: "2023", t: "Chef Dave comes back", d: "Dave Marshal first cooked for our family from 1997 to 2001, then went on to another career. He came back to our kitchen in 2023, and he's been a nice addition to the family." },
+  { y: "2023", t: "Chef Dave comes back", d: "Dave Marchal first cooked for our family from 1997 to 2001, then went on to another career. He came back to our kitchen in 2023, and he's been a nice addition to the family." },
   { y: "2003–2022", t: "Ten Taste of Buffalo awards", d: "From Best Vegetarian in 2003 to Best Seafood in 2022, including Chairman’s Choice three times and Best Seafood five times. The full list is below." },
 ];
 const tlItem = (x) => `<li class="tl"><div class="tl-y">${x.ph ? ph(x.y) : x.y}</div><div class="tl-body"><h3>${x.ph ? ph(x.t) : x.t}</h3><p>${x.ph ? ph(x.d) : x.d}</p>${x.clip ? `
@@ -360,7 +360,7 @@ ${pageHead("Our Story", `A casual family Italian restaurant since ${R.founded}, 
   ${ruleHead("The Family")}
   <div class="cols2 family">
     <div><h3>Kelly &amp; Alex Jacobbi</h3><p>Owners. Alex created Al’s Fussili, the dish that became a house favorite.</p></div>
-    <div><h3>Chef Dave Marshal</h3><p>In our kitchen from 1997 to 2001, and again since 2023.</p></div>
+    <div><h3>Chef Dave Marchal</h3><p>In our kitchen from 1997 to 2001, and again since 2023.</p></div>
   </div>
   <div class="snaps three" style="margin-top:30px">
     ${snap("lib:dave-1997-kitchen", "Chef Dave at the stove in our kitchen in 1997, in a ball cap and black apron", "Chef Dave on the line, 1997", "-1.2")}
@@ -460,7 +460,6 @@ ${pageHead("Banquets", "Showers, birthdays, anniversaries and celebrations of li
     <div>${ruleHead("Add-ons", "h3", "sm")}<div class="ledger">${BANQ.addons.map((t) => ledgerRow(t.n, t.d, [trayPrice(t.p)])).join("")}</div></div>
     <div>${ruleHead("Miscellaneous", "h3", "sm")}<div class="ledger">${BANQ.misc.map((t) => ledgerRow(t.n, t.d, [trayPrice(t.p)])).join("")}</div></div>
   </div>
-  <p class="note" style="margin-top:22px">Staging note: from the October 2024 banquet menu. carminestogo.com still shows the May 2024 banquet prices, so Kelly to confirm which is current.</p>
 </div></section>
 
 ${quoteSection("banquet")}`, [], "/banquets.html"
