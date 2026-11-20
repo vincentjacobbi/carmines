@@ -211,8 +211,12 @@ const home = page(
   "Carmine's Italiano at 7170 Transit Road in Williamsville: dine-in, take-out, catering and banquets. Open Wednesday to Sunday from 4pm.",
   "",
   `
+<figure class="hero">
+  <img src="/assets/img/hero-mural.jpg" srcset="/assets/img/hero-mural-sm.jpg 1200w, /assets/img/hero-mural.jpg 2400w" sizes="100vw" alt="The painted Buffalo mural on the side of our building at night: stained-glass colors around a script Carmine's over the word Buffalo" fetchpriority="high">
+  <figcaption>The Buffalo mural on the side of our building · <span class="ph">Artist's name + credit</span></figcaption>
+</figure>
 <section class="cover"><div class="wrap">
-  <h1 class="mark">${logoSVG({ id: "hero" })}</h1>
+  <h1 class="visually-hidden">Carmine's Italiano</h1>
   <p class="tagline">Dine-in · Take-out · Catering &amp; Banquets</p>
   <p class="lead">A casual family Italian restaurant on Transit Road since ${R.founded}.</p>
   <div class="ctas">
@@ -223,11 +227,11 @@ const home = page(
   <p class="facts"><span>${R.streetShort} ${R.city}</span><span>Wed–Sun from 4pm</span><span>Catering 7 days</span></p>
 </div></section>
 
-<section class="tight"><div class="wrap">
-  <figure class="mural">
-    <img src="/assets/img/library/building-mural.jpg" alt="A painted Buffalo mural on the side of the building at night: stained-glass colors around a script Carmine's over the word Buffalo" loading="lazy">
-    <figcaption><span>The Buffalo mural on the side of our building</span><span class="ph">Artist's name + credit</span></figcaption>
-  </figure>
+<section class="tight pasta-band"><div class="wrap">
+  <div class="shelf" style="--n:${BOWL.pasta.length}">
+    ${BOWL.pasta.map(([label, , art]) => `<figure>${pastaSVG(art)}<figcaption>${label}</figcaption></figure>`).join("\n    ")}
+  </div>
+  <p class="center pasta-line">${BOWL.pasta.length} pastas, ${BOWL.items.length} sauces, made your way. <a href="/menu.html#bowl">See the menu</a></p>
 </div></section>
 
 <section><div class="wrap">

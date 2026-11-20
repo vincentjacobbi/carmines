@@ -294,3 +294,18 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--wine)}
 .awards .nm b{color:var(--wine);font-style:italic;margin-right:12px}
 .awards .pr{font:400 16px/1.3 var(--serif);color:var(--ink);text-align:right}
 @media (max-width:560px){.awards .lrow{flex-wrap:wrap}.awards .dots{display:none}.awards .pr{width:100%;text-align:left;padding-left:52px;color:var(--muted)}}
+
+/* ---------- home hero: the Buffalo mural on the side of the building, edge to edge ---------- */
+.hero{margin:0;position:relative;background:#141210;line-height:0}
+.hero img{display:block;width:100%;height:min(64vh,640px);min-height:300px;object-fit:cover;object-position:50% 52%}
+.hero figcaption{position:absolute;right:12px;bottom:10px;line-height:1.4;font:600 11px var(--caps);text-transform:uppercase;letter-spacing:.08em;color:#f4f0e4;background:rgba(20,18,16,.55);padding:4px 8px}
+.hero figcaption .ph{font-size:10.5px;text-transform:none;letter-spacing:0}
+.cover{padding-top:38px}
+.cover .tagline{margin-top:0}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:640px){.hero img{height:46vh;object-position:42% 52%}.hero figcaption{left:8px;right:auto;font-size:10px}}
+/* home: her designer's pasta drawings, no prices */
+.pasta-band .shelf{margin-top:0}
+.pasta-band .shelf .pasta{height:92px}
+.pasta-line{margin:16px 0 0;font:600 14px/1.6 var(--caps);text-transform:uppercase;letter-spacing:var(--track);color:var(--wine)}
+.pasta-line a{color:var(--ink);margin-left:8px}
