@@ -8,7 +8,7 @@
   if (!draft) return;
   const esc = (t) => String(t ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
   const money = (n) => (typeof n === "number" ? n.toFixed(2) : "$ —");
-  const item = (i) => `<div class="item${i.feature ? " feature" : ""}"><div class="head"><span class="nm">${esc(i.n)}</span>${i.p != null ? `<span class="pr">${money(i.p)}</span>` : ""}${i.v && i.p == null ? i.v.map(([l, p]) => ` <span class="pr"><span class="opt-l">${esc(l)}</span> ${money(p)}</span>`).join("") : ""}</div>${i.d ? `<div class="ds">${esc(i.d)}</div>` : ""}</div>`;
+  const item = (i) => `<div class="item${i.feature ? " feature" : ""}"><div class="head"><span class="nm">${esc(i.n)}</span>${i.p != null ? `<span class="pr">${money(i.p)}</span>` : ""}${i.v && i.p == null ? i.v.map(([l, p]) => ` <span class="pr"><span class="opt-l">${esc(l)}</span> ${money(p)}</span>`).join("") : ""}</div>${i.d ? `<div class="ds">${esc(i.d)}</div>` : ""}${i.award ? `<div class="award">${esc(i.award)}</div>` : ""}</div>`;
   draft.sections.forEach((s) => {
     const el = document.getElementById(s.id);
     if (!el) return;

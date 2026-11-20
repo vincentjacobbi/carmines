@@ -25,7 +25,8 @@ window.SITE_DATA = {
      {
       "n": "Char Grilled Cajun Shrimp",
       "d": "Over a bed of spinach with drizzled gorgonzola cream",
-      "p": 16.99
+      "p": 16.99,
+      "award": "Best Seafood, 2022 Taste of Buffalo"
      },
      {
       "n": "Arancini",
@@ -394,7 +395,8 @@ window.SITE_DATA = {
      {
       "n": "Salmon & Asparagus Risotto",
       "d": "Creamy asparagus & asiago risotto topped with grilled salmon. Shrimp instead of salmon? Just ask!",
-      "p": 32.99
+      "p": 32.99,
+      "award": "Its asiago-asparagus risotto won Chairman’s Choice, 2021 Taste of Buffalo"
      }
     ]
    },

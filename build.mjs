@@ -89,7 +89,8 @@ const STANDIN = `<span class="ph">Sample: Giacobbi’s plate, same recipe</span>
 const CREDIT = `<span class="ph">Photo credit + OK from the photographer</span>`;
 // f is a file in assets/img/photos/, or "lib:<id>" for a photo-library thumbnail (assets/img/library/<id>-t.jpg, 480 px).
 const photoSrc = (f) => (f.startsWith("lib:") ? `/assets/img/library/${f.slice(4)}-t.jpg` : `/assets/img/photos/${f}.jpg`);
-const snap = (f, alt, cap, tilt = "") => `<figure class="snap"${tilt ? ` style="transform:rotate(${tilt}deg)"` : ""}><img src="${photoSrc(f)}" alt="${alt}" loading="lazy"><figcaption>${cap}</figcaption></figure>`;
+// pos: CSS object-position for the 4:3 crop (portrait photos need the top kept).
+const snap = (f, alt, cap, tilt = "", pos = "") => `<figure class="snap"${tilt ? ` style="transform:rotate(${tilt}deg)"` : ""}><img src="${photoSrc(f)}" alt="${alt}" loading="lazy"${pos ? ` style="object-position:${pos}"` : ""}><figcaption>${cap}</figcaption></figure>`;
 // content/awards.json: Kelly's Taste of Buffalo records.
 const AWARDS = JSON.parse(readFileSync("content/awards.json", "utf8"));
 const phPhoto = (label, ratio = "4/3") => `<div class="ph ph-block" style="aspect-ratio:${ratio};display:grid;place-items:center;text-align:center;margin:0">[Photo: ${label}]</div>`;
@@ -293,7 +294,7 @@ document.querySelectorAll(".carousel").forEach((c) => {
 
 // ---------- Menu ----------
 // As printed: name, then price in wine italics; two-way prices ("Chicken 30.99 Veal 32.99") on the same line.
-const itemRow = (i) => `<div class="item${i.feature ? " feature" : ""}${i.hidden ? " is-hidden" : ""}"><div class="head"><span class="nm">${i.n}</span>${i.p != null ? `<span class="pr">${money(i.p)}</span>` : ""}${i.v && i.p == null && i.v.length <= 2 && !i.d.includes("instead") ? i.v.map(([l, p]) => ` <span class="pr"><span class="opt-l">${l}</span> ${money(p)}</span>`).join("") : ""}</div>${i.d ? `<div class="ds">${i.d}</div>` : ""}${i.v && (i.p != null) ? `<ul class="opts">${i.v.map(([l, p]) => `<li>${l} ${money(p)}</li>`).join("")}</ul>` : ""}</div>`;
+const itemRow = (i) => `<div class="item${i.feature ? " feature" : ""}${i.hidden ? " is-hidden" : ""}"><div class="head"><span class="nm">${i.n}</span>${i.p != null ? `<span class="pr">${money(i.p)}</span>` : ""}${i.v && i.p == null && i.v.length <= 2 && !i.d.includes("instead") ? i.v.map(([l, p]) => ` <span class="pr"><span class="opt-l">${l}</span> ${money(p)}</span>`).join("") : ""}</div>${i.d ? `<div class="ds">${i.d}</div>` : ""}${i.award ? `<div class="award">${i.award}</div>` : ""}${i.v && (i.p != null) ? `<ul class="opts">${i.v.map(([l, p]) => `<li>${l} ${money(p)}</li>`).join("")}</ul>` : ""}</div>`;
 const addsRow = (s) => s.adds ? `<p class="adds">${s.adds.map(([l, p]) => `${l} <b>${money(p)}</b>`).join(" · ")}</p>` : "";
 const sectionBody = (s) => s.id === "bowl" ? `
     <p class="sub-caps" style="margin-top:-6px">${s.sub}</p>
@@ -361,9 +362,10 @@ ${pageHead("Our Story", `A casual family Italian restaurant since ${R.founded}, 
     <div><h3>Kelly &amp; Alex Jacobbi</h3><p>Owners. Alex created Al’s Fussili, the dish that became a house favorite.</p></div>
     <div><h3>Chef Dave Marshal</h3><p>In our kitchen from 1997 to 2001, and again since 2023.</p></div>
   </div>
-  <div class="snaps two" style="margin-top:30px">
-    ${snap("ea-toss", PHOTOS.kitchen[5].alt, `East Amherst kitchen, 2017 · ${CREDIT}`, "-1")}
-    <figure class="snap" style="transform:rotate(1deg)">${phPhoto("the family and Chef Dave at the restaurant (Kelly is OK showing faces; photo shoot planned)", "4/3")}<figcaption>Coming from the photo shoot</figcaption></figure>
+  <div class="snaps three" style="margin-top:30px">
+    ${snap("lib:dave-1997-kitchen", "Chef Dave at the stove in our kitchen in 1997, in a ball cap and black apron", "Chef Dave on the line, 1997", "-1.2")}
+    ${snap("lib:dave-today", "Chef Dave today in our kitchen, in a Carmine's cap, shirt and apron", "Chef Dave today", "0.9", "50% 22%")}
+    <figure class="snap" style="transform:rotate(-0.6deg)">${phPhoto("Kelly & Alex at the restaurant (from the photo shoot)", "4/3")}<figcaption>Coming from the photo shoot</figcaption></figure>
   </div>
   ${RECIPES.length ? `${ruleHead("From the Kitchen")}<div class="recipes">${RECIPES.map(recipeCard).join("\n    ")}</div>` : ""}
 </div></section>`, [], "/story.html"

@@ -31,6 +31,9 @@ for p in lib["photos"]:
         subprocess.run(["sips", "-s", "format", "jpeg", src, "--out", conv], check=True, capture_output=True)
         src = conv
     im = ImageOps.exif_transpose(Image.open(src)).convert("RGB")
+    if p.get("crop"):  # [left, top, right, bottom] as fractions, e.g. to trim the border of a photographed print
+        W, H = im.size; l, t, r, b = p["crop"]
+        im = im.crop((round(l * W), round(t * H), round(r * W), round(b * H)))
     w, h = im.size
     if max(w, h) < MIN_LONG:
         problems.append(f"too small ({w}x{h}): {p['id']}"); continue
@@ -38,7 +41,7 @@ for p in lib["photos"]:
         c = im.copy(); c.thumbnail((size, size), Image.LANCZOS)
         c.save(os.path.join(OUT, f"{p['id']}{suffix}.jpg"), quality=q, optimize=True, progressive=True)
     folder, name = os.path.split(p["src"])
-    items.append({**{k: v for k, v in p.items() if k != "src"}, "w": w, "h": h,
+    items.append({**{k: v for k, v in p.items() if k not in ("src", "crop")}, "w": w, "h": h,
                   "where": folder.replace("Dropbox/", "Dropbox › ").replace("GoogleDrive-vincentjacobbi@gmail.com/My Drive/", "Google Drive › ").replace("/", " › "),
                   "file": name})
 

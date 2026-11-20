@@ -18,6 +18,69 @@ window.LIBRARY = {
  ],
  "photos": [
   {
+   "id": "dave-today",
+   "title": "Chef Dave in our kitchen today",
+   "tags": [
+    "People",
+    "Kitchen",
+    "Our story",
+    "Social media"
+   ],
+   "status": "ours",
+   "note": "Sent by Kelly, Nov 2026. Confirm the spelling (Marshal or Marshall) before launch.",
+   "w": 3024,
+   "h": 4032,
+   "where": "Dropbox › Carmines › Website Photos › From Mom",
+   "file": "Chef Dave today 1.HEIC"
+  },
+  {
+   "id": "dave-today-2",
+   "title": "Chef Dave in our kitchen today (wider)",
+   "tags": [
+    "People",
+    "Kitchen",
+    "Our story"
+   ],
+   "status": "ours",
+   "note": "Sent by Kelly, Nov 2026.",
+   "w": 3024,
+   "h": 4032,
+   "where": "Dropbox › Carmines › Website Photos › From Mom",
+   "file": "Chef Dave today 2.HEIC"
+  },
+  {
+   "id": "dave-1997-kitchen",
+   "title": "Chef Dave on the line, 1997",
+   "tags": [
+    "People",
+    "Kitchen",
+    "Our story",
+    "Social media"
+   ],
+   "status": "ours",
+   "year": "1997",
+   "note": "A phone photo of a 1997 print, sent by Kelly. Good for a then-and-now post.",
+   "w": 3024,
+   "h": 2803,
+   "where": "Dropbox › Carmines › Website Photos › From Mom",
+   "file": "Chef Dave 1997 in the kitchen.HEIC"
+  },
+  {
+   "id": "dave-1997",
+   "title": "Chef Dave, 1997",
+   "tags": [
+    "People",
+    "Our story"
+   ],
+   "status": "ours",
+   "year": "1997",
+   "note": "A phone photo of a 1997 print, sent by Kelly. Cropped to Dave; another person was at the left edge.",
+   "w": 2419,
+   "h": 3790,
+   "where": "Dropbox › Carmines › Website Photos › From Mom",
+   "file": "Chef Dave 1997 at the bar.HEIC"
+  },
+  {
    "id": "mom-salmon-risotto",
    "title": "Salmon & Asparagus Risotto",
    "dish": "Salmon & Asparagus Risotto",
