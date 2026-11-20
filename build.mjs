@@ -155,7 +155,7 @@ const nav = (active) => `
   <a class="brand" href="/" aria-label="Carmine's Italiano, home">${logoSVG({ id: "hdr" })}</a>
   <button class="menu-toggle" aria-label="Menu" onclick="document.querySelector('nav.links').classList.toggle('open')">☰</button>
   <nav class="links">
-    ${[["/menu.html", "Menu"], ["/takeout.html", "Take-Out"], ["/catering.html", "Catering"], ["/banquets.html", "Banquets"], ["/story.html", "Our Story"], ["/#visit", "Visit"]]
+    ${[["/menu.html", "Menu"], ["/takeout.html", "Take-Out"], ["/catering.html", "Catering"], ["/banquets.html", "Banquets"], ["/story.html", "Our Story"]]
       .map(([h, t]) => `<a href="${h}"${active === t ? ' aria-current="page"' : ""}>${t}</a>`).join("")}
     ${R.orderOnline ? `<a class="btn ghost" href="${R.orderOnline}" target="_blank" rel="noopener">Order online</a>` : R.ubereats ? orderBtn() : ""}
     <a class="btn primary" href="tel:${R.tel}">Call ${R.phoneDots}</a>
@@ -217,7 +217,6 @@ const home = page(
 </figure>
 <section class="cover"><div class="wrap">
   <h1 class="visually-hidden">Carmine's Italiano</h1>
-  <p class="tagline">Dine-in · Take-out · Catering &amp; Banquets</p>
   <p class="lead">A casual family Italian restaurant on Transit Road since ${R.founded}.</p>
   <div class="ctas">
     <a class="btn primary" href="/menu.html">See the menu</a>
@@ -227,12 +226,26 @@ const home = page(
   <p class="facts"><span>${R.streetShort} ${R.city}</span><span>Wed–Sun from 4pm</span><span>Catering 7 days</span></p>
 </div></section>
 
-<section class="tight pasta-band"><div class="wrap">
-  <div class="shelf" style="--n:${BOWL.pasta.length}">
-    ${BOWL.pasta.map(([label, , art]) => `<figure>${pastaSVG(art)}<figcaption>${label}</figcaption></figure>`).join("\n    ")}
+<section class="pasta-band" aria-label="Our pastas"><div class="wrap">
+  <div class="carousel">
+    <button class="car-btn prev" aria-label="Previous pastas">‹</button>
+    <div class="car-track" tabindex="0">
+      ${BOWL.pasta.map(([label, , art]) => `<figure>${pastaSVG(art)}<figcaption>${label}</figcaption></figure>`).join("\n      ")}
+    </div>
+    <button class="car-btn next" aria-label="More pastas">›</button>
   </div>
   <p class="center pasta-line">${BOWL.pasta.length} pastas, ${BOWL.items.length} sauces, made your way. <a href="/menu.html#bowl">See the menu</a></p>
 </div></section>
+<script>
+// Pasta carousel: scroll-snap track, arrow buttons scroll by one view. No autoplay.
+document.querySelectorAll(".carousel").forEach((c) => {
+  const t = c.querySelector(".car-track"), prev = c.querySelector(".prev"), next = c.querySelector(".next");
+  const step = (d) => t.scrollBy({ left: d * t.clientWidth * 0.8, behavior: "smooth" });
+  prev.onclick = () => step(-1); next.onclick = () => step(1);
+  const upd = () => { prev.disabled = t.scrollLeft < 4; next.disabled = t.scrollLeft + t.clientWidth > t.scrollWidth - 4; };
+  t.addEventListener("scroll", upd, { passive: true }); addEventListener("resize", upd); upd();
+});
+</script>
 
 <section><div class="wrap">
   ${ruleHead("House Favorites")}
